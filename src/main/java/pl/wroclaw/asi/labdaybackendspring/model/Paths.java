@@ -1,4 +1,4 @@
-package pl.wroclaw.asi.labdaybackendspring.domain;
+package pl.wroclaw.asi.labdaybackendspring.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
