@@ -13,6 +13,10 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 public class Place {
+    public static final int TYPE_NOT_SET = 0;
+    public static final int TYPE_INFO = 1;
+    public static final int TYPE_FOOD = 2;
+    public static final int TYPE_REST = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
