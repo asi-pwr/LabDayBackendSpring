@@ -1,4 +1,8 @@
 package pl.wroclaw.asi.labdaybackendspring.repositories;
 
-public interface PlaceRepository {
+import org.springframework.data.repository.CrudRepository;
+import pl.wroclaw.asi.labdaybackendspring.model.Place;
+
+public interface PlaceRepository extends CrudRepository<Place, Integer> {
+
 }

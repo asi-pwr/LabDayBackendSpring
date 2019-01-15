@@ -1,4 +1,8 @@
 package pl.wroclaw.asi.labdaybackendspring.repositories;
 
-public interface PathRepository {
+import org.springframework.data.repository.CrudRepository;
+import pl.wroclaw.asi.labdaybackendspring.model.Path;
+
+public interface PathRepository extends CrudRepository<Path, Integer> {
+
 }

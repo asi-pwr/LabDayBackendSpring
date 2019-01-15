@@ -1,4 +1,7 @@
 package pl.wroclaw.asi.labdaybackendspring.repositories;
 
-public interface TimetableRepository {
+import org.springframework.data.repository.CrudRepository;
+import pl.wroclaw.asi.labdaybackendspring.model.Timetable;
+
+public interface TimetableRepository extends CrudRepository<Timetable, Integer> {
 }
