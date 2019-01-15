@@ -38,7 +38,7 @@ public class Event {
     private String topic;
 
     @JsonProperty("speaker_id")
-    private int speakerId;
+    private Integer speakerId;
 
     @JsonProperty("dor1_img")
     private String dor1Img;
