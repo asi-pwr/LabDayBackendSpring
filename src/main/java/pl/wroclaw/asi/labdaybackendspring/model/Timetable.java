@@ -18,18 +18,18 @@ public class Timetable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
-    private int id;
+    private Integer id;
 
     @JsonProperty("path_id")
     @NonNull
-    private int pathId;
+    private Integer pathId;
 
     @JsonProperty("event_id")
-    private int eventId;
+    private Integer eventId;
 
     @JsonProperty("time_start")
-    private int timeStart;
+    private Integer timeStart;
 
     @JsonProperty("time_end")
-    private int timeEnd;
+    private Integer timeEnd;
 }
