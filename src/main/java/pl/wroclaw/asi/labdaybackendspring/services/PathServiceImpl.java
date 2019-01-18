@@ -19,8 +19,10 @@ public class PathServiceImpl implements PathService {
         this.pathRepository = pathRepository;
     }
 
+
+
     @Override
-    public Path saveOrUpdateEvent(Path path) {
+    public Path saveOrUpdatePath(Path path) {
         return pathRepository.save(path);
     }
 
