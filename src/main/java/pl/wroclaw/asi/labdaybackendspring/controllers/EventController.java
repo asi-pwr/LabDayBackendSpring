@@ -37,4 +37,15 @@ public class EventController {
 
     }
 
+    @DeleteMapping("/delete/{eventId}")
+    public ResponseEntity<?> deleteEventById(@PathVariable Integer eventId){
+        eventService.deleteEvent(eventId);
+        return new ResponseEntity<>("Event with id: " + eventId + "was successfully deleted", HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity getAllEvents(){
+        return new ResponseEntity<>(eventService.findAllEvents(),HttpStatus.OK);
+    }
+
 }
