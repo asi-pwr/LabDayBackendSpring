@@ -34,7 +34,7 @@ public class PlaceController {
         if(errors != null)
             return errors;
         placeService.saveOrUpdatePlace(place);
-        return new ResponseEntity<>("", HttpStatus.CREATED);
+        return new ResponseEntity<>("Place successfully created", HttpStatus.CREATED);
 
     }
 

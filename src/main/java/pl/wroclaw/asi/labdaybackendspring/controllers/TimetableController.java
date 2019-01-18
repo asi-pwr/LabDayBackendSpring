@@ -32,7 +32,7 @@ public class TimetableController {
         if(errors != null)
             return errors;
         timetableService.saveOrUpdateTimetable(timetable);
-        return new ResponseEntity<>("", HttpStatus.CREATED);
+        return new ResponseEntity<>("Timetable successfully created", HttpStatus.CREATED);
 
     }
 

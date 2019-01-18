@@ -33,7 +33,7 @@ public class SpeakerController {
         if(errors != null)
             return errors;
         Speaker tmp = speakerService.saveOrUpdateSpeaker(speaker);
-        return new ResponseEntity<>(tmp, HttpStatus.CREATED);
+        return new ResponseEntity<>("Speaker successfully created", HttpStatus.CREATED);
 
     }
 

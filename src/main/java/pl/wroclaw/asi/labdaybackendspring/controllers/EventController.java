@@ -33,7 +33,7 @@ public class EventController {
         if(errors != null)
             return errors;
         eventService.saveOrUpdateEvent(event);
-        return new ResponseEntity<>("", HttpStatus.CREATED);
+        return new ResponseEntity<>("Event successfully created", HttpStatus.CREATED);
 
     }
 

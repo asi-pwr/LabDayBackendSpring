@@ -34,7 +34,7 @@ public class PathController {
         if(errors != null)
             return errors;
         pathService.saveOrUpdatePath(path);
-        return new ResponseEntity<>("", HttpStatus.CREATED);
+        return new ResponseEntity<>("Path successfully created", HttpStatus.CREATED);
 
     }
 
