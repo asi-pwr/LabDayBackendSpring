@@ -33,7 +33,7 @@ public class TimetableServiceImpl implements TimetableService {
     @Override
     public void deleteTimetable(Integer id) {
         Optional<Timetable> timetable = timetableRepository.findById(id);
-        if(timetable.isEmpty())
+        if(!timetable.isPresent())
             throw new RuntimeException("Timetable with id: " + id + "does not exists");
         timetableRepository.delete(timetable.get());
     }

@@ -35,7 +35,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteEvent(Integer id) {
         Optional<Event> event = eventRepository.findById(id);
-        if (event.isEmpty())
+        if (!event.isPresent())
             throw new RuntimeException("Event with id: " + id + "does not exist");
         eventRepository.delete(event.get());
 
