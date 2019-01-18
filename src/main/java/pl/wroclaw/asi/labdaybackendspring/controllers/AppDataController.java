@@ -46,6 +46,7 @@ public class AppDataController {
     @RequestMapping(value = "/last-update")
     public ResponseEntity<?> getLastUpdate(){
         //LastUpdate lastUpdate = new LastUpdate(ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
+        //TODO!!
         return new ResponseEntity<>("What is last-update?", HttpStatus.OK);
     }
 }
