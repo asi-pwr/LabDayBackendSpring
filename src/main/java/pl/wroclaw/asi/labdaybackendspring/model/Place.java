@@ -34,7 +34,7 @@ public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
-    private int id;
+    private Integer id;
 
     @JsonProperty("type")
     private Type type;

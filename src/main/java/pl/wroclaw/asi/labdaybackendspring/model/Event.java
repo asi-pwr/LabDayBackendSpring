@@ -17,7 +17,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
-    private int Integer;
+    private Integer id;
 
     @JsonProperty("name")
     private String name;
@@ -38,7 +38,7 @@ public class Event {
     private String topic;
 
     @JsonProperty("speaker_id")
-    private int speakerId;
+    private Integer speakerId;
 
     @JsonProperty("dor1_img")
     private String dor1Img;
