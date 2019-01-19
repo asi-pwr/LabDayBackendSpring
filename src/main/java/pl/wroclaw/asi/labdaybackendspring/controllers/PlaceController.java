@@ -13,7 +13,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/api/place")
+@RequestMapping("/api/map_other")
 public class PlaceController {
 
 
@@ -44,7 +44,7 @@ public class PlaceController {
         return new ResponseEntity<>("Place with id: " + PlaceId + "was successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity getAllPlaces(){
         return new ResponseEntity<>(placeService.findAllPlaces(),HttpStatus.OK);
     }

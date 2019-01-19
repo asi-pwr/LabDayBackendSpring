@@ -31,7 +31,7 @@ public class AppDataController {
         this.validationErrorService = validationErrorService;
     }
 
-    @RequestMapping(value = "/app-data", method = RequestMethod.GET)
+    @RequestMapping(value = "/app_data", method = RequestMethod.GET)
     public ResponseEntity<?> getAppData(){
         AppData appData = new AppData(
                 eventService.findAllEvents(),
@@ -43,7 +43,7 @@ public class AppDataController {
         return new ResponseEntity<>(appData, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/last-update")
+    @RequestMapping(value = "/last_update")
     public ResponseEntity<?> getLastUpdate(){
         //LastUpdate lastUpdate = new LastUpdate(ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
         //TODO!!

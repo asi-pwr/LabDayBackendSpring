@@ -42,7 +42,7 @@ public class TimetableController {
         return new ResponseEntity<>("Timetable with id: " + timetableId + "was successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity getAllTimetables(){
         return new ResponseEntity<>(timetableService.findAllTimetables(),HttpStatus.OK);
     }
