@@ -7,7 +7,6 @@ import lombok.Data;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Data
 public class AppData {
 
@@ -26,5 +25,11 @@ public class AppData {
     @JsonProperty("speakers")
     private List<Speaker> speakers;
 
-
+    public AppData(List<Event> events, List<Place> mapOthers, List<Path> paths, List<Timetable> timetables, List<Speaker> speakers) {
+        this.events = events;
+        this.mapOthers = mapOthers;
+        this.paths = paths;
+        this.timetables = timetables;
+        this.speakers = speakers;
+    }
 }
