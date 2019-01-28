@@ -40,7 +40,7 @@ public class AppDataController {
                 timetableService.findAllTimetables(),
                 speakerService.findAllSpeakers()
         );
-        return new ResponseEntity<>(appData, HttpStatus.CREATED);
+        return new ResponseEntity<>(appData, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/last_update")
