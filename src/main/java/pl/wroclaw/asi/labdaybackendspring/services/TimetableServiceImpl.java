@@ -40,8 +40,4 @@ public class TimetableServiceImpl implements TimetableService {
         timetableRepository.delete(timetable.get());
     }
 
-    @Override
-    public Timestamp findLastUpdate() {
-        return timetableRepository.getLastUpdate();
-    }
 }

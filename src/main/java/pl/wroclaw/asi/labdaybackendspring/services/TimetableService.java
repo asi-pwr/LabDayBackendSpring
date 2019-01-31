@@ -10,5 +10,4 @@ public interface TimetableService {
     Timetable saveOrUpdateTimetable(Timetable timetable);
     List<Timetable> findAllTimetables();
     void deleteTimetable(Integer id);
-    Timestamp findLastUpdate();
 }
