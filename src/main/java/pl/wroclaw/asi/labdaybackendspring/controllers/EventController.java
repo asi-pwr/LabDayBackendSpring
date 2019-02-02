@@ -13,7 +13,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/events")
 public class EventController {
 
     private final EventService eventService;
@@ -25,7 +25,7 @@ public class EventController {
         this.validationErrorService = validationErrorService;
     }
 
-    @PostMapping("/event/add")
+    @PostMapping
     public ResponseEntity addEvent(@Valid @RequestBody Event event, BindingResult result){
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
@@ -37,13 +37,13 @@ public class EventController {
 
     }
 
-    @DeleteMapping("/event/delete/{eventId}")
+    @DeleteMapping("/{eventId}")
     public ResponseEntity<?> deleteEventById(@PathVariable Integer eventId){
         eventService.deleteEvent(eventId);
         return new ResponseEntity<>("Event with id: " + eventId + "was successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/events")
+    @GetMapping
     public ResponseEntity getAllEvents(){
         return new ResponseEntity<>(eventService.findAllEvents(),HttpStatus.OK);
     }

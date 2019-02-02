@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @AllArgsConstructor
 @Data
 public class LastUpdate {
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private Timestamp updatedAt;
 }

@@ -13,7 +13,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 import javax.validation.Valid;
 
 @Service
-@RequestMapping("/api/timetable")
+@RequestMapping("/api/timetables")
 public class TimetableController {
     private final TimetableService timetableService;
     private final ValidationErrorService validationErrorService;
@@ -24,7 +24,7 @@ public class TimetableController {
         this.validationErrorService = validationErrorService;
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity addTimetable(@Valid @RequestBody Timetable timetable, BindingResult result){
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
@@ -36,13 +36,13 @@ public class TimetableController {
 
     }
 
-    @DeleteMapping("/delete/{timetableId}")
+    @DeleteMapping("/{timetableId}")
     public ResponseEntity<?> deleteTimetableById(@PathVariable Integer timetableId){
         timetableService.deleteTimetable(timetableId);
         return new ResponseEntity<>("Timetable with id: " + timetableId + "was successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity getAllTimetables(){
         return new ResponseEntity<>(timetableService.findAllTimetables(),HttpStatus.OK);
     }

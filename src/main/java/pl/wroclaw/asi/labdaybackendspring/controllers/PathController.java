@@ -14,7 +14,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/paths")
 public class PathController {
 
     private final PathService pathService;
@@ -26,7 +26,7 @@ public class PathController {
         this.validationErrorService = validationErrorService;
     }
 
-    @PostMapping("/path/add")
+    @PostMapping
     public ResponseEntity addPath(@Valid @RequestBody Path path, BindingResult result){
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
@@ -38,13 +38,13 @@ public class PathController {
 
     }
 
-    @DeleteMapping("/path/delete/{pathId}")
+    @DeleteMapping("/{pathId}")
     public ResponseEntity<?> deletePathById(@PathVariable Integer PathId){
         pathService.deletePath(PathId);
         return new ResponseEntity<>("Path with id: " + PathId + "was successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/paths")
+    @GetMapping
     public ResponseEntity getAllPaths(){
         return new ResponseEntity<>(pathService.findAllPaths(),HttpStatus.OK);
     }

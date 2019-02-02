@@ -13,7 +13,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/speakers")
 public class SpeakerController {
 
     private final SpeakerService speakerService;
@@ -25,7 +25,7 @@ public class SpeakerController {
         this.validationErrorService = validationErrorService;
     }
 
-    @PostMapping("/speaker/add")
+    @PostMapping
     public ResponseEntity addSpeaker(@Valid @RequestBody Speaker speaker, BindingResult result){
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
@@ -37,13 +37,13 @@ public class SpeakerController {
 
     }
 
-    @DeleteMapping("/speaker/delete/{speakerId}")
+    @DeleteMapping("/{speakerId}")
     public ResponseEntity<?> deleteSpeakerById(@PathVariable Integer speakerId){
         speakerService.deleteSpeaker(speakerId);
         return new ResponseEntity<>("Speaker with id: " + speakerId + "was successfully deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/speakers")
+    @GetMapping
     public ResponseEntity getAllSpeakers(){
         return new ResponseEntity<>(speakerService.findAllSpeakers(),HttpStatus.OK);
     }

@@ -1,6 +1,5 @@
 package pl.wroclaw.asi.labdaybackendspring.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,16 +17,24 @@ public class AppDataController {
     private final PathService pathService;
     private final TimetableService timetableService;
     private final SpeakerService speakerService;
+    private final LastUpdateService lastUpdateService;
 
     private final ValidationErrorService validationErrorService;
 
-    @Autowired
-    public AppDataController(EventService eventService, PlaceService placeService, PathService pathService, TimetableService timetableService, SpeakerService speakerService, ValidationErrorService validationErrorService) {
+    public AppDataController(
+            EventService eventService,
+            PlaceService placeService,
+            PathService pathService,
+            TimetableService timetableService,
+            SpeakerService speakerService,
+            LastUpdateService lastUpdateService,
+            ValidationErrorService validationErrorService) {
         this.eventService = eventService;
         this.placeService = placeService;
         this.pathService = pathService;
         this.timetableService = timetableService;
         this.speakerService = speakerService;
+        this.lastUpdateService = lastUpdateService;
         this.validationErrorService = validationErrorService;
     }
 
@@ -40,13 +47,11 @@ public class AppDataController {
                 timetableService.findAllTimetables(),
                 speakerService.findAllSpeakers()
         );
-        return new ResponseEntity<>(appData, HttpStatus.CREATED);
+        return new ResponseEntity<>(appData, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/last_update")
     public ResponseEntity<?> getLastUpdate(){
-        //LastUpdate lastUpdate = new LastUpdate(ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
-        //TODO!!
-        return new ResponseEntity<>("What is last-update?", HttpStatus.OK);
+        return new ResponseEntity<>(lastUpdateService.getLastUpdate(), HttpStatus.OK);
     }
 }
