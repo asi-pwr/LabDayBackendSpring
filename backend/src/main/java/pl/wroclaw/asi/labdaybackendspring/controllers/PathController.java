@@ -12,6 +12,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.PathService;
 import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/api/paths")
@@ -27,12 +28,13 @@ public class PathController {
     }
 
     @PostMapping
-    public ResponseEntity addPath(@Valid @RequestBody Path path, BindingResult result){
+    public ResponseEntity addPath(@Valid @RequestBody Path path, Principal principal, BindingResult result){
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
 
         if(errors != null)
             return errors;
+        path.setPathOwner(principal.getName());
         pathService.saveOrUpdatePath(path);
         return new ResponseEntity<>("Path successfully created", HttpStatus.CREATED);
 

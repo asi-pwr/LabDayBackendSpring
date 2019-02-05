@@ -2,11 +2,15 @@ package pl.wroclaw.asi.labdaybackendspring.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.wroclaw.asi.labdaybackendspring.model.AppData;
+import pl.wroclaw.asi.labdaybackendspring.model.User;
 import pl.wroclaw.asi.labdaybackendspring.services.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
@@ -39,13 +43,14 @@ public class AppDataController {
     }
 
     @RequestMapping(value = "/app_data", method = RequestMethod.GET)
-    public ResponseEntity<?> getAppData(){
+    public ResponseEntity<?> getAppData(Principal principal){
+        System.out.println(principal.getName());
         AppData appData = new AppData(
-                eventService.findAllEvents(),
+                eventService.findActiveEvents(principal.getName()),
                 placeService.findAllPlaces(),
-                pathService.findAllPaths(),
-                timetableService.findAllTimetables(),
-                speakerService.findAllSpeakers()
+                pathService.findActivePaths(principal.getName()),
+                timetableService.findActiveTimetables(principal.getName()),
+                speakerService.findActiveSpeakers(principal.getName())
         );
         return new ResponseEntity<>(appData, HttpStatus.OK);
     }

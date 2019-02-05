@@ -41,4 +41,9 @@ public class PathServiceImpl implements PathService {
         pathRepository.delete(path.get());
 
     }
+
+    @Override
+    public List<Path> findActivePaths(String owner) {
+        return pathRepository.findAllByActiveTrueAndPathOwner(owner);
+    }
 }
