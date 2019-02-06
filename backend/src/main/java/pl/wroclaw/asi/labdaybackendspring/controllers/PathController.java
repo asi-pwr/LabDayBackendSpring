@@ -41,7 +41,7 @@ public class PathController {
     }
 
     @DeleteMapping("/{pathId}")
-    public ResponseEntity<?> deletePathById(@PathVariable Integer PathId){
+    public ResponseEntity<?> deletePathById(@PathVariable("pathId") Integer PathId){
         pathService.deletePath(PathId);
         return new ResponseEntity<>("Path with id: " + PathId + "was successfully deleted", HttpStatus.OK);
     }
