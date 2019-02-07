@@ -4,6 +4,7 @@ package pl.wroclaw.asi.labdaybackendspring.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 import javax.validation.Valid;
 import java.security.Principal;
 
+@Secured("ROLE_USER")
 @Controller
 @RequestMapping("/api/paths")
 public class PathController {
