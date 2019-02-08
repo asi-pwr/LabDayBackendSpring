@@ -78,13 +78,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
-                        "/api/last_update",
-                        "/api/public_access_active",
-                        "/api/public_access"
+                        "/api/last-update",
+                        "/api/public-access-active",
+                        "/api/public-access"
 
                 ).permitAll()
                 .antMatchers(HttpMethod.DELETE,"/api/**/*").hasAuthority("WRITE_PRIVILEGE")
-                .antMatchers(HttpMethod.GET,"/api/app_data").hasAuthority("READ_PRIVILEGE")
+                .antMatchers(HttpMethod.GET,"/api/app-data").hasAuthority("READ_PRIVILEGE")
                 .antMatchers(HttpMethod.POST,"/api/login", "/api/register").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
