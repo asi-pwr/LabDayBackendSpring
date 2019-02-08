@@ -21,6 +21,8 @@ import java.util.Collections;
 
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public static final String TOKEN_PREFIX = "token ";
+
 
     @Value("${jwt.header}")
     private String HEADER_STRING;
@@ -36,9 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            //TODO: login auth
-            String jwt = httpServletRequest.getHeader(HEADER_STRING);
-
+            String jwt = getJWTFromRequest(httpServletRequest);
             if(StringUtils.hasText(jwt)&& tokenProvider.validateToken(jwt)){
                 Integer userId = tokenProvider.getUserIdFromJWT(jwt);
                 UserDetails userDetails = customUserDetailsService.loadUserById(userId);
@@ -57,5 +57,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
 
+    }
+
+    private String getJWTFromRequest(HttpServletRequest request){
+        String token = request.getHeader(HEADER_STRING);
+        if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)){
+            return token.substring(6,token.length());
+        }
+        return null;
     }
 }
