@@ -17,13 +17,10 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
-    @Value("${jwt.expiration}")
-    private Integer EXPIRATION_TIME;
 
     public String generateToken(Authentication authentication){
         User user = (User) authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
-        Date expiryDate = new Date(now.getTime()+EXPIRATION_TIME);
 
         String userId = user.getId().toString();
         Map<String,Object> claims = new HashMap<>();
@@ -34,7 +31,6 @@ public class JwtTokenProvider {
                 .setSubject(userId)
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
         return token;
