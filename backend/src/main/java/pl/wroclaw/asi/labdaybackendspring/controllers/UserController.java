@@ -1,5 +1,6 @@
 package pl.wroclaw.asi.labdaybackendspring.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,7 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.wroclaw.asi.labdaybackendspring.model.Path;
+import pl.wroclaw.asi.labdaybackendspring.model.PublicAccessActive;
 import pl.wroclaw.asi.labdaybackendspring.model.Role;
+import pl.wroclaw.asi.labdaybackendspring.repositories.PathRepository;
 import pl.wroclaw.asi.labdaybackendspring.repositories.RoleRepository;
 import pl.wroclaw.asi.labdaybackendspring.security.UserTokenResponse;
 import pl.wroclaw.asi.labdaybackendspring.model.User;
@@ -20,6 +24,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.CustomUserDetailsService;
 import pl.wroclaw.asi.labdaybackendspring.services.UserService;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,6 +43,9 @@ public class UserController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PathRepository pathRepository;
 
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -94,4 +102,12 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
+
+    @GetMapping(path = "/public-access-active")
+    public ResponseEntity<?> isPublicAccessActive(){
+         if (pathRepository.countDistinctByActiveTrue() > 0){
+             return new ResponseEntity<>(new PublicAccessActive(true),HttpStatus.OK);
+         }
+        return new ResponseEntity<>(new PublicAccessActive(false),HttpStatus.OK);
+    }
 }
