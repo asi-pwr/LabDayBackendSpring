@@ -51,7 +51,7 @@ public class AppDataController {
         this.validationErrorService = validationErrorService;
     }
 
-    @GetMapping(value = "/app_data")
+    @GetMapping(value = "/app-data")
     public ResponseEntity<?> getAppData(Principal principal){
         AppData appData;
         Set<String> roles = SecurityContextHolder
@@ -83,7 +83,7 @@ public class AppDataController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @RequestMapping(value = "/last_update")
+    @RequestMapping(value = "/last-update")
     public ResponseEntity<?> getLastUpdate(){
         return new ResponseEntity<>(lastUpdateService.getLastUpdate(), HttpStatus.OK);
     }

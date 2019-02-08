@@ -77,7 +77,7 @@ public class UserController {
         return  new ResponseEntity("", HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(path = "/public_access")
+    @GetMapping(path = "/public-access")
     public ResponseEntity<?> getPublicAccess(){
         Optional<User> guest = userService.findUserByUsername("guest");
         if (guest.isPresent()){
