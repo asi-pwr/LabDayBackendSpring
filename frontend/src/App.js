@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/App.css';
 import ButtonAppBar from './components/ButtonAppBar'
-import labdayLogo from './labday.png'
+import LoginForm from './components/LoginForm'
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <ButtonAppBar />
-        <img src={labdayLogo} className="App-logo" alt="Labday logo"/>
-      </div>
+      <Router>
+        <div className="App">
+          <ButtonAppBar />
+          <LoginForm />
+        </div>
+      </Router>
     );
   }
 }
