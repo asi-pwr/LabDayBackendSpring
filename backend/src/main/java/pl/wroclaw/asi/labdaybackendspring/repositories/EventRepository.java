@@ -19,8 +19,8 @@ public interface EventRepository extends CrudRepository<Event, Integer> {
             "FROM event " +
                 "INNER JOIN timetable ON event.id = timetable.event_id " +
                 "INNER JOIN path ON path.id = timetable.path_id " +
-            "WHERE path.active = TRUE AND path.path_owner = ?1",
+            "WHERE path.active = TRUE",
             nativeQuery = true)
-    List<Event> findAllActive(String owner);
+    List<Event> findAllActive();
 }
 

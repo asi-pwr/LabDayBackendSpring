@@ -43,7 +43,7 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
-    public List<Path> findActivePaths(String owner) {
-        return pathRepository.findAllByActiveTrueAndPathOwner(owner);
+    public List<Path> findActivePaths() {
+        return pathRepository.findAllByActiveTrue();
     }
 }

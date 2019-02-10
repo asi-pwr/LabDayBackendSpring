@@ -6,7 +6,7 @@ import pl.wroclaw.asi.labdaybackendspring.model.Path;
 import java.util.List;
 
 public interface PathRepository extends CrudRepository<Path, Integer> {
-    List<Path> findAllByActiveTrueAndPathOwner(String owner);
+    List<Path> findAllByActiveTrue();
 
     List<Path> getByActiveTrue();
     Integer countDistinctByActiveTrue();

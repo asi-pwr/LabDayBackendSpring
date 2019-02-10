@@ -1,6 +1,7 @@
 package pl.wroclaw.asi.labdaybackendspring.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,7 @@ import pl.wroclaw.asi.labdaybackendspring.repositories.PrivilegeRepository;
 import pl.wroclaw.asi.labdaybackendspring.repositories.RoleRepository;
 import pl.wroclaw.asi.labdaybackendspring.services.UserService;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -31,6 +29,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private PrivilegeRepository privilegeRepository;
 
+    @Value("${jwt.adminPassword}")
+    private String adminPassword;
+
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -40,21 +41,32 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
         Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
 
-        List<Privilege> userPrivileges = Arrays.asList(readPrivilege,writePrivilege);
+        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege,writePrivilege);
 
-        createRoleIfNotFound("ROLE_USER", userPrivileges);
+        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
+        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
         createRoleIfNotFound("ROLE_GUEST", Arrays.asList(readPrivilege));
+
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Optional<User> admin = userService.findUserByUsername("admin");
+        createAccountIfNotFound(admin,"admin",adminPassword,Arrays.asList(adminRole));
 
         Role guestRole = roleRepository.findByName("ROLE_GUEST");
         Optional<User> guest = userService.findUserByUsername("guest");
-        if (guest.isEmpty() || guest.get().getRoles().isEmpty()){
-            User user = new User();
-            user.setUsername("guest");
-            user.setPassword("guest");
-            user.setRoles(Arrays.asList(guestRole));
-            userService.saveUser(user);
-        }
+        createAccountIfNotFound(guest,"guest","guest",Arrays.asList(guestRole));
+
         alreadySetup = true;
+    }
+
+    @Transactional
+    void createAccountIfNotFound(Optional<User> user, String username, String password, Collection<Role> roles) {
+        if(user.isEmpty() || user.get().getRoles().isEmpty()){
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(password);
+            newUser.setRoles(roles);
+            userService.saveUser(newUser);
+        }
     }
 
     @Transactional

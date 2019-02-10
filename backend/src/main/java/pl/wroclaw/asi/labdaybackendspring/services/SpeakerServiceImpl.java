@@ -40,7 +40,7 @@ public class SpeakerServiceImpl implements SpeakerService {
     }
 
     @Override
-    public List<Speaker> findActiveSpeakers(String pathOwner) {
-        return speakerRepository.findAllActive(pathOwner);
+    public List<Speaker> findActiveSpeakers() {
+        return speakerRepository.findAllActive();
     }
 }

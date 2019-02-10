@@ -43,8 +43,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> findActiveEvents(String owner) {
-        return eventRepository.findAllActive(owner);
+    public List<Event> findActiveEvents( ) {
+        return eventRepository.findAllActive();
     }
 
 }

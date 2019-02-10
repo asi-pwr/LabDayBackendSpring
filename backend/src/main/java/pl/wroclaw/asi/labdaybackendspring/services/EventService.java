@@ -8,5 +8,5 @@ public interface EventService {
     Event saveOrUpdateEvent(Event event);
     List<Event> findAllEvents();
     void deleteEvent(Integer id);
-    List<Event> findActiveEvents(String owner);
+    List<Event> findActiveEvents();
 }

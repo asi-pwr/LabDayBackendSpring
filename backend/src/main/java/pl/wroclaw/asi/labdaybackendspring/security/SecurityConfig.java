@@ -54,7 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -81,7 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/last-update",
                         "/api/public-access-active",
                         "/api/public-access"
-
                 ).permitAll()
                 .antMatchers(HttpMethod.DELETE,"/api/**/*").hasAuthority("WRITE_PRIVILEGE")
                 .antMatchers(HttpMethod.GET,"/api/app-data").hasAuthority("READ_PRIVILEGE")

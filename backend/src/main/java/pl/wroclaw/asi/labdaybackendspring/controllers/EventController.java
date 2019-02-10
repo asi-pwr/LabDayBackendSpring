@@ -13,7 +13,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
 
-@Secured("ROLE_USER")
+@Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/api/events")
 public class EventController {

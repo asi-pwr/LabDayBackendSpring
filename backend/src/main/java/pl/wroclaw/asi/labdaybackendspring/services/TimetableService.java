@@ -8,5 +8,5 @@ public interface TimetableService {
     Timetable saveOrUpdateTimetable(Timetable timetable);
     List<Timetable> findAllTimetables();
     void deleteTimetable(Integer id);
-    List<Timetable> findActiveTimetables(String pathOwner);
+    List<Timetable> findActiveTimetables();
 }

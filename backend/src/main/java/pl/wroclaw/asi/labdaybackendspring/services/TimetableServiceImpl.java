@@ -39,8 +39,8 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public List<Timetable> findActiveTimetables(String pathOwner) {
-        return timetableRepository.findAllActive(pathOwner);
+    public List<Timetable> findActiveTimetables() {
+        return timetableRepository.findAllActive();
     }
 
 }

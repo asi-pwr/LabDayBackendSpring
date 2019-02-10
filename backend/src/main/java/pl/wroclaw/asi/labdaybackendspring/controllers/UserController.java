@@ -64,7 +64,8 @@ public class UserController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = tokenProvider.generateToken(authentication);
-            return new ResponseEntity(new UserTokenResponse(jwt),HttpStatus.OK);
+            if (!user.getUsername().equals("guest"))
+                return new ResponseEntity(new UserTokenResponse(jwt),HttpStatus.OK);
         }
 
         return new ResponseEntity("",HttpStatus.BAD_REQUEST);

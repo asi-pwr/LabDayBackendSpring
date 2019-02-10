@@ -11,8 +11,8 @@ public interface TimetableRepository extends CrudRepository<Timetable, Integer> 
     @Query(value =
             "SELECT timetable.* " +
             "FROM timetable INNER JOIN path ON path.id = timetable.path_id " +
-            "WHERE path.active = TRUE AND path.path_owner = ?1",
+            "WHERE path.active = TRUE",
              nativeQuery = true)
-    List<Timetable> findAllActive(String pathOwner);
+    List<Timetable> findAllActive();
 
 }
