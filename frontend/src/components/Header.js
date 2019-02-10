@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, withTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -20,9 +20,16 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  link: {
+    '&:hover': {
+      color: 'white',
+      textDecoration: 'none'
+    },
+    color: 'white'
+  }
 };
 
-function ButtonAppBar(props) {
+function Header(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
@@ -32,9 +39,15 @@ function ButtonAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            LabDay - Wydział Chemiczny
+            <a href="/" className={classes.link}>
+              LabDay - Wydział Chemiczny
+            </a>
           </Typography>
-          <Button color="inherit">{/*<Link to="/test">Zgłoś błąd</Link>*/}Zgłoś błąd</Button>   {/* TEST!!! */}
+          <Button color="inherit">
+            <a href="/bug" className={classes.link}>
+              Zgłoś błąd
+            </a>
+          </Button>
         </Toolbar>
       </AppBar>
       
@@ -42,8 +55,8 @@ function ButtonAppBar(props) {
   );
 }
 
-ButtonAppBar.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default withStyles(styles)(Header);
