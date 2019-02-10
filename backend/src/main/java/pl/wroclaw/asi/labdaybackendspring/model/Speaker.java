@@ -3,11 +3,9 @@ package pl.wroclaw.asi.labdaybackendspring.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -22,6 +20,7 @@ public class Speaker {
     @JsonProperty("name")
     private String name;
 
+    @Lob
     @JsonProperty("info")
     private String info;
 

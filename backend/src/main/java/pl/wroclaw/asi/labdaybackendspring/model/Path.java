@@ -25,7 +25,4 @@ public class Path {
 
     @JsonProperty("active")
     private boolean active;
-
-    @JsonIgnore
-    private String pathOwner;
 }
