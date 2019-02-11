@@ -38,4 +38,9 @@ public class SpeakerServiceImpl implements SpeakerService {
             throw new RuntimeException("Speaker with id:" + id + "does not exist");
         speakerRepository.delete(speaker.get());
     }
+
+    @Override
+    public List<Speaker> findActiveSpeakers() {
+        return speakerRepository.findAllActive();
+    }
 }

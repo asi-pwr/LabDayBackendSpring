@@ -41,4 +41,10 @@ public class EventServiceImpl implements EventService {
 
 
     }
+
+    @Override
+    public List<Event> findActiveEvents( ) {
+        return eventRepository.findAllActive();
+    }
+
 }

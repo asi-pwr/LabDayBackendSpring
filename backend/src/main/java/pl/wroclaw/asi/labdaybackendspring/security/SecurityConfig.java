@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -53,13 +54,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST,
+                        "/api/events",
+                        "/api/paths",
+                        "/api/map_others",
+                        "/api/speakers",
+                        "/api/timetables"
+                ).hasAuthority("WRITE_PRIVILEGE")
                 .antMatchers(
                         "/",
                         "/favicon.ico",
@@ -70,12 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
-                        "/api/login",
-                        "/api/register",
-                        "/api/last_update",
-                        "/api/public_access_active",
-                        "/api/public_access"
+                        "/api/last-update",
+                        "/api/public-access-active",
+                        "/api/public-access"
                 ).permitAll()
+                .antMatchers(HttpMethod.DELETE,"/api/**/*").hasAuthority("WRITE_PRIVILEGE")
+                .antMatchers(HttpMethod.GET,"/api/app-data").hasAuthority("READ_PRIVILEGE")
+                .antMatchers(HttpMethod.POST,"/api/login", "/api/register").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
