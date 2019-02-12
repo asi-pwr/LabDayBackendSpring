@@ -3,13 +3,41 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/LoginForm.css'
 import labdayLogo from '../labday.png'
 import { FaUser, FaKey } from 'react-icons/fa'
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import axios from 'axios';
+import { Redirect } from 'react-router'
 
 class LoginForm extends React.Component{
+
+
+    handleSubmit(event){
+        const apiBaseUrl = "http://193.33.111.235:5436/api";
+        const params = new URLSearchParams();
+        params.append('username',this.state.username);
+        params.append('password',this.state.password);
+        const configUrlEncoded = {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }
+        axios.post(apiBaseUrl + '/login', params,configUrlEncoded)
+            .then( response => {
+                console.log(response.status)
+                if (response.status === 200) {
+                    this.setState({token: response.data})
+                }
+            })
+            .catch(error =>{
+                console.log(error)
+                console.log('error with request to:' + apiBaseUrl + '/login')
+            });
+    }
+
     constructor(props){
         super(props);
-        this.state={
+        this.state = {
             username: "",
-            password: ""    // <--- should this be done this way?
+            password: "",    // <--- should this be done this way?
+            token: ""
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,11 +51,11 @@ class LoginForm extends React.Component{
         });
     }
 
-    handleSubmit(event){
-
-    }
-
     render(){
+        const { token } = this.state;
+        if (token !== ""){
+            return <Redirect to='/dashboard' />
+        }
         return(
             <div>
             <img src={labdayLogo} className="center" alt="Labday logo"/>
@@ -70,11 +98,13 @@ class LoginForm extends React.Component{
                             </div>
                         </div>
                         <div className="form-group">
-                            <button type="submit" 
-                            className="btn btn-primary btn-block"
-                            onSubmit={this.handleSubmit}> 
+                            <MuiThemeProvider>
+                            <RaisedButton
+                            // className="btn btn-primary btn-block"
+                            onClick={this.handleSubmit}>
                                 Zaloguj  
-                            </button>
+                            </RaisedButton>
+                            </MuiThemeProvider>
                         </div>
                     </form>
                 </article>
