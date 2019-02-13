@@ -5,39 +5,31 @@ import labdayLogo from '../labday.png'
 import { FaUser, FaKey } from 'react-icons/fa'
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import axios from 'axios';
 import { Redirect } from 'react-router'
+import { connect } from 'react-redux';
+import {userActions} from "../actions/UserActions";
 
 class LoginForm extends React.Component{
 
 
     handleSubmit(event){
-        const apiBaseUrl = "http://193.33.111.235:5436/api";
-        const params = new URLSearchParams();
-        params.append('username',this.state.username);
-        params.append('password',this.state.password);
-        const configUrlEncoded = {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        event.preventDefault();
+        const { username, password } = this.state;
+        const { dispatch } = this.props;
+        if (username && password) {
+            dispatch(userActions.login(username,password));
         }
-        axios.post(apiBaseUrl + '/login', params,configUrlEncoded)
-            .then( response => {
-                console.log(response.status)
-                if (response.status === 200) {
-                    this.setState({token: response.data})
-                }
-            })
-            .catch(error =>{
-                console.log(error)
-                console.log('error with request to:' + apiBaseUrl + '/login')
-            });
+        this.setState({ submitted: true });
     }
 
     constructor(props){
         super(props);
+        const { dispatch } = this.props;
+        dispatch(userActions.logout());
         this.state = {
             username: "",
             password: "",    // <--- should this be done this way?
-            token: ""
+            submitted: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -52,8 +44,8 @@ class LoginForm extends React.Component{
     }
 
     render(){
-        const { token } = this.state;
-        if (token !== ""){
+        const { submitted } = this.state;
+        if (submitted){
             return <Redirect to='/dashboard' />
         }
         return(
@@ -61,7 +53,7 @@ class LoginForm extends React.Component{
             <img src={labdayLogo} className="center" alt="Labday logo"/>
                 
             <div className="card divStyle">
-            
+
                 <article className="card-body">
                     <h4 className="card-title text-center mb-4 mt-1">Logowanie</h4>
                     <hr />
@@ -98,13 +90,11 @@ class LoginForm extends React.Component{
                             </div>
                         </div>
                         <div className="form-group">
-                            <MuiThemeProvider>
-                            <RaisedButton
-                            // className="btn btn-primary btn-block"
-                            onClick={this.handleSubmit}>
-                                Zaloguj  
-                            </RaisedButton>
-                            </MuiThemeProvider>
+                            <button type="submit"
+                                    className="btn btn-primary btn-block"
+                                    onClick={this.handleSubmit}>
+                                Zaloguj
+                            </button>
                         </div>
                     </form>
                 </article>
@@ -114,4 +104,11 @@ class LoginForm extends React.Component{
     }
 }
 
-export default LoginForm;
+function mapStateToProps(state) {
+    const { loggingIn, user } = state.authentication;
+    return { loggingIn, user };
+}
+
+
+const LoginPage = connect(mapStateToProps)(LoginForm);
+export { LoginPage as LoginForm } ;
