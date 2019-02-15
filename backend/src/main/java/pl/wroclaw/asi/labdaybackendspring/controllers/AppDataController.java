@@ -28,7 +28,6 @@ public class AppDataController {
     private final SpeakerService speakerService;
     private final LastUpdateService lastUpdateService;
 
-    private final ValidationErrorService validationErrorService;
 
     public AppDataController(
             EventService eventService,
@@ -36,15 +35,13 @@ public class AppDataController {
             PathService pathService,
             TimetableService timetableService,
             SpeakerService speakerService,
-            LastUpdateService lastUpdateService,
-            ValidationErrorService validationErrorService) {
+            LastUpdateService lastUpdateService) {
         this.eventService = eventService;
         this.placeService = placeService;
         this.pathService = pathService;
         this.timetableService = timetableService;
         this.speakerService = speakerService;
         this.lastUpdateService = lastUpdateService;
-        this.validationErrorService = validationErrorService;
     }
 
     @Transactional
