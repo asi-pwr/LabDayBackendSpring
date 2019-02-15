@@ -11,15 +11,16 @@ export const userActions = {
 
 function login(username, password) {
     return dispatch => {
-        const user = {
-            username: username,
-            token: ""
-        }
-        dispatch(request(user));
 
-        user.token = userService.login(username, password)
+        dispatch(request(username));
+
+        userService.login(username, password)
             .then(
-                user => {
+                token => {
+                    const user = {
+                        username: username,
+                        token: token
+                    }
                     dispatch(success(user));
                     history.push('/');
                 },
@@ -28,6 +29,7 @@ function login(username, password) {
                     dispatch(alertActions.error(error));
                 }
             );
+
     };
 }
     function request(user){
