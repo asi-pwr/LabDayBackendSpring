@@ -31,6 +31,7 @@ const styles = {
 
 function Header(props) {
   const { classes } = props;
+  const auth = Boolean(props.user);
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -43,6 +44,13 @@ function Header(props) {
               LabDay - Wydział Chemiczny
             </a>
           </Typography>
+            { auth && (
+                <Button disabled={true} className={classes.menuButton}>
+                  <Typography variant="h6" color="inherit" className={classes.link}>
+                      {props.user.username}
+                  </Typography>
+                </Button>
+            )}
           <Button color="inherit">
             <a href="/bug" className={classes.link}>
               Zgłoś błąd
