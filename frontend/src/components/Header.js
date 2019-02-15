@@ -13,9 +13,6 @@ const styles = {
   root: {
     flexGrow: 1,
   },
-  grow: {
-    flexGrow: 1,
-  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -26,6 +23,9 @@ const styles = {
       textDecoration: 'none'
     },
     color: 'white'
+  },
+  toRight: {
+    marginLeft: 'auto'
   }
 };
 
@@ -39,11 +39,12 @@ function Header(props) {
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h6" color="inherit">
             <a href="/" className={classes.link}>
               LabDay - Wydział Chemiczny
             </a>
           </Typography>
+          <div className={classes.toRight}>
             { auth && (
                 <Button disabled={true} className={classes.menuButton}>
                   <Typography variant="h6" color="inherit" className={classes.link}>
@@ -63,6 +64,7 @@ function Header(props) {
                     </a>
                 </Button>
             )}
+          </div>
         </Toolbar>
       </AppBar>
 
