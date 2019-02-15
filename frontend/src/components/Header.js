@@ -56,11 +56,13 @@ function Header(props) {
               Zgłoś błąd
             </a>
           </Button>
-            <Button color="inherit">
-                <a href="/logout" className={classes.link}>
-                    Logout
-                </a>
-            </Button>
+            { auth && (
+                <Button color="inherit">
+                    <a href="/logout" className={classes.link}>
+                        Logout
+                    </a>
+                </Button>
+            )}
         </Toolbar>
       </AppBar>
 
