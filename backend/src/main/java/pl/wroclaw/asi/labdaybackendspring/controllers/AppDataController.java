@@ -26,7 +26,6 @@ public class AppDataController {
     private final PathService pathService;
     private final TimetableService timetableService;
     private final SpeakerService speakerService;
-    private final LastUpdateService lastUpdateService;
 
 
     public AppDataController(
@@ -34,14 +33,12 @@ public class AppDataController {
             PlaceService placeService,
             PathService pathService,
             TimetableService timetableService,
-            SpeakerService speakerService,
-            LastUpdateService lastUpdateService) {
+            SpeakerService speakerService) {
         this.eventService = eventService;
         this.placeService = placeService;
         this.pathService = pathService;
         this.timetableService = timetableService;
         this.speakerService = speakerService;
-        this.lastUpdateService = lastUpdateService;
     }
 
     @Transactional
@@ -75,14 +72,5 @@ public class AppDataController {
             return new ResponseEntity<>(appData, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
-
-    @RequestMapping(value = "/last-update")
-    public ResponseEntity<?> getLastUpdate(){
-        LastUpdate lastUpdate = lastUpdateService.getLastUpdate();
-        if (lastUpdate.getUpdatedAt() == null){
-            lastUpdate.setUpdatedAt(new Timestamp(0));
-        }
-        return new ResponseEntity<>(lastUpdate, HttpStatus.OK);
     }
 }
