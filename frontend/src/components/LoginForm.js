@@ -29,7 +29,7 @@ class LoginForm extends React.Component{
         this.state = {
             username: "",
             password: "",    // <--- should this be done this way?
-            submitted: false
+            submitted: false,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -45,8 +45,10 @@ class LoginForm extends React.Component{
 
     render(){
         const { submitted } = this.state;
+        const { loggedIn } = this.props;
         if (submitted){
-            return <Redirect to='/dashboard' />
+            if (loggedIn)
+                return <Redirect to='/dashboard' />
         }
         return(
             <div>
@@ -57,7 +59,10 @@ class LoginForm extends React.Component{
                 <article className="card-body">
                     <h4 className="card-title text-center mb-4 mt-1">Logowanie</h4>
                     <hr />
-                    <p className="text-success text-center">Aby kontynuować, zaloguj się</p>
+                    {(submitted && !loggedIn) ?
+                        <p className="text-danger text-center">Coś poszło nie tak</p>
+                        : <p className="text-success text-center">Aby kontynuować, zaloguj się</p>
+                    }
                     <form>
                         <div className="form-group">
                             <div className="input-group">
@@ -105,8 +110,8 @@ class LoginForm extends React.Component{
 }
 
 function mapStateToProps(state) {
-    const { loggingIn, user } = state.authentication;
-    return { loggingIn, user };
+    const { loggingIn, user, loggedIn } = state.authentication;
+    return { loggingIn, user, loggedIn };
 }
 
 
