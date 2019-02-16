@@ -31,7 +31,8 @@ const styles = {
 
 function Header(props) {
   const { classes } = props;
-  const auth = Boolean(props.user);
+  const isLoggedIn = Boolean(props.user);
+  const buttons = isLoggedIn ? LoggedInButtons(props) : ReportBugButton(props);
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -45,40 +46,51 @@ function Header(props) {
             </a>
           </Typography>
           <div className={classes.toRight}>
-            { auth && (
-                <Button disabled={true} className={classes.menuButton}>
-                  <Typography variant="h6" color="inherit" className={classes.link}>
-                      {props.user.username}
-                  </Typography>
-                </Button>
-            )}
-          <Button color="inherit">
-            <a href="/bug" className={classes.link}>
-              Zgłoś błąd
-            </a>
-          </Button>
-            { auth && (
-                <Button color="inherit">
-                    <a href="/logout" className={classes.link}>
-                        Logout
-                    </a>
-                </Button>
-            )}
+              {buttons}
           </div>
         </Toolbar>
       </AppBar>
-
     </div>
   );
 }
+function ReportBugButton(props) {
+  const { classes } = props;
+  return (
+        <Button color="inherit">
+            <a href="/bug" className={classes.link}>
+                Zgłoś błąd
+            </a>
+        </Button>
+    )
+}
+
+function LoggedInButtons(props){
+    const { classes } = props;
+    return (
+      <div>
+          <Button disabled={true} className={classes.menuButton}>
+              <Typography variant="h6" color="inherit" className={classes.link}>
+                  {props.user.username}
+              </Typography>
+          </Button>
+          {ReportBugButton(props)}
+          <Button color="inherit">
+              <a href="/logout" className={classes.link}>
+                  Logout
+              </a>
+          </Button>
+      </div>
+  )
+}
+
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+
 function mapStateToProps(state) {
     const { user } = state.authentication;
     return { user };
 }
-
 export default connect(mapStateToProps)(withStyles(styles)(Header));
