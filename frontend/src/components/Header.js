@@ -31,7 +31,7 @@ const styles = {
 
 function Header(props) {
   const { classes } = props;
-  const isLoggedIn = Boolean(props.user);
+  const isLoggedIn = props.user ? Boolean(props.user.token) : false;
   const buttons = isLoggedIn ? LoggedInButtons(props) : ReportBugButton(props);
   return (
     <div className={classes.root}>
