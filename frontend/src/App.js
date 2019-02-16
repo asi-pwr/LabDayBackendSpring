@@ -10,7 +10,7 @@ import {PrivateRoute} from "./services/PrivateRoute";
 import {alertActions} from "./actions/alertActions";
 import { history } from "./helpers/history";
 import {Logout} from "./components/Logout";
-import AddPlaceComponent from "./components/addPlaceComponent";
+import AddPlaceComponent from "./components/AddPlaceComponent";
 
 class App extends Component {
 
