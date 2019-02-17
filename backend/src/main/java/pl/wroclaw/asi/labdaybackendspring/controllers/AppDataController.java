@@ -27,7 +27,6 @@ public class AppDataController {
     private final TimetableService timetableService;
     private final SpeakerService speakerService;
 
-
     public AppDataController(
             EventService eventService,
             PlaceService placeService,
