@@ -51,7 +51,7 @@ Path
 The Path resource represents  a particular set of events with similar topics occurring one after another.
 
 ========   ===============
-Property	Description
+Property   Description
 ========   ===============
 id	       The unique identifier by which to identify the path
 name       The name of the path
@@ -60,14 +60,14 @@ active     Boolean defines whether the path is active
 ========   ===============
 
 List Resource
-~~~~~~~~~~~~~~~
++++++++++++++
 
 .. code-block:: text
 
     /admin/api/paths
 
 GET
-+++++
++++
 
 Returns a list of all paths.
 
@@ -142,30 +142,27 @@ Place
 
 The Place resource represents an interesting place related to labday.
 
-========   ===============
-Property	Description
-========   ===============
-id	       The unique identifier
-type       Integer represents one of the types of places
-name       Name of the place
-img        url with picture of the place
-info       The additional information
-latitude   latutude of place
-longitude  longitude of place
-========   ===============
+=========   ===============
+Property    Description
+=========   ===============
+id          The unique identifier
+type        Integer represents one of the types of places
+name        Name of the place
+img         url with picture of the place
+info        The additional information
+latitude    latutude of place
+longitude   longitude of place
+=========   ===============
 
 Types of places:
 
 - 0 - NOT SET
-
 - 1 - INFO
-
 - 2 - FOOD
-
 - 3 - REST
 
 List Resource
-~~~~~~~~~~~~~~~
++++++++++++++
 
 .. code-block:: text
 
@@ -267,7 +264,7 @@ info       The additional information
 ========   ===============
 
 List Resource
-~~~~~~~~~~~~~~~
++++++++++++++
 
 .. code-block:: text
 
