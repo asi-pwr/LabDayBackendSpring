@@ -3,13 +3,33 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/LoginForm.css'
 import labdayLogo from '../labday.png'
 import { FaUser, FaKey } from 'react-icons/fa'
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Redirect } from 'react-router'
+import { connect } from 'react-redux';
+import {userActions} from "../actions/UserActions";
 
 class LoginForm extends React.Component{
+
+
+    handleSubmit(event){
+        event.preventDefault();
+        const { username, password } = this.state;
+        const { dispatch } = this.props;
+        if (username && password) {
+            dispatch(userActions.login(username,password));
+        }
+        this.setState({ submitted: true });
+    }
+
     constructor(props){
         super(props);
-        this.state={
+        const { dispatch } = this.props;
+        dispatch(userActions.logout());
+        this.state = {
             username: "",
-            password: ""    // <--- should this be done this way?
+            password: "",    // <--- should this be done this way?
+            submitted: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,17 +43,17 @@ class LoginForm extends React.Component{
         });
     }
 
-    handleSubmit(event){
-
-    }
-
     render(){
+        const { submitted } = this.state;
+        if (submitted){
+            return <Redirect to='/dashboard' />
+        }
         return(
             <div>
             <img src={labdayLogo} className="center" alt="Labday logo"/>
                 
             <div className="card divStyle">
-            
+
                 <article className="card-body">
                     <h4 className="card-title text-center mb-4 mt-1">Logowanie</h4>
                     <hr />
@@ -70,10 +90,10 @@ class LoginForm extends React.Component{
                             </div>
                         </div>
                         <div className="form-group">
-                            <button type="submit" 
-                            className="btn btn-primary btn-block"
-                            onSubmit={this.handleSubmit}> 
-                                Zaloguj  
+                            <button type="submit"
+                                    className="btn btn-primary btn-block"
+                                    onClick={this.handleSubmit}>
+                                Zaloguj
                             </button>
                         </div>
                     </form>
@@ -84,4 +104,11 @@ class LoginForm extends React.Component{
     }
 }
 
-export default LoginForm;
+function mapStateToProps(state) {
+    const { loggingIn, user } = state.authentication;
+    return { loggingIn, user };
+}
+
+
+const LoginPage = connect(mapStateToProps)(LoginForm);
+export { LoginPage as LoginForm } ;
