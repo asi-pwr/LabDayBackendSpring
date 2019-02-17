@@ -17,7 +17,7 @@ import java.security.Principal;
 
 @Secured("ROLE_ADMIN")
 @Controller
-@RequestMapping("/api/paths")
+@RequestMapping("/admin/api/paths")
 public class PathController {
 
     private final PathService pathService;

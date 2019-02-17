@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Secured("ROLE_ADMIN")
 @Controller
-@RequestMapping("/api/events")
+@RequestMapping("/admin/api/events")
 public class EventController {
 
     private final EventService eventService;

@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Secured("ROLE_ADMIN")
 @Service
-@RequestMapping("/api/timetables")
+@RequestMapping("/admin/api/timetables")
 public class TimetableController {
     private final TimetableService timetableService;
     private final ValidationErrorService validationErrorService;

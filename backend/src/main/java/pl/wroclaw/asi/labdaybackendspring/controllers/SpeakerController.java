@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Secured("ROLE_ADMIN")
 @Controller
-@RequestMapping("/api/speakers")
+@RequestMapping("/admin/api/speakers")
 public class SpeakerController {
 
     private final SpeakerService speakerService;

@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Secured("ROLE_ADMIN")
 @Controller
-@RequestMapping("/api/map_others")
+@RequestMapping("/admin/api/map_others")
 public class PlaceController {
 
 
