@@ -132,7 +132,7 @@ Deletes a path
 
 .. code-block:: bash
 
-    curl -X DELETE http://193.33.111.235:5436/admin/api/paths/3 \
+    curl -X DELETE /admin/api/paths/{path_id} \
     -H 'Authorization: token eyJh.eyJW4ifQ.mJnN6A' 
 
 
