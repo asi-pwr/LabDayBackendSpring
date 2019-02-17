@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
+import MenuListComposition from "./MenuListComposition";
 
 const styles = {
   root: {
@@ -31,14 +32,14 @@ const styles = {
 
 function Header(props) {
   const { classes } = props;
-  const isLoggedIn = Boolean(props.user);
+  const isLoggedIn = props.user ? Boolean(props.user.token) : false;
   const buttons = isLoggedIn ? LoggedInButtons(props) : ReportBugButton(props);
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
+              <MenuListComposition/>
           </IconButton>
           <Typography variant="h6" color="inherit">
             <a href="/" className={classes.link}>
