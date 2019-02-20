@@ -7,12 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import {connect} from "react-redux";
+import MenuListComposition from "./MenuListComposition";
+
 
 const styles = {
   root: {
-    flexGrow: 1,
-  },
-  grow: {
     flexGrow: 1,
   },
   menuButton: {
@@ -25,42 +25,75 @@ const styles = {
       textDecoration: 'none'
     },
     color: 'white'
+  },
+  toRight: {
+    marginLeft: 'auto'
   }
 };
 
 function Header(props) {
   const { classes } = props;
+  const isLoggedIn = props.user ? Boolean(props.user.token) : false;
+  const buttons = isLoggedIn ? LoggedInButtons(props) : ReportBugButton(props);
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
+              <MenuListComposition/>
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h6" color="inherit">
             <a href="/" className={classes.link}>
               LabDay - Wydział Chemiczny
             </a>
           </Typography>
-          <Button color="inherit">
-            <a href="/bug" className={classes.link}>
-              Zgłoś błąd
-            </a>
-          </Button>
-            <Button color="inherit">
-                <a href="/logout" className={classes.link}>
-                    Logout
-                </a>
-            </Button>
+          <div className={classes.toRight}>
+              {buttons}
+          </div>
         </Toolbar>
       </AppBar>
-
     </div>
   );
 }
+function ReportBugButton(props) {
+  const { classes } = props;
+  return (
+        <Button color="inherit">
+            <a href="/bug" className={classes.link}>
+                Zgłoś błąd
+            </a>
+        </Button>
+    )
+}
+
+function LoggedInButtons(props){
+    const { classes } = props;
+    return (
+      <div>
+          <Button disabled={true} className={classes.menuButton}>
+              <Typography variant="h6" color="inherit" className={classes.link}>
+                  {props.user.username}
+              </Typography>
+          </Button>
+          {ReportBugButton(props)}
+          <Button color="inherit">
+              <a href="/logout" className={classes.link}>
+                  Logout
+              </a>
+          </Button>
+      </div>
+  )
+}
+
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+
+function mapStateToProps(state) {
+    const { user } = state.authentication;
+    return { user };
+}
+export default connect(mapStateToProps)(withStyles(styles)(Header));
+

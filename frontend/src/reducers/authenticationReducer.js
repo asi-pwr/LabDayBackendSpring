@@ -1,6 +1,10 @@
 import {userConstants} from "../constants/userConstants";
 
-let user = localStorage.getItem('token');
+
+const user = {
+    token: localStorage.getItem('token'),
+    username: localStorage.getItem('username')
+}
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function authentication(state = initialState, action) {

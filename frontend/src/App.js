@@ -21,9 +21,6 @@ class App extends Component {
     })
   }
 
-  onLogout(e){
-
-  }
   render() {
     return (
       <Router history = { history }>
