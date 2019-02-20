@@ -6,7 +6,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index
 import {connect} from "react-redux";
 
 function MenuListComposition(props) {
-    if (!props.auth) {
+    if (!props.auth.loggedIn) {
         return (
             <MenuIcon/>
         )
