@@ -1,5 +1,6 @@
 import {userConstants} from "../constants/userConstants";
 
+
 const user = {
     token: localStorage.getItem('token'),
     username: localStorage.getItem('username')

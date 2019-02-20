@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Timetable;
 import pl.wroclaw.asi.labdaybackendspring.repositories.TimetableRepository;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +36,11 @@ public class TimetableServiceImpl implements TimetableService {
         if(!timetable.isPresent())
             throw new RuntimeException("Timetable with id: " + id + "does not exists");
         timetableRepository.delete(timetable.get());
+    }
+
+    @Override
+    public List<Timetable> findActiveTimetables() {
+        return timetableRepository.findAllActive();
     }
 
 }

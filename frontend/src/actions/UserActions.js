@@ -21,6 +21,7 @@ function login(username, password) {
                         username: username,
                         token: token
                     }
+
                     dispatch(success(user));
                     history.push('/');
                 },
@@ -29,7 +30,6 @@ function login(username, password) {
                     dispatch(alertActions.error(error));
                 }
             );
-
     };
 }
     function request(user){

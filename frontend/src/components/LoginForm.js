@@ -29,7 +29,7 @@ class LoginForm extends React.Component{
         this.state = {
             username: "",
             password: "",    // <--- should this be done this way?
-            submitted: false,
+            submitted: false
         }
 
         this.handleChange = this.handleChange.bind(this);
