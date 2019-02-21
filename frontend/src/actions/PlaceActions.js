@@ -1,5 +1,4 @@
-import axios from "axios";
-import {authHeader} from "../helpers/auth-header";
+import axiosInstance from "../helpers/axiosInstance";
 
 
 export const placeActions = {
@@ -12,19 +11,7 @@ function getPlaces() {
 }
 
 function postPlace(place) {
-    const apiBaseUrl = "http://193.33.111.235:5436/admin/api";
-    const config = {
-        ...(authHeader()),
-        'content-type': 'application/json'
-    }
-    return dispatch => {
-        axios.post(apiBaseUrl + '/places', place, config)
-            .then(res=>{
-            })
-            .then(post =>
-            dispatch({
-                type: 'PLACE_POST',
-                payload: post
-            }))
-    }
+    axiosInstance.post('/places', JSON.stringify(place))
+        .then(res =>{console.log(res)})
+    //TODO: dispatch with response data
 }

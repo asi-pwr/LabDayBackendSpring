@@ -40,7 +40,6 @@ class AddPlaceComponent extends React.Component {
             place.type = 0
         }
         placeActions.postPlace(place)
-        console.log(place)
     }
 
     render() {
