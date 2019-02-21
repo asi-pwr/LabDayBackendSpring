@@ -9,6 +9,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from 'prop-types';
 import Input from "@material-ui/core/Input/Input";
 import RaisedButton from 'material-ui/RaisedButton';
+import {placeActions} from "../actions/PlaceActions";
 
 class AddPlaceComponent extends React.Component {
     state = {
@@ -38,6 +39,7 @@ class AddPlaceComponent extends React.Component {
         if (place.type === ''){
             place.type = 0
         }
+        placeActions.postPlace(place)
         console.log(place)
     }
 
