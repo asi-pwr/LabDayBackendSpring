@@ -19,8 +19,6 @@ public class PathServiceImpl implements PathService {
         this.pathRepository = pathRepository;
     }
 
-
-
     @Override
     public Path saveOrUpdatePath(Path path) {
         return pathRepository.save(path);
@@ -34,10 +32,10 @@ public class PathServiceImpl implements PathService {
     @Override
     public void deletePath(Integer id) {
         Optional<Path> path = pathRepository.findById(id);
-        if(!path.isPresent())
-            throw new RuntimeException("path with id: " + id + "does not exist");
-        pathRepository.delete(path.get());
 
+        path.ifPresentOrElse(pathRepository::delete, () -> {
+            throw new RuntimeException("path with id: " + id + "does not exist");
+        });
     }
 
     @Override
