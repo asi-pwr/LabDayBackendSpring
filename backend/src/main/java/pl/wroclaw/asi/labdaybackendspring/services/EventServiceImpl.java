@@ -27,9 +27,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> findAllEvents() {
-        List<Event> eventList = new ArrayList<>();
-        eventRepository.findAll().iterator().forEachRemaining(eventList::add);
-        return eventList;
+        return (List<Event>) eventRepository.findAll();
     }
 
     @Override
