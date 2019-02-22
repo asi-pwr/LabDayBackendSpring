@@ -35,15 +35,14 @@ public class SpeakerController {
 
         if(errors != null)
             return errors;
-        Speaker tmp = speakerService.saveOrUpdateSpeaker(speaker);
-        return new ResponseEntity<>("Speaker successfully created", HttpStatus.CREATED);
+        return new ResponseEntity<>(speakerService.saveOrUpdateSpeaker(speaker), HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/{speakerId}")
     public ResponseEntity<?> deleteSpeakerById(@PathVariable Integer speakerId){
         speakerService.deleteSpeaker(speakerId);
-        return new ResponseEntity<>("Speaker with id: " + speakerId + "was successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @GetMapping
