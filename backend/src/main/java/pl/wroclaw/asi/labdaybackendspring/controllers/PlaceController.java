@@ -35,15 +35,15 @@ public class PlaceController {
 
         if(errors != null)
             return errors;
-        placeService.saveOrUpdatePlace(place);
-        return new ResponseEntity<>("Place successfully created", HttpStatus.CREATED);
+
+        return new ResponseEntity<>(placeService.saveOrUpdatePlace(place), HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/{placeId}")
     public ResponseEntity<?> deletePlaceById(@PathVariable("placeId") Integer placeId){
         placeService.deletePlace(placeId);
-        return new ResponseEntity<>("Place with id: " + placeId + "was successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping

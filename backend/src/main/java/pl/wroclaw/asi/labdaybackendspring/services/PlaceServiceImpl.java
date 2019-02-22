@@ -24,9 +24,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<Place> findAllPlaces() {
-        List<Place> placesList = new ArrayList<>();
-        placeRepository.findAll().iterator().forEachRemaining(placesList::add);
-        return placesList;
+        return (List<Place>) placeRepository.findAll();
     }
 
     @Override
