@@ -11,6 +11,7 @@ import {alertActions} from "./actions/alertActions";
 import { history } from "./helpers/history";
 import {Logout} from "./components/Logout";
 import AddPlaceComponent from "./components/AddPlaceComponent";
+import ShowPlacesComponent from "./components/ShowPlacesComponent";
 
 class App extends Component {
 
@@ -22,21 +23,24 @@ class App extends Component {
     })
   }
 
+
   render() {
     return (
       <Router history = { history }>
         <div className="App">
-          <Header />
+          <Header/>
             <PrivateRoute exact path="/" component={Dashboard} />
             <Route exact path="/login" component={LoginForm} />
             <Route exact path="/bug" component={BugForm} />
             <Route exact path="/logout" component={Logout}/>
             <PrivateRoute exact path="/addPlace" component={AddPlaceComponent}/>
+          <PrivateRoute exact path = "/showPlace" component={ShowPlacesComponent}/>
         </div>
       </Router>
     );
   }
 }
+
 
 function mapStateToProps(state) {
     const { alert } = state;
