@@ -34,9 +34,10 @@ public class SpeakerServiceImpl implements SpeakerService {
     @Override
     public void deleteSpeaker(Integer id) {
         Optional<Speaker> speaker = speakerRepository.findById(id);
-        if(!speaker.isPresent())
+
+        speaker.ifPresentOrElse(speakerRepository::delete, () -> {
             throw new RuntimeException("Speaker with id:" + id + "does not exist");
-        speakerRepository.delete(speaker.get());
+        });
     }
 
     @Override
