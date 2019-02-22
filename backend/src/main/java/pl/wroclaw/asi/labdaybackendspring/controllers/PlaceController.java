@@ -3,6 +3,7 @@ package pl.wroclaw.asi.labdaybackendspring.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
 
+@Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/api/map_others")
 public class PlaceController {
@@ -39,9 +41,9 @@ public class PlaceController {
     }
 
     @DeleteMapping("/{placeId}")
-    public ResponseEntity<?> deletePlaceById(@PathVariable Integer PlaceId){
-        placeService.deletePlace(PlaceId);
-        return new ResponseEntity<>("Place with id: " + PlaceId + "was successfully deleted", HttpStatus.OK);
+    public ResponseEntity<?> deletePlaceById(@PathVariable("placeId") Integer placeId){
+        placeService.deletePlace(placeId);
+        return new ResponseEntity<>("Place with id: " + placeId + "was successfully deleted", HttpStatus.OK);
     }
 
     @GetMapping

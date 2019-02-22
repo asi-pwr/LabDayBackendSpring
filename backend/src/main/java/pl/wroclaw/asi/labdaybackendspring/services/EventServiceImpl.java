@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -35,10 +34,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteEvent(Integer id) {
         Optional<Event> event = eventRepository.findById(id);
-        if (!event.isPresent())
+
+        event.ifPresentOrElse(eventRepository::delete, () -> {
             throw new RuntimeException("Event with id: " + id + "does not exist");
-        eventRepository.delete(event.get());
-
-
+        });
     }
+
+    @Override
+    public List<Event> findActiveEvents( ) {
+        return eventRepository.findAllActive();
+    }
+
 }

@@ -1,5 +1,6 @@
 import {userConstants} from "../constants/userConstants";
 
+
 const user = {
     token: localStorage.getItem('token'),
     username: localStorage.getItem('username')
@@ -19,9 +20,13 @@ export function authentication(state = initialState, action) {
                 user: action.user
             };
         case userConstants.LOGIN_FAILURE:
-            return {};
+            return {
+                loggedIn: false
+            };
         case userConstants.LOGOUT:
-            return {};
+            return {
+                loggedIn: false
+            };
         default:
             return state
     }

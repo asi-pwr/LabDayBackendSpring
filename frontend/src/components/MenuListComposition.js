@@ -3,10 +3,14 @@ import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from "@material-ui/core/Menu/Menu";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index';
-import {Redirect} from "react-router";
-import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 
-function MenuListComposition() {
+function MenuListComposition(props) {
+    if (!props.auth.loggedIn) {
+        return (
+            <MenuIcon/>
+        )
+    }
     return (
         <div>
             <PopupState variant="popover" popupId="demo-popup-menu">
@@ -14,11 +18,7 @@ function MenuListComposition() {
                     <React.Fragment>
                         <MenuIcon variant="contained" {...bindTrigger(popupState)}/>
                         <Menu {...bindMenu(popupState)}>
-                            <MenuItem onClick={popupState.close}>
-                                <NavLink to="/addPlace">
-                                    dodaj nowe miejsce
-                                </NavLink>
-                            </MenuItem>
+                            <MenuItem onClick={popupState.close}>ExampleItem</MenuItem>
                         </Menu>
                     </React.Fragment>
                 )}
@@ -26,4 +26,8 @@ function MenuListComposition() {
          </div>
     )
 }
-export default MenuListComposition
+
+const mapStateToProps = state => ({
+    auth: state.authentication
+})
+export default connect(mapStateToProps)(MenuListComposition)

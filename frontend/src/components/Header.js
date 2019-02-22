@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
 import MenuListComposition from "./MenuListComposition";
 
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -95,3 +96,4 @@ function mapStateToProps(state) {
     return { user };
 }
 export default connect(mapStateToProps)(withStyles(styles)(Header));
+
