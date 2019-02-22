@@ -666,7 +666,7 @@ GET
 
 .. code-block:: bash
 
-    curl /api/last-update \
+    curl /api/app-data \
     --header  'Authorization: token eyiJ9.eyJnVzZXjWRtaW4ifQ.cEvSYhg4zZdlqxaQ'
 
 - Success response:
