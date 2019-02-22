@@ -34,15 +34,14 @@ public class EventController {
 
         if(errors != null)
             return errors;
-        eventService.saveOrUpdateEvent(event);
-        return new ResponseEntity<>("Event successfully created", HttpStatus.CREATED);
+        return new ResponseEntity<>(eventService.saveOrUpdateEvent(event), HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/{eventId}")
     public ResponseEntity<?> deleteEventById(@PathVariable Integer eventId){
         eventService.deleteEvent(eventId);
-        return new ResponseEntity<>("Event with id: " + eventId + "was successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @GetMapping

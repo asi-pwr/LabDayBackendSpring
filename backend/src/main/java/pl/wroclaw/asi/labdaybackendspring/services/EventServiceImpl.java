@@ -38,8 +38,6 @@ public class EventServiceImpl implements EventService {
         if (!event.isPresent())
             throw new RuntimeException("Event with id: " + id + "does not exist");
         eventRepository.delete(event.get());
-
-
     }
 
     @Override
