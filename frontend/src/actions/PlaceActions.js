@@ -1,4 +1,5 @@
 import axiosInstance from "../helpers/axiosInstance";
+import {restConstants} from "../constants/restConstants";
 
 
 export const placeActions = {
@@ -11,7 +12,15 @@ function getPlaces() {
 }
 
 function postPlace(place) {
-    axiosInstance.post('/places', JSON.stringify(place))
-        .then(res =>{console.log(res)})
-    //TODO: dispatch with response data
+    return dispatch => {
+
+        axiosInstance.post('/places', JSON.stringify(place))
+            .then(post =>{
+                dispatch({
+                    type: restConstants.POST_PLACE_REQUEST,
+                    data: post.data
+                })
+            })
+    }
 }
+

@@ -10,6 +10,9 @@ import PropTypes from 'prop-types';
 import Input from "@material-ui/core/Input/Input";
 import RaisedButton from 'material-ui/RaisedButton';
 import {placeActions} from "../actions/PlaceActions";
+import {connect} from "react-redux";
+import {Redirect} from "react-router";
+
 
 class AddPlaceComponent extends React.Component {
     state = {
@@ -18,7 +21,8 @@ class AddPlaceComponent extends React.Component {
         info: '',
         img: '',
         latitude: '',
-        longitude: ''
+        longitude: '',
+        postSuccess: false
     }
 
     handleChange = input => e => {
@@ -28,6 +32,7 @@ class AddPlaceComponent extends React.Component {
     };
 
     handleSubmit = e => {
+        const {dispatch } = this.props
         const place = {
             type: this.state.type,
             name: this.state.name,
@@ -39,11 +44,25 @@ class AddPlaceComponent extends React.Component {
         if (place.type === ''){
             place.type = 0
         }
-        placeActions.postPlace(place)
+        dispatch(placeActions.postPlace(place))
+    }
+
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const { newPlace } = this.props.placeReducer
+        if (newPlace !== prevProps.placeReducer.newPlace){
+           this.setState({
+               postSuccess: true
+           })
+       }
     }
 
     render() {
         const { classes } = this.props
+        const { postSuccess} = this.state
+        if (postSuccess){
+            return ( <Redirect to ='/'/>)
+        }
 
         return (
             <div>
@@ -85,12 +104,14 @@ class AddPlaceComponent extends React.Component {
                         />
                         <br/>
                         <TextField
+                            type="number"
                             hintText="Wpisz latitude"
                             floatingLabelText="latitude"
                             onChange={this.handleChange('latitude')}
                         />
                         <br/>
                         <TextField
+                            type="number"
                             hintText="Wpisz longitude"
                             floatingLabelText="longitude"
                             onChange={this.handleChange('longitude')}
@@ -119,5 +140,9 @@ const styles = {
 AddPlaceComponent.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+function mapStateToProps(state) {
+    const { placeReducer } = state;
+    return { placeReducer }
+}
 
-export default withStyles(styles)(AddPlaceComponent);
+export default connect(mapStateToProps)(withStyles(styles)(AddPlaceComponent))
