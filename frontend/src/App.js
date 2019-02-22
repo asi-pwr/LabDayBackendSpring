@@ -31,7 +31,7 @@ class App extends Component {
             <Route exact path="/login" component={LoginForm} />
             <Route exact path="/bug" component={BugForm} />
             <Route exact path="/logout" component={Logout}/>
-            <Route exact path="/addPlace" component={AddPlaceComponent}/>
+            <PrivateRoute exact path="/addPlace" component={AddPlaceComponent}/>
         </div>
       </Router>
     );
