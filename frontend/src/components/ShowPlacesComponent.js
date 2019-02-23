@@ -10,6 +10,9 @@ import CardActions from "@material-ui/core/CardActions/CardActions";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
 import ButtonBase from "@material-ui/core/es/ButtonBase/ButtonBase";
+import Fab from "@material-ui/core/Fab/Fab";
+import AddIcon from '@material-ui/icons/Add';
+import {Link as RouterLink} from "react-router-dom";
 
 class ShowPlacesComponent extends React.Component {
     componentDidMount() {
@@ -30,6 +33,9 @@ class ShowPlacesComponent extends React.Component {
         const { placeReducer, classes, dispatch } = this.props
         return (
             <div className={classes.root}>
+                <Fab color="primary" aria-label="Add" className={classes.addButton} component={RouterLink} to={'/addPlace'}>
+                    <AddIcon/>
+                </Fab>
                 { placeReducer.places.map(place => (
                     <Grid key={place.id}>
                         <ShowPlace place = {place} classes={classes} dispatch={dispatch} />
@@ -55,6 +61,7 @@ function ShowPlace(props) {
     const type = getType(place.type)
 
     return(
+
         <Card className={classes.card}>
             <Typography color="textSecondary" gutterBottom>
                 id: {place.id}
@@ -89,6 +96,9 @@ function ShowPlace(props) {
 }
 
 const styles = {
+    addButton: {
+        marginTop: 50
+    },
     root: {
         display: 'inline-block'
     },
