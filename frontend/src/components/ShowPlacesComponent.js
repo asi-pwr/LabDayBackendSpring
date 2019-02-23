@@ -12,23 +12,27 @@ import Grid from "@material-ui/core/Grid/Grid";
 import ButtonBase from "@material-ui/core/es/ButtonBase/ButtonBase";
 
 class ShowPlacesComponent extends React.Component {
-
-
     componentDidMount() {
         const { dispatch } = this.props
         dispatch(placeActions.getPlaces())
+    }
+
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const { placeReducer, dispatch } = this.props
+        if (placeReducer.deletedItemId !== prevProps.placeReducer.deletedItemId) {
+            dispatch(placeActions.getPlaces())
+        }
 
     }
 
     render() {
-
-        const { placeReducer, classes } = this.props
-        console.log(placeReducer);
+        const { placeReducer, classes, dispatch } = this.props
         return (
             <div className={classes.root}>
                 { placeReducer.places.map(place => (
                     <Grid key={place.id}>
-                        <ShowPlace place = {place} classes={classes} />
+                        <ShowPlace place = {place} classes={classes} dispatch={dispatch} />
                     </Grid>
                 ))}
             </div>
@@ -47,7 +51,7 @@ function getType(type) {
 }
 
 function ShowPlace(props) {
-    const { classes, place} = props
+    const { classes, place, dispatch} = props
     const type = getType(place.type)
 
     return(
@@ -56,7 +60,7 @@ function ShowPlace(props) {
                 id: {place.id}
             </Typography>
             <ButtonBase>
-                <img alt="complex" src={place.img}/>
+                <img alt="" src={place.img}/>
             </ButtonBase>
             <CardContent>
                 <Typography variant="h5" component="h2">
@@ -75,7 +79,9 @@ function ShowPlace(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Usuń</Button>
+                <Button size="small" onClick={()=>{
+                    dispatch(placeActions.deletePlace(place.id))
+                }} >Usuń</Button>
             </CardActions>
         </Card>
     )
