@@ -1,0 +1,4 @@
+export const restConstants = {
+    POST_PLACE_REQUEST: 'POST_PLACE_REQUEST',
+    GET_PLACE_REQUEST: 'GET_PLACE_REQUEST'
+}

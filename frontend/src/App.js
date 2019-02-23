@@ -10,6 +10,7 @@ import {PrivateRoute} from "./services/PrivateRoute";
 import {alertActions} from "./actions/alertActions";
 import { history } from "./helpers/history";
 import {Logout} from "./components/Logout";
+import AddPlaceComponent from "./components/AddPlaceComponent";
 
 class App extends Component {
 
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact path="/login" component={LoginForm} />
             <Route exact path="/bug" component={BugForm} />
             <Route exact path="/logout" component={Logout}/>
+            <PrivateRoute exact path="/addPlace" component={AddPlaceComponent}/>
         </div>
       </Router>
     );
