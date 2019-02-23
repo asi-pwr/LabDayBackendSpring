@@ -63,9 +63,6 @@ function ShowPlace(props) {
     return(
 
         <Card className={classes.card}>
-            {/*<Typography color="textSecondary" gutterBottom>*/}
-                {/*id: {place.id}*/}
-            {/*</Typography>*/}
             <ButtonBase>
                 <img alt="" src={place.img}/>
             </ButtonBase>
