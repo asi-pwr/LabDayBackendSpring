@@ -33,7 +33,7 @@ class ShowPlacesComponent extends React.Component {
         const { placeReducer, classes, dispatch } = this.props
         return (
             <div className={classes.root}>
-                <Fab color="primary" aria-label="Add" className={classes.addButton} component={RouterLink} to={'/addPlace'}>
+                <Fab  aria-label="Add" className={classes.addButton} component={RouterLink} to={'/addPlace'}>
                     <AddIcon/>
                 </Fab>
                 { placeReducer.places.map(place => (
