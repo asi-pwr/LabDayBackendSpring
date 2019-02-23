@@ -63,9 +63,9 @@ function ShowPlace(props) {
     return(
 
         <Card className={classes.card}>
-            <Typography color="textSecondary" gutterBottom>
-                id: {place.id}
-            </Typography>
+            {/*<Typography color="textSecondary" gutterBottom>*/}
+                {/*id: {place.id}*/}
+            {/*</Typography>*/}
             <ButtonBase>
                 <img alt="" src={place.img}/>
             </ButtonBase>
@@ -85,10 +85,13 @@ function ShowPlace(props) {
                     longi: {place.longitude}
                 </Typography>
             </CardContent>
-            <CardActions>
-                <Button size="small" onClick={()=>{
+            <CardActions className={classes.cardAction}>
+                <Button className={classes.deleteButton} size="small"  onClick={()=>{
                     dispatch(placeActions.deletePlace(place.id))
-                }} >Usuń</Button>
+                }}>Usuń</Button>
+                <Button disabled={true} className={classes.buttonId}>
+                id: {place.id}
+                </Button>
             </CardActions>
         </Card>
     )
@@ -103,7 +106,19 @@ const styles = {
         display: 'inline-block'
     },
     card: {
+        paddingBottom: 15,
         margin: 50,
+    },
+    cardAction: {
+        display: 'block'
+    },
+    buttonId:{
+        paddingRight: '10px',
+        float: 'right'
+    },
+    deleteButton: {
+        padding: '10px',
+        float: 'left'
     }
 };
 ShowPlacesComponent.propTypes = {
