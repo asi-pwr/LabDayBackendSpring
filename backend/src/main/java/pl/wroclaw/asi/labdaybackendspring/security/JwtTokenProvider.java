@@ -36,8 +36,13 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY);
-        if (authentication.getAuthorities().contains("ROLE_ADMIN"))
+        Boolean isAdmin = ((User) authentication.getPrincipal())
+                .getRoles()
+                .stream()
+                .anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
+        if (isAdmin)
             return tokenBuilder.setExpiration(expiryDate).compact();
+
         return tokenBuilder.compact();
 
 
