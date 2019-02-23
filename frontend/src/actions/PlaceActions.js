@@ -3,13 +3,10 @@ import {restConstants} from "../constants/restConstants";
 
 
 export const placeActions = {
-    getPlaces,//:TODO
+    getPlaces,
     postPlace
 }
 
-function getPlaces() {
-
-}
 
 function postPlace(place) {
     return dispatch => {
@@ -24,3 +21,14 @@ function postPlace(place) {
     }
 }
 
+function getPlaces() {
+    return dispatch => {
+        axiosInstance.get('/places')
+            .then(response =>{
+                dispatch({
+                    type: restConstants.GET_PLACE_REQUEST,
+                    data: response.data
+                })
+            })
+    }
+}

@@ -14,7 +14,6 @@ import AddPlaceComponent from "./components/AddPlaceComponent";
 import ShowPlacesComponent from "./components/ShowPlacesComponent";
 
 class App extends Component {
-
   constructor(props){
     super(props);
     const { dispatch } = this.props;
@@ -34,7 +33,7 @@ class App extends Component {
             <Route exact path="/bug" component={BugForm} />
             <Route exact path="/logout" component={Logout}/>
             <PrivateRoute exact path="/addPlace" component={AddPlaceComponent}/>
-          <PrivateRoute exact path = "/showPlace" component={ShowPlacesComponent}/>
+          <PrivateRoute exact path = "/showPlaces" component={ShowPlacesComponent}/>
         </div>
       </Router>
     );
