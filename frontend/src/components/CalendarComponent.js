@@ -6,13 +6,15 @@ import {
     DayView, MonthView,
     Scheduler,
     ViewSwitcher,
-    WeekView
+    WeekView,
+    AppointmentForm
 } from '@devexpress/dx-react-scheduler-material-ui';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue} from "@material-ui/core/colors";
 import { Toolbar } from '@devexpress/dx-react-scheduler-material-ui';
 import {ViewState} from "@devexpress/dx-react-scheduler";
+import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 
 const theme = createMuiTheme(
     {
@@ -61,6 +63,12 @@ class CalendarComponent extends React.Component {
                         <DateNavigator/>
                         <ViewSwitcher/>
                         <Appointments />
+                        <AppointmentTooltip
+                            showOpenButton
+                            showCloseButton
+                            showDeleteButton
+                        />
+                        <AppointmentForm/>
                     </Scheduler>
                 </Paper>
                 </MuiThemeProvider>
