@@ -1,9 +1,11 @@
 import React from "react";
 import Paper from "@material-ui/core/es/Paper/Paper";
-import {Appointments, DayView, Scheduler, WeekView} from '@devexpress/dx-react-scheduler-material-ui';
+import {Appointments, DateNavigator, DayView, Scheduler, WeekView} from '@devexpress/dx-react-scheduler-material-ui';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue} from "@material-ui/core/colors";
+import { Toolbar } from '@devexpress/dx-react-scheduler-material-ui';
+import {ViewState} from "@devexpress/dx-react-scheduler";
 
 const theme = createMuiTheme(
     {
@@ -26,10 +28,14 @@ class CalendarComponent extends React.Component {
             ]
         }
 
+        this.currentDateChange = (currentDate) => { this.setState({ currentDate })}
+
     }
 
+
+
     render() {
-        const { data } = this.state
+        const { data, currentDate } = this.state
         return(
             <div>
                 CalendarComponent
@@ -37,7 +43,13 @@ class CalendarComponent extends React.Component {
                 <MuiThemeProvider theme={theme}>
                 <Paper>
                     <Scheduler data={data}>
+                        <ViewState
+                            currentDate={currentDate}
+                            onCurrentDateChange={this.currentDateChange}
+                        />
                         <DayView/>
+                        <Toolbar/>
+                        <DateNavigator/>
                         <Appointments />
                     </Scheduler>
                 </Paper>
