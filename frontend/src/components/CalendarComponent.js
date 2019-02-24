@@ -1,6 +1,13 @@
 import React from "react";
 import Paper from "@material-ui/core/es/Paper/Paper";
-import {Appointments, DateNavigator, DayView, Scheduler, WeekView} from '@devexpress/dx-react-scheduler-material-ui';
+import {
+    Appointments,
+    DateNavigator,
+    DayView, MonthView,
+    Scheduler,
+    ViewSwitcher,
+    WeekView
+} from '@devexpress/dx-react-scheduler-material-ui';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue} from "@material-ui/core/colors";
@@ -48,8 +55,11 @@ class CalendarComponent extends React.Component {
                             onCurrentDateChange={this.currentDateChange}
                         />
                         <DayView/>
+                        <MonthView/>
+                        <WeekView/>
                         <Toolbar/>
                         <DateNavigator/>
+                        <ViewSwitcher/>
                         <Appointments />
                     </Scheduler>
                 </Paper>
