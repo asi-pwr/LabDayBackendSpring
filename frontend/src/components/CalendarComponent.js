@@ -13,7 +13,7 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {blue} from "@material-ui/core/colors";
 import { Toolbar } from '@devexpress/dx-react-scheduler-material-ui';
-import {ViewState} from "@devexpress/dx-react-scheduler";
+import {EditingState, ViewState} from "@devexpress/dx-react-scheduler";
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import {connectProps} from "@devexpress/dx-react-core";
 import AppointmentFormContainer from "./AppointmentFormComponent";
@@ -30,6 +30,8 @@ class CalendarComponent extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            addedAppointment: undefined,
+            editingAppointmentId: undefined,
             data:[
                 {
                     startDate: '2019-02-24 15:30',
@@ -42,17 +44,36 @@ class CalendarComponent extends React.Component {
         this.currentDateChange = (currentDate) => { this.setState({ currentDate })}
 
         this.toggleEditingFormVisibility = this.toggleEditingFormVisibility.bind(this)
+        this.commitChanges = this.commitChanges.bind(this)
+        this.onEditingAppointmentIdChange = this.onEditingAppointmentIdChange.bind(this)
+        this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this)
+
+        const { data, editingAppointmentId, addedAppointment } = this.state
+        const clickedAppointment = data
+            .filter(appointment => appointment.id === editingAppointmentId)[0] || addedAppointment
 
         this.appointmentForm = connectProps(AppointmentFormContainer, () => {
             const {editingFormVisible} = this.state
             return {
+                appointmentData: clickedAppointment,
                 visible: editingFormVisible,
                 visibleChange: this.toggleEditingFormVisibility,
             }
         })
 
     }
+    onEditingAppointmentIdChange(editingAppointmentId){
+        this.setState({editingAppointmentId})
+    }
 
+    onAddedAppointmentChange(addedAppointment){
+        this.setState({ addedAppointment})
+        this.onEditingAppointmentIdChange(undefined)
+    }
+
+    commitChanges(){
+        //TODO!!
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.appointmentForm.update()
@@ -76,6 +97,10 @@ class CalendarComponent extends React.Component {
                             currentDate={currentDate}
                             onCurrentDateChange={this.currentDateChange}
                         />
+                        <EditingState
+                            onCommitChanges={this.commitChanges}
+                            onEditingAppointmentIdChange={this.onEditingAppointmentIdChange}
+                            onAddedAppointmentChange={this.onAddedAppointmentChange}/>
                         <DayView/>
                         <MonthView/>
                         <WeekView/>
