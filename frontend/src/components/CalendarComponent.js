@@ -15,6 +15,8 @@ import {blue} from "@material-ui/core/colors";
 import { Toolbar } from '@devexpress/dx-react-scheduler-material-ui';
 import {ViewState} from "@devexpress/dx-react-scheduler";
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
+import {connectProps} from "@devexpress/dx-react-core";
+import AppointmentFormContainer from "./AppointmentFormComponent";
 
 const theme = createMuiTheme(
     {
@@ -39,12 +41,30 @@ class CalendarComponent extends React.Component {
 
         this.currentDateChange = (currentDate) => { this.setState({ currentDate })}
 
+        this.toggleEditingFormVisibility = this.toggleEditingFormVisibility.bind(this)
+
+        this.appointmentForm = connectProps(AppointmentFormContainer, () => {
+            const {editingFormVisible} = this.state
+            return {
+                visible: editingFormVisible,
+                visibleChange: this.toggleEditingFormVisibility,
+            }
+        })
+
     }
 
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.appointmentForm.update()
+    }
+
+    toggleEditingFormVisibility(){
+        const { editingFormVisible } = this.state
+        this.setState({ editingFormVisible: !editingFormVisible })
+    }
 
     render() {
-        const { data, currentDate } = this.state
+        const { data, currentDate, editingFormVisible } = this.state
         return(
             <div>
                 CalendarComponent
@@ -68,7 +88,10 @@ class CalendarComponent extends React.Component {
                             showCloseButton
                             showDeleteButton
                         />
-                        <AppointmentForm/>
+                        <AppointmentForm
+                        popupComponent={this.appointmentForm}
+                        visible={editingFormVisible}
+                        onVisibilityChange={ this.toggleEditingFormVisibility}/>
                     </Scheduler>
                 </Paper>
                 </MuiThemeProvider>
