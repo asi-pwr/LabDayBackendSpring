@@ -25,6 +25,9 @@ class AppointmentFormComponent extends React.Component {
             return appointmentChanges
         }
 
+        this.changeAppointment = this.changeAppointment.bind(this)
+        this.commitAppointment = this.commitAppointment.bind(this)
+
     }
 
     changeAppointment({ field, changes }) {
@@ -35,7 +38,18 @@ class AppointmentFormComponent extends React.Component {
         this.setState({
             appointmentChanges: nextChanges,
         });
-        console.log(this.state.appointmentChanges)
+    }
+
+    commitAppointment(type) {
+        const { commitChanges } = this.props
+        const appointment = {
+            ...this.getAppointmentData(),
+            ...this.getAppointmentChanges()
+        }
+        commitChanges({
+            [type]: type === 'deleted' ? appointment.id : appointment
+        })
+        this.setState({ appointmentChanges: {}})
     }
 
 
@@ -47,6 +61,10 @@ class AppointmentFormComponent extends React.Component {
             ...appointmentData,
             ...appointmentChanges,
         };
+        const applyChanges = isNewAppointment
+            ? () => this.commitAppointment('added')
+            : () => this.commitAppointment('changed')
+
         const textEditorProps = field => ({
             variant: 'outlined',
             onChange: ({ target }) => this.changeAppointment({ field: [field], changes: target.value }),
@@ -58,10 +76,10 @@ class AppointmentFormComponent extends React.Component {
             className: classes.picker,
             keyboard: true,
             value: displayAppointmentData[field],
-            onChange: date => this.changeAppointment({ field: [field], changes: date }),
+            onChange: date => this.changeAppointment({ field: [field], changes: date.format('YYYY-MM-DD hh:mm')}),
             variant: 'outlined',
-            format: 'DD/MM/YYYY HH:mm',
-            mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ':', /\d/, /\d/],
+            format: 'YYYY-MM-DD hh:mm',
+            mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, ' ', /\d/, /\d/, ':', /\d/, /\d/],
         });
 
         return (
@@ -78,13 +96,13 @@ class AppointmentFormComponent extends React.Component {
                     <div className={classes.content}>
                         <div className={classes.wrapper}>
                             <TextField label="Nazwa"
-                                {...textEditorProps('name')}
+                                {...textEditorProps('title')}
                             />
                         </div>
                         <div className={classes.wrapper}>
                             <MuiPickersUtilsProvider utils={MomentUtils}>
-                                <InlineDateTimePicker label="Rozpoczęcie" {...pickerEditorProps('startTime')} />
-                                <InlineDateTimePicker label="Zakończenie" {...pickerEditorProps('endTime')}/>
+                                <InlineDateTimePicker label="Rozpoczęcie" {...pickerEditorProps('startDate')} />
+                                <InlineDateTimePicker label="Zakończenie" {...pickerEditorProps('endDate')}/>
                             </MuiPickersUtilsProvider>
                         </div>
                         <div className={classes.wrapper}>
@@ -122,7 +140,10 @@ class AppointmentFormComponent extends React.Component {
                             variant="outlined"
                             color="primary"
                             className={classes.button}
-                            onClick={visibleChange}
+                            onClick={() => {
+                                visibleChange()
+                                applyChanges()
+                            }}
                         >
                             {isNewAppointment ? 'Dodaj' : 'Zapisz' }
 

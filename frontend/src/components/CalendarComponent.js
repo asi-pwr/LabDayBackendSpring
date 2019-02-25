@@ -34,15 +34,21 @@ class CalendarComponent extends React.Component {
             editingAppointmentId: undefined,
             data:[
                 {
+                    startDate: '',
+                    endDate: '',
+                    title: '',
+                },
+                {
                     startDate: '2019-02-24 15:30',
                     endDate: '2019-02-24 16:00',
-                    title: 'Rejestracja'
+                    title: 'Rejestracja',
+                    id: 1
                 }
             ]
         }
 
         this.currentDateChange = (currentDate) => { this.setState({ currentDate })}
-
+        this.toggleConfirmationVisible = this.toggleConfirmationVisible.bind(this)
         this.toggleEditingFormVisibility = this.toggleEditingFormVisibility.bind(this)
         this.commitChanges = this.commitChanges.bind(this)
         this.onEditingAppointmentIdChange = this.onEditingAppointmentIdChange.bind(this)
@@ -58,6 +64,8 @@ class CalendarComponent extends React.Component {
                 appointmentData: clickedAppointment,
                 visible: editingFormVisible,
                 visibleChange: this.toggleEditingFormVisibility,
+                commitChanges: this.commitChanges,
+                onEditingAppointmentIdChange: this.onEditingAppointmentIdChange
             }
         })
 
@@ -71,9 +79,38 @@ class CalendarComponent extends React.Component {
         this.onEditingAppointmentIdChange(undefined)
     }
 
-    commitChanges(){
-        //TODO!!
+    setDeletedAppointmentId(id) {
+        this.setState({ deletedAppointmentId: id });
     }
+
+    toggleConfirmationVisible() {
+        const { confirmationVisible } = this.state;
+        this.setState({ confirmationVisible: !confirmationVisible });
+    }
+
+    commitChanges({ added, changed, deleted }) {
+        let { data } = this.state;
+        if (added) {
+            const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
+            data = [
+                ...data,
+                {
+                    id: startingAddedId,
+                    ...added,
+                },
+            ];
+        }
+        if (changed) {
+            data = data.map(appointment => (
+                changed.id === appointment.id ? { ...appointment, ...changed } : appointment));
+        }
+        if (deleted !== undefined) {
+            this.setDeletedAppointmentId(deleted);
+            this.toggleConfirmationVisible();
+        }
+        this.setState({ data, addedAppointment: {} });
+    }
+
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.appointmentForm.update()
