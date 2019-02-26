@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
-import CalendarComponent from "./CalendarComponent";
+import CalendarComponent from "../calendar/CalendarComponent";
 
 class Dashboard extends Component {
   constructor(props){
