@@ -30,14 +30,10 @@ class CalendarComponent extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            addedAppointment: undefined,
+            addedAppointment: {},
             editingAppointmentId: undefined,
+            deletedAppointmentId: undefined,
             data:[
-                {
-                    startDate: '',
-                    endDate: '',
-                    title: '',
-                },
                 {
                     startDate: '2019-02-24 15:30',
                     endDate: '2019-02-24 16:00',
@@ -54,12 +50,11 @@ class CalendarComponent extends React.Component {
         this.onEditingAppointmentIdChange = this.onEditingAppointmentIdChange.bind(this)
         this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this)
 
-        const { data, editingAppointmentId, addedAppointment } = this.state
-        const clickedAppointment = data
-            .filter(appointment => appointment.id === editingAppointmentId)[0] || addedAppointment
-
         this.appointmentForm = connectProps(AppointmentFormContainer, () => {
             const {editingFormVisible} = this.state
+            const { data, editingAppointmentId, addedAppointment } = this.state
+            const clickedAppointment = data
+                .filter(appointment => appointment.id === editingAppointmentId)[0] || addedAppointment
             return {
                 appointmentData: clickedAppointment,
                 visible: editingFormVisible,
