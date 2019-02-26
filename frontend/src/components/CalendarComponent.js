@@ -17,6 +17,12 @@ import {EditingState, ViewState} from "@devexpress/dx-react-scheduler";
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import {connectProps} from "@devexpress/dx-react-core";
 import AppointmentFormContainer from "./AppointmentFormComponent";
+import Dialog from "@material-ui/core/es/Dialog/Dialog";
+import DialogTitle from "@material-ui/core/es/DialogTitle/DialogTitle";
+import DialogContent from "@material-ui/core/es/DialogContent/DialogContent";
+import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
+import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
+import Button from "@material-ui/core/es/Button/Button";
 
 const theme = createMuiTheme(
     {
@@ -33,6 +39,7 @@ class CalendarComponent extends React.Component {
             addedAppointment: {},
             editingAppointmentId: undefined,
             deletedAppointmentId: undefined,
+            confirmationVisible: false,
             data:[
                 {
                     startDate: '2019-02-24 15:30',
@@ -67,14 +74,11 @@ class CalendarComponent extends React.Component {
 
     }
 
-    commitDeletedAppointment(deletedId){
-        const { data } = this.state
-
-        console.log('commitDeletedAppointment')
-        console.log(deletedId)
-        const nextData = data.filter(appointment => appointment.id !== deletedId)
-        console.log(nextData)
+    commitDeletedAppointment(){
+        const { data, deletedAppointmentId } = this.state
+        const nextData = data.filter(appointment => appointment.id !== deletedAppointmentId)
         this.setState({data: nextData, deletedAppointmentId: null})
+        this.toggleConfirmationVisible()
     }
 
     onEditingAppointmentIdChange(editingAppointmentId){
@@ -111,11 +115,10 @@ class CalendarComponent extends React.Component {
             data = data.map(appointment => (
                 changed.id === appointment.id ? { ...appointment, ...changed } : appointment));
         }
-        //  this.toggleConfirmationVisible();
         this.setState({ data, addedAppointment: {} });
         if (deleted !== undefined) {
             this.setDeletedAppointmentId(deleted);
-            this.commitDeletedAppointment(deleted)
+            this.toggleConfirmationVisible()
         }
     }
 
@@ -130,7 +133,7 @@ class CalendarComponent extends React.Component {
     }
 
     render() {
-        const { data, currentDate, editingFormVisible } = this.state
+        const { data, currentDate, editingFormVisible, confirmationVisible } = this.state
         return(
             <div>
                 CalendarComponent
@@ -163,6 +166,27 @@ class CalendarComponent extends React.Component {
                         visible={editingFormVisible}
                         onVisibilityChange={ this.toggleEditingFormVisibility}/>
                     </Scheduler>
+
+                    <Dialog
+                        open={confirmationVisible}
+                    >
+                        <DialogTitle>
+                            Usuwanie wydarzenia
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Czy na pewno chcesz usunąć to wydarzenie?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.toggleConfirmationVisible} color="primary" variant="outlined">
+                                Anuluj
+                            </Button>
+                            <Button onClick={this.commitDeletedAppointment} color="secondary" variant="outlined">
+                                Usuń
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Paper>
                 </MuiThemeProvider>
 
