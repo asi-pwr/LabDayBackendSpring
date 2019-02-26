@@ -23,6 +23,7 @@ import DialogContent from "@material-ui/core/es/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
 import Button from "@material-ui/core/es/Button/Button";
+import ToolbarCalendarComponent from "./ToolbarCalendarComponent";
 
 const theme = createMuiTheme(
     {
@@ -71,6 +72,9 @@ class CalendarComponent extends React.Component {
                 onEditingAppointmentIdChange: this.onEditingAppointmentIdChange
             }
         })
+        this.toolbar = connectProps(ToolbarCalendarComponent, ()=> {
+
+        } )
 
     }
 
@@ -132,6 +136,8 @@ class CalendarComponent extends React.Component {
         this.setState({ editingFormVisible: !editingFormVisible })
     }
 
+
+
     render() {
         const { data, currentDate, editingFormVisible, confirmationVisible } = this.state
         return(
@@ -152,7 +158,7 @@ class CalendarComponent extends React.Component {
                         <DayView/>
                         <MonthView/>
                         <WeekView/>
-                        <Toolbar/>
+                        <Toolbar flexibleSpaceComponent={this.toolbar}/>
                         <DateNavigator/>
                         <ViewSwitcher/>
                         <Appointments />
