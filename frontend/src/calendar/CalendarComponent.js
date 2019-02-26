@@ -41,16 +41,45 @@ class CalendarComponent extends React.Component {
             editingAppointmentId: undefined,
             deletedAppointmentId: undefined,
             confirmationVisible: false,
+            currentPath: 0,
+            paths: [
+                {
+                    id: 0,
+                    name: 'sciezka 1'
+                },
+                {
+                    id: 1,
+                    name: 'sciezka 2'
+                }
+            ],
             data:[
                 {
                     startDate: '2019-02-24 15:30',
                     endDate: '2019-02-24 16:00',
                     title: 'Rejestracja',
-                    id: 1
+                    id: 1,
+                    path_id: 1
+                },
+                {
+                    startDate: '2019-02-24 15:30',
+                    endDate: '2019-02-24 16:00',
+                    title: 'AAAA',
+                    id: 2,
+                    path_id: 1
+                },
+                {
+                    startDate: '2019-02-24 15:30',
+                    endDate: '2019-02-24 16:00',
+                    title: 'BBBBBB',
+                    id: 3,
+                    path_id: 0
                 }
             ]
         }
 
+        this.pathChange = (value) => {
+            this.setState({ currentPath: value})
+        }
         this.currentDateChange = (currentDate) => { this.setState({ currentDate })}
         this.toggleConfirmationVisible = this.toggleConfirmationVisible.bind(this)
         this.toggleEditingFormVisibility = this.toggleEditingFormVisibility.bind(this)
@@ -73,6 +102,12 @@ class CalendarComponent extends React.Component {
             }
         })
         this.toolbar = connectProps(ToolbarCalendarComponent, ()=> {
+            const { currentPath, paths } = this.state
+            return {
+                path: currentPath,
+                pathChange: this.pathChange,
+                paths: paths
+            }
 
         } )
 
@@ -140,14 +175,14 @@ class CalendarComponent extends React.Component {
 
 
     render() {
-        const { data, currentDate, editingFormVisible, confirmationVisible } = this.state
+        const { data, currentDate, editingFormVisible, confirmationVisible, currentPath } = this.state
         return(
             <div>
                 CalendarComponent
                 <br/>
                 <MuiThemeProvider theme={theme}>
                 <Paper>
-                    <Scheduler data={data}>
+                    <Scheduler data={filterData(data, currentPath)}>
                         <ViewState
                             currentDate={currentDate}
                             onCurrentDateChange={this.currentDateChange}
@@ -202,5 +237,7 @@ class CalendarComponent extends React.Component {
     }
 
 }
+
+const filterData = (data, pathId) => data.filter(event => ( event.path_id === pathId));
 
 export default CalendarComponent
