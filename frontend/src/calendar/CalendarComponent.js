@@ -129,6 +129,7 @@ class CalendarComponent extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.appointmentForm.update()
+        this.toolbar.update()
     }
 
     toggleEditingFormVisibility(){
