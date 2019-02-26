@@ -49,6 +49,7 @@ class CalendarComponent extends React.Component {
         this.commitChanges = this.commitChanges.bind(this)
         this.onEditingAppointmentIdChange = this.onEditingAppointmentIdChange.bind(this)
         this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this)
+        this.commitDeletedAppointment = this.commitDeletedAppointment.bind(this)
 
         this.appointmentForm = connectProps(AppointmentFormContainer, () => {
             const {editingFormVisible} = this.state
@@ -65,6 +66,17 @@ class CalendarComponent extends React.Component {
         })
 
     }
+
+    commitDeletedAppointment(deletedId){
+        const { data } = this.state
+
+        console.log('commitDeletedAppointment')
+        console.log(deletedId)
+        const nextData = data.filter(appointment => appointment.id !== deletedId)
+        console.log(nextData)
+        this.setState({data: nextData, deletedAppointmentId: null})
+    }
+
     onEditingAppointmentIdChange(editingAppointmentId){
         this.setState({editingAppointmentId})
     }
@@ -99,11 +111,12 @@ class CalendarComponent extends React.Component {
             data = data.map(appointment => (
                 changed.id === appointment.id ? { ...appointment, ...changed } : appointment));
         }
+        //  this.toggleConfirmationVisible();
+        this.setState({ data, addedAppointment: {} });
         if (deleted !== undefined) {
             this.setDeletedAppointmentId(deleted);
-            this.toggleConfirmationVisible();
+            this.commitDeletedAppointment(deleted)
         }
-        this.setState({ data, addedAppointment: {} });
     }
 
 

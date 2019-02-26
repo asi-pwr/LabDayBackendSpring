@@ -130,10 +130,12 @@ class AppointmentFormComponent extends React.Component {
                                 variant="outlined"
                                 color="secondary"
                                 className={classes.button}
-                                onClick={visibleChange}
+                                onClick={() => {
+                                    visibleChange()
+                                    this.commitAppointment('deleted')
+                                }}
                             >
                                 Usuń
-                                {/*TODO!! commit changes!*/}
                             </Button>
                         )}
                         <Button
