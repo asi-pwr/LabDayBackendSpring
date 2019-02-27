@@ -15,11 +15,12 @@ import AddIcon from '@material-ui/icons/Add';
 import {Link as RouterLink} from "react-router-dom";
 
 class ShowPlacesComponent extends React.Component {
-    componentDidMount() {
+
+    constructor(props){
+        super(props)
         const { dispatch } = this.props
         dispatch(placeActions.getPlaces())
     }
-
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const { placeReducer, dispatch } = this.props
