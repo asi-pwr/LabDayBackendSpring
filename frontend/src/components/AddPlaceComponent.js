@@ -61,7 +61,7 @@ class AddPlaceComponent extends React.Component {
         const { classes } = this.props
         const { postSuccess} = this.state
         if (postSuccess){
-            return ( <Redirect to ='/'/>)
+            return ( <Redirect to ='/showPlaces'/>)
         }
 
         return (

@@ -4,6 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from "@material-ui/core/Menu/Menu";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index';
 import {connect} from "react-redux";
+import {Link as RouterLink} from "react-router-dom";
 
 function MenuListComposition(props) {
     if (!props.auth.loggedIn) {
@@ -18,7 +19,15 @@ function MenuListComposition(props) {
                     <React.Fragment>
                         <MenuIcon variant="contained" {...bindTrigger(popupState)}/>
                         <Menu {...bindMenu(popupState)}>
-                            <MenuItem onClick={popupState.close}>ExampleItem</MenuItem>
+                            <MenuItem component={RouterLink} to='/showPlaces' onClick={popupState.close}>
+                                Miejsca
+                            </MenuItem>
+                            <MenuItem component={RouterLink} to='/showSpeakers' onClick={popupState.close}>
+                                Prelegenci
+                            </MenuItem>
+                            <MenuItem component={RouterLink} to='/dashboard' onClick={popupState.close}>
+                                Kalendarz
+                            </MenuItem>
                         </Menu>
                     </React.Fragment>
                 )}
