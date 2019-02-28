@@ -24,6 +24,8 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
 import Button from "@material-ui/core/es/Button/Button";
 import ToolbarCalendarComponent from "./ToolbarCalendarComponent";
+import {connect} from "react-redux";
+import {PathActions} from "../actions/PathActions";
 
 const theme = createMuiTheme(
     {
@@ -36,22 +38,14 @@ const theme = createMuiTheme(
 class CalendarComponent extends React.Component {
     constructor(props){
         super(props);
+        const { dispatch } = props
+        dispatch(PathActions.getPaths())
         this.state = {
             addedAppointment: {},
             editingAppointmentId: undefined,
             deletedAppointmentId: undefined,
             confirmationVisible: false,
             currentPath: 0,
-            paths: [
-                {
-                    id: 0,
-                    name: 'sciezka 1'
-                },
-                {
-                    id: 1,
-                    name: 'sciezka 2'
-                }
-            ],
             data:[
                 {
                     startDate: '2019-02-24 15:30',
@@ -102,7 +96,8 @@ class CalendarComponent extends React.Component {
             }
         })
         this.toolbar = connectProps(ToolbarCalendarComponent, ()=> {
-            const { currentPath, paths } = this.state
+            const {paths } = this.props
+            const { currentPath } = this.state
             return {
                 path: currentPath,
                 pathChange: this.pathChange,
@@ -165,6 +160,11 @@ class CalendarComponent extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.appointmentForm.update()
         this.toolbar.update()
+
+        const { dispatch } = this.props
+        dispatch(PathActions.getPaths())
+
+
     }
 
     toggleEditingFormVisibility(){
@@ -238,6 +238,11 @@ class CalendarComponent extends React.Component {
 
 }
 
+function mapStateToProps(state) {
+    const { paths } = state.pathReducer
+    return { paths}
+}
+
 const filterData = (data, pathId) => data.filter(event => ( event.path_id === pathId));
 
-export default CalendarComponent
+export default connect(mapStateToProps)(CalendarComponent)
