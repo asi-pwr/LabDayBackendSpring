@@ -8,7 +8,16 @@ export const PathActions = {
 }
 
 function getPaths() {
-
+    return dispatch => {
+        axiosInstance.get('paths')
+            .then(response => {
+                dispatch({
+                    status: response.status,
+                    type: restConstants.GET_PATH_REQUEST,
+                    data: response.data
+                })
+            })
+    }
 }
 
 function postPath(path) {
