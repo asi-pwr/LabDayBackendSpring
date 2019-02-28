@@ -7,6 +7,8 @@ import DialogContent from "@material-ui/core/es/DialogContent/DialogContent";
 import TextField from "@material-ui/core/TextField/TextField";
 import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
 import {withStyles} from "@material-ui/core";
+import {PathActions} from "../actions/PathActions";
+import {connect} from "react-redux";
 
 class PathFormComponent extends Component {
 
@@ -22,8 +24,21 @@ class PathFormComponent extends Component {
         this.handleClose = this.handleClose.bind(this)
         this.handleOpen = this.handleOpen.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+
+    handleSubmit(){
+        const { name, info } = this.state
+        const { dispatch } = this.props
+        const path = {
+            name,
+            info,
+            active: true
+        }
+        dispatch(PathActions.postPath(path))
+        this.setState({ open: false})
+    }
     handleClose() {
         this.setState({open: false})
     }
@@ -82,7 +97,7 @@ class PathFormComponent extends Component {
                         <Button variant="outlined" onClick={this.handleClose} color="secondary">
                             Anuluj
                         </Button>
-                        <Button variant="outlined" color="primary">
+                        <Button variant="outlined" onClick={this.handleSubmit} color="primary">
                             Dodaj
                         </Button>
                     </DialogActions>
@@ -99,4 +114,5 @@ const styles = theme => ({
     }
 });
 
-export default withStyles(styles)(PathFormComponent)
+
+export default connect()(withStyles(styles)(PathFormComponent))
