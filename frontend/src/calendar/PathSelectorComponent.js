@@ -1,29 +1,45 @@
 import {Component} from "react";
 import FormControl from "@material-ui/core/FormControl/FormControl";
-import Select from "@material-ui/core/es/Select/Select";
+import Select from "@material-ui/core/Select/Select";
 import React from "react";
-import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
+import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import {withStyles} from "@material-ui/core";
+import InputLabel from "@material-ui/core/InputLabel/InputLabel";
+import Input from "@material-ui/core/Input/Input";
 
 class PathSelectorComponent extends Component {
     render() {
         const { path, pathChange, paths, classes } = this.props
         return(
-            <FormControl className={classes.pathSelector}>
-                <Select
+           <FormControl
+               className={classes.pathSelector}
+           >
+               <InputLabel htmlFor="outline-path">Ścieżka</InputLabel>
+               <Select
                     disableUnderline
                     value={path}
                     onChange={(e) => {pathChange(e.target.value)}}
+                    input={
+                        <Input
+                            name="Ścieżki"
+                            id="outline-path"
+                        />
+                    }
                 >
                     {paths.map((singlePath) => (
-                        <MenuItem value={singlePath.id} key={singlePath.id.toString()} className={classes.pathSelectorItem}>
+                        <MenuItem
+                            value={singlePath.id}
+                            key={singlePath.id.toString()}
+                            className={classes.pathSelectorItem}
+                        >
                             {singlePath.name}
                         </MenuItem>
                     ))}
                     </Select>
-            </FormControl>
+           </FormControl>
             )
     }
+
 }
 
 
