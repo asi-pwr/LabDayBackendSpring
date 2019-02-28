@@ -14,7 +14,7 @@ class PathSelectorComponent extends Component {
            <FormControl
                className={classes.pathSelector}
            >
-               <InputLabel htmlFor="outline-path">Ścieżka</InputLabel>
+               <InputLabel htmlFor="path-input">Ścieżka</InputLabel>
                <Select
                     disableUnderline
                     value={path}
@@ -22,7 +22,7 @@ class PathSelectorComponent extends Component {
                     input={
                         <Input
                             name="Ścieżki"
-                            id="outline-path"
+                            id="path-input"
                         />
                     }
                 >
@@ -48,6 +48,7 @@ class PathSelectorComponent extends Component {
 
 const styles = theme => ({
     pathSelector: {
+        textAlign: 'left',
         marginLeft: theme.spacing.unit * 2,
         minWidth: 140,
     },
