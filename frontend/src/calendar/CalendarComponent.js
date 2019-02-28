@@ -45,7 +45,7 @@ class CalendarComponent extends React.Component {
             editingAppointmentId: undefined,
             deletedAppointmentId: undefined,
             confirmationVisible: false,
-            currentPath: '',
+            currentPath: -1,
             data:[
                 {
                     startDate: '2019-02-24 15:30',
@@ -88,7 +88,7 @@ class CalendarComponent extends React.Component {
             const clickedAppointment = data
                 .filter(appointment => appointment.id === editingAppointmentId)[0] || addedAppointment
             if (!clickedAppointment.path_id){
-                clickedAppointment.path_id = currentPath
+                clickedAppointment.path_id = currentPath === -1 ? '': currentPath
             }
             return {
                 appointmentData: clickedAppointment,
@@ -184,7 +184,7 @@ class CalendarComponent extends React.Component {
                 <br/>
                 <MuiThemeProvider theme={theme}>
                 <Paper>
-                    <Scheduler data={filterData(data, currentPath)}>
+                    <Scheduler data={currentPath === -1 ? data : filterData(data, currentPath)}>
                         <ViewState
                             currentDate={currentDate}
                             onCurrentDateChange={this.currentDateChange}

@@ -26,6 +26,9 @@ class PathSelectorComponent extends Component {
                         />
                     }
                 >
+                   <MenuItem value={-1}>
+                       Wszystkie wydarzenia
+                   </MenuItem>
                     {paths.map((singlePath) => (
                         <MenuItem
                             value={singlePath.id}
