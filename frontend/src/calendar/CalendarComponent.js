@@ -158,13 +158,12 @@ class CalendarComponent extends React.Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        const { newPath, dispatch } = this.props
         this.appointmentForm.update()
         this.toolbar.update()
-
-        const { dispatch } = this.props
-        dispatch(PathActions.getPaths())
-
-
+        if (newPath !== prevProps.newPath){
+            dispatch(PathActions.getPaths())
+        }
     }
 
     toggleEditingFormVisibility(){
@@ -239,8 +238,8 @@ class CalendarComponent extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { paths } = state.pathReducer
-    return { paths}
+    const { paths, newPath } = state.pathReducer
+    return { paths, newPath }
 }
 
 const filterData = (data, pathId) => data.filter(event => ( event.path_id === pathId));
