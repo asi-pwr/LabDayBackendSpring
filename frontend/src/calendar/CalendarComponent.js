@@ -45,7 +45,7 @@ class CalendarComponent extends React.Component {
             editingAppointmentId: undefined,
             deletedAppointmentId: undefined,
             confirmationVisible: false,
-            currentPath: 0,
+            currentPath: '',
             data:[
                 {
                     startDate: '2019-02-24 15:30',
@@ -83,10 +83,13 @@ class CalendarComponent extends React.Component {
         this.commitDeletedAppointment = this.commitDeletedAppointment.bind(this)
 
         this.appointmentForm = connectProps(AppointmentFormContainer, () => {
-            const {editingFormVisible} = this.state
+            const {editingFormVisible, currentPath} = this.state
             const { data, editingAppointmentId, addedAppointment } = this.state
             const clickedAppointment = data
                 .filter(appointment => appointment.id === editingAppointmentId)[0] || addedAppointment
+            if (!clickedAppointment.path_id){
+                clickedAppointment.path_id = currentPath
+            }
             return {
                 appointmentData: clickedAppointment,
                 visible: editingFormVisible,

@@ -7,6 +7,8 @@ import TextField from "@material-ui/core/es/TextField/TextField";
 import { InlineDateTimePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import Button from "@material-ui/core/es/Button/Button";
+import PathSelectorComponent from "./PathSelectorComponent";
+import {connect} from "react-redux";
 
 
 class AppointmentFormComponent extends React.Component {
@@ -54,7 +56,7 @@ class AppointmentFormComponent extends React.Component {
 
 
     render() {
-        const {  classes, visible, visibleChange, appointmentData } = this.props;
+        const { classes, visible, visibleChange, appointmentData, paths} = this.props;
         const { appointmentChanges } = this.state
         const isNewAppointment = appointmentData.id === undefined;
         const displayAppointmentData = {
@@ -81,9 +83,9 @@ class AppointmentFormComponent extends React.Component {
             format: 'YYYY-MM-DD hh:mm',
             mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, ' ', /\d/, /\d/, ':', /\d/, /\d/],
         });
-
         return (
             <AppointmentForm.Popup
+                disableEnforceFocus
                 visible={visible}
                 onBackdropClick={visibleChange}
             >
@@ -122,9 +124,19 @@ class AppointmentFormComponent extends React.Component {
                                 rows="3"
                             />
                         </div>
-                        {/*TODO!! path, 3x img, longitude and latitude */}
+                        {/*TODO!!  3x img, longitude and latitude */}
                     </div>
+                    <div className={classes.pathSelectorWithButtons}>
+                    <PathSelectorComponent
+                        className={classes.pathSelector}
+                        path={displayAppointmentData['path_id'] || ''}
+                        pathChange={pathId => {
+                            this.changeAppointment({ field: ['path_id'], changes: pathId})
+                        }}
+                        paths={paths}
+                    />
                     <div className={classes.buttonGroup}>
+
                         {!isNewAppointment && (
                             <Button
                                 variant="outlined"
@@ -150,6 +162,7 @@ class AppointmentFormComponent extends React.Component {
                             {isNewAppointment ? 'Dodaj' : 'Zapisz' }
 
                         </Button>
+                    </div>
                     </div>
                 </AppointmentForm.Container>
             </AppointmentForm.Popup>
@@ -177,9 +190,11 @@ const containerStyles = theme => ({
         display: 'flex',
         justifyContent: 'flex-end',
         padding: `0 ${theme.spacing.unit * 2}px`,
+        marginLeft: 'auto',
     },
     button: {
         marginLeft: theme.spacing.unit * 2,
+        marginTop: 'auto'
     },
     picker: {
         marginRight: theme.spacing.unit * 2,
@@ -199,7 +214,14 @@ const containerStyles = theme => ({
     textField: {
         width: '100%',
     },
+    pathSelectorWithButtons: {
+       display: 'flex'
+    }
 });
 
+function mapStateToProps(state) {
+    const {paths} = state.pathReducer
+    return { paths }
+}
 
-export default withStyles(containerStyles)(AppointmentFormComponent)
+export default connect(mapStateToProps)(withStyles(containerStyles)(AppointmentFormComponent))
