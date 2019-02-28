@@ -1,17 +1,11 @@
-import {restPost, restGet, restDelete} from "./restActions";
+import axiosInstance from "../helpers/axiosInstance";
+import {restConstants} from "../constants/restConstants";
 
 
-export const placeActions = {
-    restGet,
-    restPost,
-    restDelete,
-};
-
-/*
-function postPlace(place) {
+export function restPost(item, endpoint) {
     return dispatch => {
 
-        axiosInstance.post('/places', JSON.stringify(place))
+        axiosInstance.post(endpoint, JSON.stringify(item))
             .then(post =>{
                 dispatch({
                     status: post.status,
@@ -22,9 +16,9 @@ function postPlace(place) {
     }
 }
 
-function getPlaces() {
+export function restGet(endpoint) {
     return dispatch => {
-        axiosInstance.get('/places')
+        axiosInstance.get(endpoint)
             .then(response =>{
                 dispatch({
                     status: response.status,
@@ -35,9 +29,9 @@ function getPlaces() {
     }
 }
 
-function deletePlace(id) {
+export function restDelete(id, endpoint) {
     return dispatch => {
-        axiosInstance.delete('/places/' + id)
+        axiosInstance.delete(endpoint + id)
             .then(response => {
                 dispatch({
                     status: response.status,
@@ -46,4 +40,4 @@ function deletePlace(id) {
                 })
             })
     }
-}*/
+}

@@ -17,14 +17,14 @@ import {Link as RouterLink} from "react-router-dom";
 class ShowPlacesComponent extends React.Component {
     componentDidMount() {
         const { dispatch } = this.props
-        dispatch(placeActions.getPlaces())
+        dispatch(placeActions.restGet('/places'))
     }
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const { placeReducer, dispatch } = this.props
         if (placeReducer.deletedItemId !== prevProps.placeReducer.deletedItemId) {
-            dispatch(placeActions.getPlaces())
+            dispatch(placeActions.restGet('/places'))
         }
 
     }
@@ -84,7 +84,7 @@ function ShowPlace(props) {
             </CardContent>
             <CardActions className={classes.cardAction}>
                 <Button className={classes.deleteButton} size="small"  onClick={()=>{
-                    dispatch(placeActions.deletePlace(place.id))
+                    dispatch(placeActions.restDelete(place.id, '/places'))
                 }}>Usuń</Button>
                 <Button disabled={true} className={classes.buttonId}>
                 id: {place.id}

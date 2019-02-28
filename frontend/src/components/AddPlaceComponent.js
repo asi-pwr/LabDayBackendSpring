@@ -44,7 +44,7 @@ class AddPlaceComponent extends React.Component {
         if (place.type === ''){
             place.type = 0
         }
-        dispatch(placeActions.postPlace(place))
+        dispatch(placeActions.restPost(place, '/places'))
     }
 
 
