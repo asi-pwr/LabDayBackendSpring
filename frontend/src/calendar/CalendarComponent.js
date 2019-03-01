@@ -26,6 +26,7 @@ import Button from "@material-ui/core/es/Button/Button";
 import ToolbarCalendarComponent from "./ToolbarCalendarComponent";
 import {connect} from "react-redux";
 import {PathActions} from "../actions/PathActions";
+import {AppointmentActions} from "../actions/AppointmentActions";
 
 const theme = createMuiTheme(
     {
@@ -39,36 +40,15 @@ class CalendarComponent extends React.Component {
     constructor(props){
         super(props);
         const { dispatch } = props
+        dispatch(AppointmentActions.getAppointments())
         dispatch(PathActions.getPaths())
+
         this.state = {
             addedAppointment: {},
             editingAppointmentId: undefined,
             deletedAppointmentId: undefined,
             confirmationVisible: false,
             currentPath: -1,
-            data:[
-                {
-                    startDate: '2019-02-24 15:30',
-                    endDate: '2019-02-24 16:00',
-                    title: 'Rejestracja',
-                    id: 1,
-                    path_id: 1
-                },
-                {
-                    startDate: '2019-02-24 15:30',
-                    endDate: '2019-02-24 16:00',
-                    title: 'AAAA',
-                    id: 2,
-                    path_id: 1
-                },
-                {
-                    startDate: '2019-02-24 15:30',
-                    endDate: '2019-02-24 16:00',
-                    title: 'BBBBBB',
-                    id: 3,
-                    path_id: 0
-                }
-            ]
         }
 
         this.pathChange = (value) => {
@@ -83,9 +63,10 @@ class CalendarComponent extends React.Component {
         this.commitDeletedAppointment = this.commitDeletedAppointment.bind(this)
 
         this.appointmentForm = connectProps(AppointmentFormContainer, () => {
+            const { appointments} = this.props
             const {editingFormVisible, currentPath} = this.state
-            const { data, editingAppointmentId, addedAppointment } = this.state
-            const clickedAppointment = data
+            const { editingAppointmentId, addedAppointment } = this.state
+            const clickedAppointment = appointments
                 .filter(appointment => appointment.id === editingAppointmentId)[0] || addedAppointment
             if (!clickedAppointment.path_id){
                 clickedAppointment.path_id = currentPath === -1 ? '': currentPath
@@ -137,7 +118,7 @@ class CalendarComponent extends React.Component {
     }
 
     commitChanges({ added, changed, deleted }) {
-        let { data } = this.state;
+        let { data } = this.props.appointments;
         if (added) {
             const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
             data = [
@@ -177,14 +158,15 @@ class CalendarComponent extends React.Component {
 
 
     render() {
-        const { data, currentDate, editingFormVisible, confirmationVisible, currentPath } = this.state
+        const { currentDate, editingFormVisible, confirmationVisible, currentPath } = this.state
+        const { appointments} = this.props
         return(
             <div>
                 CalendarComponent
                 <br/>
                 <MuiThemeProvider theme={theme}>
                 <Paper>
-                    <Scheduler data={currentPath === -1 ? data : filterData(data, currentPath)}>
+                    <Scheduler data={currentPath === -1 ? appointments : filterData(appointments, currentPath)}>
                         <ViewState
                             currentDate={currentDate}
                             onCurrentDateChange={this.currentDateChange}
@@ -241,8 +223,9 @@ class CalendarComponent extends React.Component {
 }
 
 function mapStateToProps(state) {
+    const { appointments } = state.appointmentReducer
     const { paths, newPath } = state.pathReducer
-    return { paths, newPath }
+    return { paths, newPath, appointments }
 }
 
 const filterData = (data, pathId) => data.filter(event => ( event.path_id === pathId));
