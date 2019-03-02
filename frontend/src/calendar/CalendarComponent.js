@@ -27,6 +27,8 @@ import ToolbarCalendarComponent from "./ToolbarCalendarComponent";
 import {connect} from "react-redux";
 import {PathActions} from "../actions/PathActions";
 import {AppointmentActions} from "../actions/AppointmentActions";
+import moment from "moment";
+import {AppointmentService} from "../services/AppointmentService";
 
 const theme = createMuiTheme(
     {
@@ -93,9 +95,10 @@ class CalendarComponent extends React.Component {
     }
 
     commitDeletedAppointment(){
-        const { data, deletedAppointmentId } = this.state
-        const nextData = data.filter(appointment => appointment.id !== deletedAppointmentId)
-        this.setState({data: nextData, deletedAppointmentId: null})
+        const { deletedAppointment } = this.state
+        const { dispatch, appointments } = this.props
+        const deleted = appointments.filter(appointment => ( appointment.id === deletedAppointment))[0];
+        dispatch(AppointmentActions.deleteAppointment(deleted.event_id, deleted.id))
         this.toggleConfirmationVisible()
     }
 
@@ -109,7 +112,7 @@ class CalendarComponent extends React.Component {
     }
 
     setDeletedAppointmentId(id) {
-        this.setState({ deletedAppointmentId: id });
+        this.setState({ deletedAppointmentId: id});
     }
 
     toggleConfirmationVisible() {
@@ -118,36 +121,38 @@ class CalendarComponent extends React.Component {
     }
 
     commitChanges({ added, changed, deleted }) {
-        let { data } = this.props.appointments;
+        const { dispatch } = this.props
         if (added) {
-            const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-            data = [
-                ...data,
-                {
-                    id: startingAddedId,
-                    ...added,
-                },
-            ];
+            const appointment = AppointmentService.addAppointment(added)
+            dispatch(AppointmentActions.postAppointment(appointment.event, appointment.timetable))
         }
         if (changed) {
-            data = data.map(appointment => (
-                changed.id === appointment.id ? { ...appointment, ...changed } : appointment));
+            const appointment = AppointmentService.changeAppointment(changed)
+            dispatch(AppointmentActions.postAppointment(appointment.event, appointment.timetable))
         }
-        this.setState({ data, addedAppointment: {} });
-        if (deleted !== undefined) {
-            this.setDeletedAppointmentId(deleted);
-            this.toggleConfirmationVisible()
+        if (deleted){
+                this.setDeletedAppointmentId(deleted);
+                this.toggleConfirmationVisible()
+
         }
     }
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const { newPath, dispatch } = this.props
-        this.appointmentForm.update()
+        const { newPath, newAppointment, deletedItem, dispatch, appointments } = this.props
+        if (newAppointment !== prevProps.newAppointment ||
+                deletedItem !== prevProps.deletedItem){
+
+            dispatch(AppointmentActions.getAppointments())
+        }
+        if (appointments !== undefined){
+            this.appointmentForm.update()
+        }
         this.toolbar.update()
         if (newPath !== prevProps.newPath){
             dispatch(PathActions.getPaths())
         }
+
     }
 
     toggleEditingFormVisibility(){
@@ -223,9 +228,9 @@ class CalendarComponent extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { appointments } = state.appointmentReducer
+    const { appointments, newAppointment, deletedItem } = state.appointmentReducer
     const { paths, newPath } = state.pathReducer
-    return { paths, newPath, appointments }
+    return { paths, newPath, appointments, newAppointment, deletedItem }
 }
 
 const filterData = (data, pathId) => data.filter(event => ( event.path_id === pathId));
