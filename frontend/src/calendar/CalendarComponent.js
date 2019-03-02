@@ -95,9 +95,9 @@ class CalendarComponent extends React.Component {
     }
 
     commitDeletedAppointment(){
-        const { deletedAppointment } = this.state
+        const { deletedAppointmentId } = this.state
         const { dispatch, appointments } = this.props
-        const deleted = appointments.filter(appointment => ( appointment.id === deletedAppointment))[0];
+        const deleted = appointments.filter(appointment => ( appointment.id === deletedAppointmentId))[0];
         dispatch(AppointmentActions.deleteAppointment(deleted.event_id, deleted.id))
         this.toggleConfirmationVisible()
     }
