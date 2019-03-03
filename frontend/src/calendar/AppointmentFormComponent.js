@@ -153,6 +153,11 @@ class AppointmentFormComponent extends React.Component {
                         <Button
                             variant="outlined"
                             color="primary"
+                            disabled={
+                                displayAppointmentData.startDate > displayAppointmentData.endDate
+                                || displayAppointmentData.path_id === -1
+                                || displayAppointmentData.path_id === ''
+                            }
                             className={classes.button}
                             onClick={() => {
                                 visibleChange()

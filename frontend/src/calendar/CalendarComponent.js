@@ -118,6 +118,8 @@ class CalendarComponent extends React.Component {
     }
 
     onAddedAppointmentChange(addedAppointment){
+        addedAppointment.startDate = moment.unix(addedAppointment.startDate.getTime()/1000).format('YYYY-MM-DD HH:mm')
+        addedAppointment.endDate = moment.unix(addedAppointment.endDate.getTime()/1000).format('YYYY-MM-DD HH:mm')
         this.setState({ addedAppointment})
         this.onEditingAppointmentIdChange(undefined)
     }
