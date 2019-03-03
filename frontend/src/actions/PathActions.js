@@ -4,7 +4,8 @@ import {restConstants} from "../constants/restConstants";
 
 export const PathActions = {
     getPaths,
-    postPath
+    postPath,
+    deletePath,
 }
 
 function getPaths() {
@@ -27,6 +28,18 @@ function postPath(path) {
                 dispatch({
                     type: restConstants.POST_PATH_REQUEST,
                     data: post.data
+                })
+            })
+    }
+}
+
+function deletePath(id) {
+    return dispatch => {
+        axiosInstance.delete('/paths/' + id)
+            .then(response => {
+                dispatch({
+                    type: restConstants.DELETE_PATH_REQUEST,
+                    data: id
                 })
             })
     }

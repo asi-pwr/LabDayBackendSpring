@@ -2,7 +2,8 @@ import {restConstants} from "../constants/restConstants";
 
 const initialState = {
     paths: [],
-    newPath: {}
+    newPath: {},
+    deletedPathId: {},
 }
 
 export function pathReducer(state = initialState, action) {
@@ -16,6 +17,11 @@ export function pathReducer(state = initialState, action) {
             return {
                 ...state,
                 newPath: action.data
+            }
+        case restConstants.DELETE_PATH_REQUEST:
+            return{
+                ...state,
+                deletedPathId: action.data
             }
         default:
             return state
