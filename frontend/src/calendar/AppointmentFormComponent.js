@@ -78,9 +78,9 @@ class AppointmentFormComponent extends React.Component {
             className: classes.picker,
             keyboard: true,
             value: displayAppointmentData[field],
-            onChange: date => this.changeAppointment({ field: [field], changes: date.format('YYYY-MM-DD hh:mm')}),
+            onChange: date => this.changeAppointment({ field: [field], changes: date.format('YYYY-MM-DD HH:mm')}),
             variant: 'outlined',
-            format: 'YYYY-MM-DD hh:mm',
+            format: 'YYYY-MM-DD HH:mm',
             mask: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, ' ', /\d/, /\d/, ':', /\d/, /\d/],
         });
         return (

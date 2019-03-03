@@ -21,8 +21,8 @@ function addAppointment(appointment){
         }
         const timetable = {
             path_id: appointment.path_id,
-            time_start: moment(appointment.startDate,'YYYY-MM-DD hh:mm').unix(),
-            time_end: moment(appointment.endDate,'YYYY-MM-DD hh:mm').unix(),
+            time_start: moment(appointment.startDate,'YYYY-MM-DD HH:mm').unix(),
+            time_end: moment(appointment.endDate,'YYYY-MM-DD HH:mm').unix(),
         }
         return { event, timetable }
 

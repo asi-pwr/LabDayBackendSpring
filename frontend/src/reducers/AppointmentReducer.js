@@ -29,8 +29,8 @@ export function appointmentReducer(state = initialState, action) {
                 }
                 newAppointments[index].id =  appointmentId
                 newAppointments[index].title = newAppointments[index].name
-                newAppointments[index].startDate = moment.unix(newAppointments[index].time_start).format('YYYY-MM-DD hh:mm')
-                newAppointments[index].endDate = moment.unix(newAppointments[index].time_end).format('YYYY-MM-DD hh:mm')
+                newAppointments[index].startDate = moment.unix(newAppointments[index].time_start).format('YYYY-MM-DD HH:mm')
+                newAppointments[index].endDate = moment.unix(newAppointments[index].time_end).format('YYYY-MM-DD HH:mm')
 
             })
             return{
