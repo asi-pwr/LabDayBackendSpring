@@ -63,6 +63,7 @@ class CalendarComponent extends React.Component {
         this.onEditingAppointmentIdChange = this.onEditingAppointmentIdChange.bind(this)
         this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this)
         this.commitDeletedAppointment = this.commitDeletedAppointment.bind(this)
+        this.onDeletePath = this.onDeletePath.bind(this)
 
         this.appointmentForm = connectProps(AppointmentFormContainer, () => {
             const { appointments} = this.props
@@ -87,11 +88,21 @@ class CalendarComponent extends React.Component {
             return {
                 path: currentPath,
                 pathChange: this.pathChange,
-                paths: paths
+                paths: paths,
+                onDeletePath: this.onDeletePath,
             }
 
         } )
 
+    }
+
+    onDeletePath(pathId){
+        const { dispatch, appointments } = this.props
+        appointments.map(function(appointment){
+            if (appointment.path_id === pathId){
+                dispatch(AppointmentActions.deleteAppointment(appointment.event_id, appointment.id))
+            }
+        })
     }
 
     commitDeletedAppointment(){
@@ -139,7 +150,8 @@ class CalendarComponent extends React.Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const { newPath, newAppointment, deletedItem, dispatch, appointments } = this.props
+        const { newPath, newAppointment, deletedItem, dispatch, appointments, deletedPathId } = this.props
+        const { currentPath } = this.state
         if (newAppointment !== prevProps.newAppointment ||
                 deletedItem !== prevProps.deletedItem){
 
@@ -150,6 +162,14 @@ class CalendarComponent extends React.Component {
         }
         this.toolbar.update()
         if (newPath !== prevProps.newPath){
+            dispatch(PathActions.getPaths())
+        }
+        if (deletedPathId !== prevProps.deletedPathId){
+            if (currentPath === deletedPathId) {
+                this.setState({
+                    currentPath: -1
+                })
+            }
             dispatch(PathActions.getPaths())
         }
 
@@ -229,8 +249,8 @@ class CalendarComponent extends React.Component {
 
 function mapStateToProps(state) {
     const { appointments, newAppointment, deletedItem } = state.appointmentReducer
-    const { paths, newPath } = state.pathReducer
-    return { paths, newPath, appointments, newAppointment, deletedItem }
+    const { paths, newPath, deletedPathId } = state.pathReducer
+    return { paths, newPath, appointments, newAppointment, deletedItem, deletedPathId }
 }
 
 const filterData = (data, pathId) => data.filter(event => ( event.path_id === pathId));
