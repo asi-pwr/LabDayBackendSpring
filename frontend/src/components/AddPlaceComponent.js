@@ -9,9 +9,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from 'prop-types';
 import Input from "@material-ui/core/Input/Input";
 import RaisedButton from 'material-ui/RaisedButton';
-import {placeActions} from "../actions/PlaceActions";
 import {connect} from "react-redux";
 import {Redirect} from "react-router";
+import {restActions} from "../actions/restActions";
+import {restConstants} from "../constants/restConstants";
 
 
 class AddPlaceComponent extends React.Component {
@@ -44,7 +45,7 @@ class AddPlaceComponent extends React.Component {
         if (place.type === ''){
             place.type = 0
         }
-        dispatch(placeActions.postPlace(place))
+        dispatch(restActions.restPost(place, '/places', restConstants.POST_PLACE_REQUEST))
     }
 
 
@@ -61,7 +62,7 @@ class AddPlaceComponent extends React.Component {
         const { classes } = this.props
         const { postSuccess} = this.state
         if (postSuccess){
-            return ( <Redirect to ='/'/>)
+            return ( <Redirect to ='/showPlaces'/>)
         }
 
         return (

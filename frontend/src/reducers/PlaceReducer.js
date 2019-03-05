@@ -17,6 +17,12 @@ export function placeReducer(state = initialState, action) {
                 ...state,
                 newPlace: action.data
             }
+        case restConstants.DELETE_PLACE_REQUEST:
+            return {
+                ...state,
+                status: action.status,
+                deletedItemId: action.deletedItem
+            }
         default:
             return state
     }

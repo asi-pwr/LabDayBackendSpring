@@ -26,9 +26,7 @@ public class SpeakerServiceImpl implements SpeakerService {
 
     @Override
     public List<Speaker> findAllSpeakers() {
-        List<Speaker> speakerList = new ArrayList<>();
-        speakerRepository.findAll().iterator().forEachRemaining(speakerList::add);
-        return speakerList;
+        return (List<Speaker>) speakerRepository.findAll();
     }
 
     @Override
