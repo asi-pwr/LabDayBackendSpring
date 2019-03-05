@@ -1,5 +1,4 @@
 import React from "react";
-import {placeActions} from "../actions/PlaceActions";
 import {connect} from "react-redux";
 import Card from "@material-ui/core/es/Card/Card";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
@@ -13,19 +12,21 @@ import ButtonBase from "@material-ui/core/es/ButtonBase/ButtonBase";
 import Fab from "@material-ui/core/Fab/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import {Link as RouterLink} from "react-router-dom";
+import {restActions} from "../actions/restActions";
+import {restConstants} from "../constants/restConstants";
 
 class ShowPlacesComponent extends React.Component {
 
     constructor(props){
         super(props)
         const { dispatch } = this.props
-        dispatch(placeActions.getPlaces())
+        dispatch(restActions.restGet('/places', restConstants.GET_PLACE_REQUEST))
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const { placeReducer, dispatch } = this.props
         if (placeReducer.deletedItemId !== prevProps.placeReducer.deletedItemId) {
-            dispatch(placeActions.getPlaces())
+            dispatch(restActions.restGet('/places', restConstants.GET_PLACE_REQUEST))
         }
 
     }
@@ -85,7 +86,7 @@ function ShowPlace(props) {
             </CardContent>
             <CardActions className={classes.cardAction}>
                 <Button className={classes.deleteButton} size="small"  onClick={()=>{
-                    dispatch(placeActions.deletePlace(place.id))
+                    dispatch(restActions.restDelete(place.id, '/places', restConstants.DELETE_PLACE_REQUEST))
                 }}>Usuń</Button>
                 <Button disabled={true} className={classes.buttonId}>
                 id: {place.id}

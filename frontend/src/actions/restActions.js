@@ -1,49 +1,45 @@
 import axiosInstance from "../helpers/axiosInstance";
 import {restConstants} from "../constants/restConstants";
 
-
-export const placeActions = {
-    getPlaces,
-    postPlace,
-    deletePlace
-}
-
-
-function postPlace(place) {
+export const restActions = {
+    restGet,
+    restPost,
+    restDelete,
+};
+function restPost(item, endpoint, type) {
     return dispatch => {
-
-        axiosInstance.post('/places', JSON.stringify(place))
+        axiosInstance.post(endpoint, JSON.stringify(item))
             .then(post =>{
                 dispatch({
                     status: post.status,
-                    type: restConstants.POST_PLACE_REQUEST,
+                    type: type,
                     data: post.data
                 })
             })
     }
 }
 
-function getPlaces() {
+function restGet(endpoint, type) {
     return dispatch => {
-        axiosInstance.get('/places')
+        axiosInstance.get(endpoint)
             .then(response =>{
                 dispatch({
                     status: response.status,
-                    type: restConstants.GET_PLACE_REQUEST,
+                    type: type,
                     data: response.data
                 })
             })
     }
 }
 
-function deletePlace(id) {
+function restDelete(id, endpoint, type) {
     return dispatch => {
-        axiosInstance.delete('/places/' + id)
+        axiosInstance.delete(endpoint + '/' + id)
             .then(response => {
                 dispatch({
                     status: response.status,
                     deletedItem: id,
-                    type: restConstants.DELETE_PLACE_REQUEST
+                    type: type,
                 })
             })
     }
