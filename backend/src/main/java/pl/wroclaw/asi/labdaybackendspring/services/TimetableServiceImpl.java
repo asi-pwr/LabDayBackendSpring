@@ -25,9 +25,7 @@ public class TimetableServiceImpl implements TimetableService {
 
     @Override
     public List<Timetable> findAllTimetables() {
-        List<Timetable> timetableList = new ArrayList<>();
-        timetableRepository.findAll().iterator().forEachRemaining(timetableList::add);
-        return timetableList;
+        return (List<Timetable>) timetableRepository.findAll();
     }
 
     @Override

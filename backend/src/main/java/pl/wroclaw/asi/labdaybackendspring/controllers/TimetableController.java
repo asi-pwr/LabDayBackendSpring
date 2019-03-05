@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Secured("ROLE_ADMIN")
 @Service
-@RequestMapping("/api/timetables")
+@RequestMapping("/admin/api/timetables")
 public class TimetableController {
     private final TimetableService timetableService;
     private final ValidationErrorService validationErrorService;
@@ -33,15 +33,15 @@ public class TimetableController {
 
         if(errors != null)
             return errors;
-        timetableService.saveOrUpdateTimetable(timetable);
-        return new ResponseEntity<>("Timetable successfully created", HttpStatus.CREATED);
+
+        return new ResponseEntity<>(timetableService.saveOrUpdateTimetable(timetable), HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/{timetableId}")
     public ResponseEntity<?> deleteTimetableById(@PathVariable Integer timetableId){
         timetableService.deleteTimetable(timetableId);
-        return new ResponseEntity<>("Timetable with id: " + timetableId + "was successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping

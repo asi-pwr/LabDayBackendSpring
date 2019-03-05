@@ -26,9 +26,7 @@ public class PathServiceImpl implements PathService {
 
     @Override
     public List<Path> findAllPaths() {
-        List<Path> pathList = new ArrayList<>();
-        pathRepository.findAll().iterator().forEachRemaining(pathList::add);
-        return pathList;
+        return (List<Path>) pathRepository.findAll();
     }
 
     @Override
