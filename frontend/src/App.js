@@ -12,6 +12,7 @@ import { history } from "./helpers/history";
 import {Logout} from "./components/Logout";
 import AddPlaceComponent from "./components/AddPlaceComponent";
 import ShowPlacesComponent from "./components/ShowPlacesComponent";
+import ShowSpeakersComponent from "./components/ShowSpeakersComponent";
 
 class App extends Component {
   constructor(props){
@@ -34,6 +35,7 @@ class App extends Component {
             <Route exact path="/logout" component={Logout}/>
             <PrivateRoute exact path="/addPlace" component={AddPlaceComponent}/>
           <PrivateRoute exact path = "/showPlaces" component={ShowPlacesComponent}/>
+            <PrivateRoute exact path = "/showSpeakers" component={ShowSpeakersComponent}/>
         </div>
       </Router>
     );
