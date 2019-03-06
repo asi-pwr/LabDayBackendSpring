@@ -18,7 +18,6 @@ import {restConstants} from "../constants/restConstants";
 class ShowSpeakersComponent extends React.Component {
 
     constructor(props){
-        debugger;
         super(props);
         const { dispatch } = this.props;
 
@@ -37,9 +36,9 @@ class ShowSpeakersComponent extends React.Component {
         const { speakerReducer, classes, dispatch } = this.props;
         return (
             <div className={classes.root}>
-                /*<Fab  aria-label="Add" className={classes.addButton} component={RouterLink} to={'/addSpeaker'}>
+                <Fab  aria-label="Add" className={classes.addButton} component={RouterLink} to={'/addSpeaker'}>
                     <AddIcon/>
-                </Fab>*/
+                </Fab>
                 { speakerReducer.speakers.map(speaker => (
                     <Grid key={speaker.id}>
                         <ShowSpeaker speaker = {speaker} classes={classes} dispatch={dispatch} />
