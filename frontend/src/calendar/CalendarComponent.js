@@ -46,6 +46,7 @@ class CalendarComponent extends React.Component {
         dispatch(PathActions.getPaths())
 
         this.state = {
+            currentDate: moment().format('YYYY-MM-DD'),
             addedAppointment: {},
             editingAppointmentId: undefined,
             deletedAppointmentId: undefined,
