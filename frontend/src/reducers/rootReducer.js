@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     authentication,
     placeReducer,
     pathReducer,
-    appointmentReducer
+    appointmentReducer,
     speakerReducer
 });
 
