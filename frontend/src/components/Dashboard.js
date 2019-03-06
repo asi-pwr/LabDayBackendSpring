@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
+import CalendarComponent from "../calendar/CalendarComponent";
 
 class Dashboard extends Component {
   constructor(props){
@@ -12,6 +13,7 @@ class Dashboard extends Component {
     return (
       <div>
         <h1>Dashboard</h1>
+          <CalendarComponent/>
       </div>
     );
   }
