@@ -79,8 +79,7 @@ public class LoginController {
             user.setPassword(body.get("password"));
             Role role = roleRepository.findByName("ROLE_USER");
             user.setRoles(Arrays.asList(role));
-            userService.saveUser(user);
-            return new ResponseEntity("",HttpStatus.CREATED);
+            return new ResponseEntity(userService.saveUser(user),HttpStatus.CREATED);
         }
 
         return  new ResponseEntity("", HttpStatus.BAD_REQUEST);
