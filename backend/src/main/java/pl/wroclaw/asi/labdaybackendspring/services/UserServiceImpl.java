@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllUsers() {
-        return (List<User>) userRepository.findAll();
+        return (List<User>) userRepository.findAllByOrderById();
     }
 
     public User saveUserWithPath(User user){
