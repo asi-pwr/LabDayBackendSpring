@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Path;
 import pl.wroclaw.asi.labdaybackendspring.repositories.PathRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +38,7 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
-    public List<Path> findActivePaths() {
-        return pathRepository.findAllByActiveTrue();
+    public List<Path> findActivePaths(Integer pathId) {
+        return pathRepository.findAllByActiveTrueAndId(pathId);
     }
 }

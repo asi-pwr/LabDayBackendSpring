@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Event;
 import pl.wroclaw.asi.labdaybackendspring.repositories.EventRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +37,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> findActiveEvents( ) {
-        return eventRepository.findAllActive();
+    public List<Event> findActiveEvents(Integer pathId) {
+        return eventRepository.findAllActive(pathId);
     }
 
 }

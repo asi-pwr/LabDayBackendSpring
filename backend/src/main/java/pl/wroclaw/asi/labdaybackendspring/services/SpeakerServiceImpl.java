@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Speaker;
 import pl.wroclaw.asi.labdaybackendspring.repositories.SpeakerRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +38,7 @@ public class SpeakerServiceImpl implements SpeakerService {
     }
 
     @Override
-    public List<Speaker> findActiveSpeakers() {
-        return speakerRepository.findAllActive();
+    public List<Speaker> findActiveSpeakers(Integer pathId) {
+        return speakerRepository.findAllActive(pathId);
     }
 }
