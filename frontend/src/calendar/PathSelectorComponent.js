@@ -9,7 +9,7 @@ import Input from "@material-ui/core/Input/Input";
 
 class PathSelectorComponent extends Component {
     render() {
-        const { path, pathChange, paths, classes } = this.props
+        const { path, pathChange, paths, classes, allEvents } = this.props
         return(
            <FormControl
                className={classes.pathSelector}
@@ -26,9 +26,12 @@ class PathSelectorComponent extends Component {
                         />
                     }
                 >
+                   {allEvents &&
                    <MenuItem value={-1}>
                        Wszystkie wydarzenia
                    </MenuItem>
+                   }
+
                     {paths.map((singlePath) => (
                         <MenuItem
                             value={singlePath.id}
