@@ -3,6 +3,7 @@ import {restConstants} from "../constants/restConstants";
 const initialState = {
     users: [],
     newUser: {},
+    status: '',
 }
 
 export function userReducer(state = initialState, action) {
@@ -16,6 +17,7 @@ export function userReducer(state = initialState, action) {
             return {
                 ...state,
                 newUser: action.data,
+                status: action.status,
             }
         default:
             return state
