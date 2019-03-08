@@ -29,13 +29,13 @@ class RegisterComponent extends React.Component {
         }
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const { newUser,status } = this.props;
+        const { newUser, status } = this.props;
         if (status !== prevProps.status && status === 400){
             this.setState({
                 error: 'Użytkownik z taką nazwą już istnieje'
             })
         }
-        if (newUser !== prevProps.newUser && status === 201){
+        if (newUser !== prevProps.newUser && newUser !== undefined){
             this.setState({
                 postSuccess: true
             })
@@ -49,10 +49,11 @@ class RegisterComponent extends React.Component {
     };
 
     render() {
-        const { postSuccess, error} = this.state
+        const { postSuccess, error} = this.state;
+        const { loggedIn } = this.props
 
         if (postSuccess){
-            return ( <Redirect to ='/'/>)
+            return loggedIn ? ( <Redirect to ='/users'/>) : ( <Redirect to ='/'/>)
         }
         return(
 
@@ -87,7 +88,8 @@ class RegisterComponent extends React.Component {
 }
 function mapStateToProps(state){
     const { newUser, status } = state.userReducer;
-    return { newUser, status };
+    const { loggedIn } = state.authentication;
+    return { newUser, status, loggedIn };
 }
 
 export default connect(mapStateToProps)(RegisterComponent);
