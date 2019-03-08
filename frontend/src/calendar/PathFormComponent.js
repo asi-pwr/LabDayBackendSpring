@@ -49,7 +49,8 @@ class PathFormComponent extends Component {
         const { commitChanges } = this.props
         const commitPath = {
             ...this.getPathData(),
-            ...this.getPathChanges()
+            ...this.getPathChanges(),
+            active: true
         }
         commitChanges({
             [type] : type === 'deleted' ? commitPath.id : commitPath
