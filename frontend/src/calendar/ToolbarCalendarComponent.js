@@ -63,7 +63,9 @@ class ToolbarCalendarComponent extends React.Component {
                 <PathSelectorComponent
                     path={path}
                     pathChange={pathChange}
-                    paths={paths}/>
+                    paths={paths}
+                    allEvents={true}
+                />
 
             </Toolbar.FlexibleSpace>
                 <Dialog open={confirmationVisible}>
