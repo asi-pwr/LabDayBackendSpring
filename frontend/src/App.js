@@ -14,6 +14,7 @@ import AddPlaceComponent from "./components/AddPlaceComponent";
 import ShowPlacesComponent from "./components/ShowPlacesComponent";
 import ShowSpeakersComponent from "./components/ShowSpeakersComponent";
 import AddSpeakerComponent from "./components/AddSpeakerComponent";
+import UserPathManagerComponent from "./components/UserPathManagerComponent";
 
 class App extends Component {
   constructor(props){
@@ -38,6 +39,7 @@ class App extends Component {
             <PrivateRoute exact path = "/showPlaces" component={ShowPlacesComponent}/>
             <PrivateRoute exact path = "/showSpeakers" component={ShowSpeakersComponent}/>
             <PrivateRoute exact path = "/addSpeaker" component={AddSpeakerComponent}/>
+            <PrivateRoute exact path="/users" component={UserPathManagerComponent}/>
         </div>
       </Router>
     );

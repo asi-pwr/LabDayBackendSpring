@@ -25,8 +25,11 @@ function MenuListComposition(props) {
                             <MenuItem component={RouterLink} to='/showSpeakers' onClick={popupState.close}>
                                 Prelegenci
                             </MenuItem>
-                            <MenuItem component={RouterLink} to='/dashboard' onClick={popupState.close}>
+                            <MenuItem component={RouterLink} to='/' onClick={popupState.close}>
                                 Kalendarz
+                            </MenuItem>
+                            <MenuItem component={RouterLink} to='/users' onClick={popupState.close}>
+                                Użytkownicy
                             </MenuItem>
                         </Menu>
                     </React.Fragment>

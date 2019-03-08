@@ -134,6 +134,7 @@ class AppointmentFormComponent extends React.Component {
                             this.changeAppointment({ field: ['path_id'], changes: pathId})
                         }}
                         paths={paths}
+                        allEvents={false}
                     />
                     <div className={classes.buttonGroup}>
 
