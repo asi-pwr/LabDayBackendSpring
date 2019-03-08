@@ -1,5 +1,4 @@
 import axiosInstance from "../helpers/axiosInstance";
-import {restConstants} from "../constants/restConstants";
 
 export const restActions = {
     restGet,

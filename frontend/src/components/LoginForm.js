@@ -3,8 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/LoginForm.css'
 import labdayLogo from '../labday.png'
 import { FaUser, FaKey } from 'react-icons/fa'
-import RaisedButton from 'material-ui/RaisedButton';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Redirect } from 'react-router'
 import { connect } from 'react-redux';
 import {userActions} from "../actions/UserActions";
@@ -28,7 +26,7 @@ class LoginForm extends React.Component{
         dispatch(userActions.logout());
         this.state = {
             username: "",
-            password: "",    // <--- should this be done this way?
+            password: "",
             submitted: false
         }
 
@@ -45,14 +43,17 @@ class LoginForm extends React.Component{
 
     render(){
         const { submitted } = this.state;
-        const { loggedIn } = this.props;
+        const { loggedIn, newUser } = this.props;
         if (submitted){
             if (loggedIn)
                 return <Redirect to='/dashboard' />
         }
         return(
             <div>
-            <img src={labdayLogo} className="center" alt="Labday logo"/>
+                <br/><br/>
+                <p className="text-success text-center">{newUser === undefined ? "" : "Stworzono konto"}</p>
+
+                <img src={labdayLogo} className="center" alt="Labday logo"/>
                 
             <div className="card divStyle">
 
@@ -61,7 +62,7 @@ class LoginForm extends React.Component{
                     <hr />
                     {(submitted && !loggedIn) ?
                         <p className="text-danger text-center">Coś poszło nie tak</p>
-                        : <p className="text-success text-center">Aby kontynuować, zaloguj się</p>
+                        : <p className="text-success text-center">Aby kontynuować, zaloguj się<br/> na konto admina</p>
                     }
                     <form>
                         <div className="form-group">
@@ -111,7 +112,8 @@ class LoginForm extends React.Component{
 
 function mapStateToProps(state) {
     const { loggingIn, user, loggedIn } = state.authentication;
-    return { loggingIn, user, loggedIn };
+    const { newUser } = state.userReducer;
+    return { loggingIn, user, loggedIn, newUser };
 }
 
 

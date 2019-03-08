@@ -1,7 +1,6 @@
 import React from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from  'material-ui/TextField';
-import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from "react-redux";
@@ -45,7 +44,6 @@ class AddSpeakerComponent extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
         const { postSuccess } = this.state;
 
         if (postSuccess){
@@ -90,12 +88,7 @@ class AddSpeakerComponent extends React.Component {
     }
 
 }
-const styles = {
-    formControl: {
-        minWidth: 256,
-    },
 
-};
 
 AddSpeakerComponent.propTypes = {
     classes: PropTypes.object.isRequired,
@@ -105,4 +98,4 @@ function mapStateToProps(state) {
     return { speakerReducer }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(AddSpeakerComponent))
+export default connect(mapStateToProps)(AddSpeakerComponent)

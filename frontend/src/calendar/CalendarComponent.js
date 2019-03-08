@@ -99,7 +99,7 @@ class CalendarComponent extends React.Component {
 
     onDeletePath(pathId){
         const { dispatch, appointments } = this.props
-        appointments.map(function(appointment){
+        appointments.forEach(function(appointment){
             if (appointment.path_id === pathId){
                 dispatch(AppointmentActions.deleteAppointment(appointment.event_id, appointment.id))
             }

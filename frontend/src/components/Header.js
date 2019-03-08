@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
 import MenuListComposition from "./MenuListComposition";
 
@@ -34,7 +33,7 @@ const styles = {
 function Header(props) {
   const { classes } = props;
   const isLoggedIn = props.user ? Boolean(props.user.token) : false;
-  const buttons = isLoggedIn ? LoggedInButtons(props) : ReportBugButton(props);
+  const buttons = isLoggedIn ? LoggedInButtons(props) : RegisterButton(props);
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -55,12 +54,13 @@ function Header(props) {
     </div>
   );
 }
-function ReportBugButton(props) {
-  const { classes } = props;
-  return (
+
+function RegisterButton(props){
+    const { classes } = props;
+    return (
         <Button color="inherit">
-            <a href="/bug" className={classes.link}>
-                Zgłoś błąd
+            <a href="/register" className={classes.link}>
+                Załóż konto
             </a>
         </Button>
     )
@@ -75,7 +75,7 @@ function LoggedInButtons(props){
                   {props.user.username}
               </Typography>
           </Button>
-          {ReportBugButton(props)}
+          {RegisterButton(props)}
           <Button color="inherit">
               <a href="/logout" className={classes.link}>
                   Logout

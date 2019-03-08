@@ -11,7 +11,6 @@ import DialogTitle from "@material-ui/core/es/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/es/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
-import Paper from "@material-ui/core/es/Paper/Paper";
 
 class ToolbarCalendarComponent extends React.Component {
     constructor(props){
