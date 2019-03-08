@@ -2,7 +2,7 @@ import {restConstants} from "../constants/restConstants";
 
 const initialState = {
     users: [],
-    newUser: {},
+    newUser: undefined,
     status: '',
 }
 
@@ -16,7 +16,7 @@ export function userReducer(state = initialState, action) {
         case restConstants.POST_USER_REQUEST:
             return {
                 ...state,
-                newUser: action.data,
+                newUser: action.newUser,
                 status: action.status,
             }
         default:
