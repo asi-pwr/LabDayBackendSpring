@@ -34,7 +34,7 @@ const styles = {
 function Header(props) {
   const { classes } = props;
   const isLoggedIn = props.user ? Boolean(props.user.token) : false;
-  const buttons = isLoggedIn ? LoggedInButtons(props) : ReportBugButton(props);
+  const buttons = isLoggedIn ? LoggedInButtons(props) : RegisterButton(props);
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -66,6 +66,17 @@ function ReportBugButton(props) {
     )
 }
 
+function RegisterButton(props){
+    const { classes } = props;
+    return (
+        <Button color="inherit">
+            <a href="/register" className={classes.link}>
+                Załóż konto
+            </a>
+        </Button>
+    )
+}
+
 function LoggedInButtons(props){
     const { classes } = props;
     return (
@@ -75,7 +86,7 @@ function LoggedInButtons(props){
                   {props.user.username}
               </Typography>
           </Button>
-          {ReportBugButton(props)}
+          {RegisterButton(props)}
           <Button color="inherit">
               <a href="/logout" className={classes.link}>
                   Logout
