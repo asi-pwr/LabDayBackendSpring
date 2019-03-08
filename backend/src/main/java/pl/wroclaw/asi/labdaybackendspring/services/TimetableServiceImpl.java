@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Timetable;
 import pl.wroclaw.asi.labdaybackendspring.repositories.TimetableRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +37,8 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public List<Timetable> findActiveTimetables() {
-        return timetableRepository.findAllActive();
+    public List<Timetable> findActiveTimetables(Integer pathId) {
+        return timetableRepository.findAllActive(pathId);
     }
 
 }

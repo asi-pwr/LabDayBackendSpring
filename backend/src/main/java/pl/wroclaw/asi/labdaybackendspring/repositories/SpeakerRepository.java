@@ -15,7 +15,7 @@ public interface SpeakerRepository extends CrudRepository<Speaker, Integer> {
                     "INNER JOIN event ON event.speaker_id = speaker.id " +
                     "INNER JOIN timetable ON event.id = timetable.event_id " +
                     "INNER JOIN path ON path.id = timetable.path_id " +
-            "WHERE path.active = TRUE",
+            "WHERE path.active = TRUE AND path.id = ?1",
             nativeQuery = true)
-    List<Speaker> findAllActive();
+    List<Speaker> findAllActive(Integer pathId);
 }

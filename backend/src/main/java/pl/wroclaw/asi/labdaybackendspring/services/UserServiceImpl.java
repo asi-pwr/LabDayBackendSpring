@@ -7,6 +7,7 @@ import pl.wroclaw.asi.labdaybackendspring.model.User;
 import pl.wroclaw.asi.labdaybackendspring.repositories.UserRepository;
 import pl.wroclaw.asi.labdaybackendspring.security.exceptions.UsernameAlreadyExistsException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,11 +29,23 @@ public class UserServiceImpl implements UserService {
         });
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
-
-        //TODO:Should username be unique?
     }
 
     public Optional<User> findUserByUsername(String username){
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return (List<User>) userRepository.findAll();
+    }
+
+    public User saveUserWithPath(User user){
+        Optional<User> updatedUser = Optional.ofNullable(userRepository.getById(user.getId()));
+        if (updatedUser.isPresent()){
+            updatedUser.get().setPathId(user.getPathId());
+            return userRepository.save(updatedUser.get());
+        }
+        return null;
     }
 }
