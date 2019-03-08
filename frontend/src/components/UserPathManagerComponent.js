@@ -50,7 +50,7 @@ class UserPathManagerComponent extends Component{
                                 </Typography>
 
                                     <PathSelectorComponent
-                                        path={user.path_id ? user.path_id :0}
+                                        pathId={user.path_id ? user.path_id :0}
                                         paths={paths}
                                         pathChange={e=> {
                                             this.pathChange(e, user.id)
