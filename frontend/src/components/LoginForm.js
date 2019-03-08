@@ -3,8 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/LoginForm.css'
 import labdayLogo from '../labday.png'
 import { FaUser, FaKey } from 'react-icons/fa'
-import RaisedButton from 'material-ui/RaisedButton';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Redirect } from 'react-router'
 import { connect } from 'react-redux';
 import {userActions} from "../actions/UserActions";
@@ -28,7 +26,7 @@ class LoginForm extends React.Component{
         dispatch(userActions.logout());
         this.state = {
             username: "",
-            password: "",    // <--- should this be done this way?
+            password: "",
             submitted: false
         }
 

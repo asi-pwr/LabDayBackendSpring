@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
 import MenuListComposition from "./MenuListComposition";
 
@@ -54,16 +53,6 @@ function Header(props) {
       </AppBar>
     </div>
   );
-}
-function ReportBugButton(props) {
-  const { classes } = props;
-  return (
-        <Button color="inherit">
-            <a href="/bug" className={classes.link}>
-                Zgłoś błąd
-            </a>
-        </Button>
-    )
 }
 
 function RegisterButton(props){

@@ -3,16 +3,10 @@ import {connect} from "react-redux";
 import CalendarComponent from "../calendar/CalendarComponent";
 
 class Dashboard extends Component {
-  constructor(props){
-      super(props);
-  }
 
   render() {
-      const { user } = this.props;
-      console.log('user: ' + user);
     return (
       <div>
-        <h1>Dashboard</h1>
           <CalendarComponent/>
       </div>
     );
