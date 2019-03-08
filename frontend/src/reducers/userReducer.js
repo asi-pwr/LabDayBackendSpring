@@ -17,5 +17,7 @@ export function userReducer(state = initialState, action) {
                 ...state,
                 newUser: action.data,
             }
+        default:
+            return state
     }
 }
