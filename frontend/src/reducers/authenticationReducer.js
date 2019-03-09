@@ -21,6 +21,7 @@ export function authentication(state = initialState, action) {
             };
         case userConstants.LOGIN_FAILURE:
             return {
+                error: action.error,
                 loggedIn: false
             };
         case userConstants.LOGOUT:

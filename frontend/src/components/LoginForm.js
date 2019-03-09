@@ -43,11 +43,10 @@ class LoginForm extends React.Component{
 
     render(){
         const { submitted } = this.state;
-        const { loggedIn, newUser } = this.props;
-        if (submitted){
-            if (loggedIn)
+        const { loggedIn, newUser, error } = this.props;
+        if (submitted && loggedIn)
                 return <Redirect to='/dashboard' />
-        }
+
         return(
             <div>
                 <br/><br/>
@@ -60,7 +59,7 @@ class LoginForm extends React.Component{
                 <article className="card-body">
                     <h4 className="card-title text-center mb-4 mt-1">Logowanie</h4>
                     <hr />
-                    {(submitted && !loggedIn) ?
+                    {(submitted && error) ?
                         <p className="text-danger text-center">Coś poszło nie tak</p>
                         : <p className="text-success text-center">Aby kontynuować, zaloguj się<br/> na konto admina</p>
                     }
@@ -111,9 +110,9 @@ class LoginForm extends React.Component{
 }
 
 function mapStateToProps(state) {
-    const { loggingIn, user, loggedIn } = state.authentication;
+    const {  user, loggedIn, error } = state.authentication;
     const { newUser } = state.userReducer;
-    return { loggingIn, user, loggedIn, newUser };
+    return {  user, loggedIn, newUser, error };
 }
 
 
