@@ -28,8 +28,10 @@ public class PublicAccessController {
     public ResponseEntity setPublicAccess(@RequestBody PublicAccessActive publicAccess){
        Optional<PublicAccessActive> publicAccessActiveFromDB =  publicAccessActiveRepository.findById(0);
 
-        if (publicAccessActiveFromDB.isEmpty())
+        if (publicAccessActiveFromDB.isEmpty()){
+            publicAccess.setId(0);
             return new ResponseEntity<>(publicAccessActiveRepository.save(publicAccess), HttpStatus.OK);
+        }
 
        publicAccessActiveFromDB.ifPresent(
                publicAccessActive -> publicAccessActive.setActive(publicAccess.isActive()));
