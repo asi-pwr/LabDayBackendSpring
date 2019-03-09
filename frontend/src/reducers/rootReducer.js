@@ -5,6 +5,7 @@ import {pathReducer} from "./pathReducer";
 import {appointmentReducer} from "./AppointmentReducer";
 import {speakerReducer} from "./speakerReducer";
 import {userReducer} from "./userReducer";
+import {publicAccessActiveReducer} from "./PublicAccessReducer";
 
 const rootReducer = combineReducers({
     authentication,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     appointmentReducer,
     speakerReducer,
     userReducer,
+    publicAccessActiveReducer,
 });
 
 export default rootReducer;
