@@ -1,30 +1,22 @@
 package pl.wroclaw.asi.labdaybackendspring.controllers;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.wroclaw.asi.labdaybackendspring.model.Path;
-import pl.wroclaw.asi.labdaybackendspring.model.PublicAccessActive;
 import pl.wroclaw.asi.labdaybackendspring.model.Role;
-import pl.wroclaw.asi.labdaybackendspring.repositories.PathRepository;
+import pl.wroclaw.asi.labdaybackendspring.repositories.PublicAccessActiveRepository;
 import pl.wroclaw.asi.labdaybackendspring.repositories.RoleRepository;
 import pl.wroclaw.asi.labdaybackendspring.security.UserTokenResponse;
 import pl.wroclaw.asi.labdaybackendspring.model.User;
 import pl.wroclaw.asi.labdaybackendspring.security.JwtTokenProvider;
-import pl.wroclaw.asi.labdaybackendspring.services.CustomUserDetailsService;
 import pl.wroclaw.asi.labdaybackendspring.services.UserService;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,21 +24,24 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class LoginController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private JwtTokenProvider tokenProvider;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private RoleRepository roleRepository;
+    private PublicAccessActiveRepository publicAccessActiveRepository;
 
-    @Autowired
-    private PathRepository pathRepository;
 
+    public LoginController(UserService userService,
+                           JwtTokenProvider tokenProvider,
+                           AuthenticationManager authenticationManager,
+                           RoleRepository roleRepository,
+                           PublicAccessActiveRepository publicAccessActiveRepository) {
+        this.userService = userService;
+        this.tokenProvider = tokenProvider;
+        this.authenticationManager = authenticationManager;
+        this.roleRepository = roleRepository;
+        this.publicAccessActiveRepository = publicAccessActiveRepository;
+    }
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity loginUser(@RequestParam Map<String, String> body){
@@ -88,7 +83,7 @@ public class LoginController {
     @GetMapping(path = "/public-access")
     public ResponseEntity<?> getPublicAccess(){
         Optional<User> guest = userService.findUserByUsername("guest");
-        if (guest.isPresent()){
+        if (guest.isPresent() && publicAccessActiveRepository.findById(0).get().isActive()){
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             guest.get().getUsername(),
@@ -103,11 +98,5 @@ public class LoginController {
     }
 
 
-    @GetMapping(path = "/public-access-active")
-    public ResponseEntity<?> isPublicAccessActive(){
-         if (pathRepository.countDistinctByActiveTrue() > 0){
-             return new ResponseEntity<>(new PublicAccessActive(true),HttpStatus.OK);
-         }
-        return new ResponseEntity<>(new PublicAccessActive(false),HttpStatus.OK);
-    }
+
 }
