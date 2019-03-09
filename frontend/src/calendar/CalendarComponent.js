@@ -193,7 +193,7 @@ class CalendarComponent extends React.Component {
         const { appointments} = this.props;
         return(
             <div>
-                CalendarComponent
+                <br/>
                 <br/>
                 <MuiThemeProvider theme={theme}>
                 <Paper>
