@@ -7,9 +7,11 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wroclaw.asi.labdaybackendspring.model.Privilege;
+import pl.wroclaw.asi.labdaybackendspring.model.PublicAccessActive;
 import pl.wroclaw.asi.labdaybackendspring.model.Role;
 import pl.wroclaw.asi.labdaybackendspring.model.User;
 import pl.wroclaw.asi.labdaybackendspring.repositories.PrivilegeRepository;
+import pl.wroclaw.asi.labdaybackendspring.repositories.PublicAccessActiveRepository;
 import pl.wroclaw.asi.labdaybackendspring.repositories.RoleRepository;
 import pl.wroclaw.asi.labdaybackendspring.services.UserService;
 
@@ -32,11 +34,17 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Value("${jwt.adminPassword}")
     private String adminPassword;
 
+    @Autowired
+    private PublicAccessActiveRepository publicAccessActiveRepository;
+
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (alreadySetup)
             return;
+
+        if(publicAccessActiveRepository.findById(0).isPresent())
+            publicAccessActiveRepository.save(new PublicAccessActive(0,false));
 
         Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
         Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
