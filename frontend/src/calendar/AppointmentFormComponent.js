@@ -9,6 +9,7 @@ import MomentUtils from '@date-io/moment';
 import Button from "@material-ui/core/es/Button/Button";
 import PathSelectorComponent from "./PathSelectorComponent";
 import {connect} from "react-redux";
+import SpeakerSelectorComponent from "./SpeakerSelectorComponent";
 
 
 class AppointmentFormComponent extends React.Component {
@@ -56,7 +57,7 @@ class AppointmentFormComponent extends React.Component {
 
 
     render() {
-        const { classes, visible, visibleChange, appointmentData, paths} = this.props;
+        const { classes, visible, visibleChange, appointmentData, paths, speakers} = this.props;
         const { appointmentChanges } = this.state
         const isNewAppointment = appointmentData.id === undefined;
         const displayAppointmentData = {
@@ -110,11 +111,32 @@ class AppointmentFormComponent extends React.Component {
                         <div className={classes.wrapper}>
                             <TextField label="Temat" {...textEditorProps('topic')}/>
                         </div>
+                        <div className={classes.pathSelectorWithButtons}>
+                            <div className={classes.shortWrapperLeft}>
+                                <TextField label='Adres' {...textEditorProps('address')}/>
+                            </div>
+                            <div className={classes.shortWrapperRight}>
+                                <TextField label="Pokój" {...textEditorProps('room')}/>
+                            </div>
+                        </div>
+
                         <div className={classes.wrapper}>
-                            <TextField label='Adres' {...textEditorProps('address')}/>
+                            <TextField label="image" {...textEditorProps('img')}/>
                         </div>
                         <div className={classes.wrapper}>
-                            <TextField label="Pokój" {...textEditorProps('room')}/>
+                            <TextField label="dor1 image" {...textEditorProps('dor1_img')}/>
+                        </div>
+
+                        <div className={classes.wrapper}>
+                            <TextField label="dor2 image" {...textEditorProps('dor2_img')}/>
+                        </div>
+                        <div className={classes.pathSelectorWithButtons}>
+                            <div className={classes.shortWrapperLeft}>
+                                <TextField type="number" label="latitude" {...textEditorProps('latitude')}/>
+                            </div>
+                            <div className={classes.shortWrapperRight}>
+                                <TextField type="number" label="longitude" {...textEditorProps('longitude')}/>
+                            </div>
                         </div>
                         <div className={classes.wrapper}>
                             <TextField
@@ -124,18 +146,25 @@ class AppointmentFormComponent extends React.Component {
                                 rows="3"
                             />
                         </div>
-                        {/*TODO!!  3x img, longitude and latitude */}
                     </div>
                     <div className={classes.pathSelectorWithButtons}>
                     <PathSelectorComponent
                         className={classes.pathSelector}
-                        path={displayAppointmentData['path_id'] || ''}
+                        pathId={displayAppointmentData['path_id'] || ''}
                         pathChange={pathId => {
                             this.changeAppointment({ field: ['path_id'], changes: pathId})
                         }}
                         paths={paths}
                         allEvents={false}
                     />
+                        <SpeakerSelectorComponent
+                            className={classes.pathSelector}
+                            speakerId={displayAppointmentData['speaker_id'] || ''}
+                            speakerChange={speakerId => {
+                                this.changeAppointment({ field: ['speaker_id'], changes: speakerId})
+                            }}
+                            speakers={speakers}
+                        />
                     <div className={classes.buttonGroup}>
 
                         {!isNewAppointment && (
@@ -213,6 +242,22 @@ const containerStyles = theme => ({
         justifyContent: 'space-between',
         padding: `${theme.spacing.unit}px 0px`,
     },
+    shortWrapperLeft: {
+        width: '100%',
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: `${theme.spacing.unit}px 0px`,
+        paddingRight: '15px',
+    },
+    shortWrapperRight: {
+        width: '100%',
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: `${theme.spacing.unit}px 0px`,
+        marginLeft: 'auto'
+    },
     icon: {
         margin: `${theme.spacing.unit * 2}px 0`,
         marginRight: `${theme.spacing.unit * 2}px`,
@@ -221,13 +266,14 @@ const containerStyles = theme => ({
         width: '100%',
     },
     pathSelectorWithButtons: {
-       display: 'flex'
+        display: 'flex'
     }
 });
 
 function mapStateToProps(state) {
-    const {paths} = state.pathReducer
-    return { paths }
+    const {paths} = state.pathReducer;
+    const { speakers } = state.speakerReducer;
+    return { paths, speakers }
 }
 
 export default connect(mapStateToProps)(withStyles(containerStyles)(AppointmentFormComponent))

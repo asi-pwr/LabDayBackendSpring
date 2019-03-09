@@ -29,6 +29,8 @@ import {PathActions} from "../actions/PathActions";
 import {AppointmentActions} from "../actions/AppointmentActions";
 import moment from "moment";
 import {AppointmentService} from "../services/AppointmentService";
+import {restActions} from "../actions/restActions";
+import {restConstants} from "../constants/restConstants";
 
 const theme = createMuiTheme(
     {
@@ -44,6 +46,7 @@ class CalendarComponent extends React.Component {
         const { dispatch } = props
         dispatch(AppointmentActions.getAppointments())
         dispatch(PathActions.getPaths())
+        dispatch(restActions.restGet('/speakers', restConstants.GET_SPEAKER_REQUEST));
 
         this.state = {
             currentDate: moment().format('YYYY-MM-DD'),
@@ -187,7 +190,7 @@ class CalendarComponent extends React.Component {
 
     render() {
         const { currentDate, editingFormVisible, confirmationVisible, currentPath } = this.state
-        const { appointments} = this.props
+        const { appointments} = this.props;
         return(
             <div>
                 CalendarComponent
@@ -203,9 +206,13 @@ class CalendarComponent extends React.Component {
                             onCommitChanges={this.commitChanges}
                             onEditingAppointmentIdChange={this.onEditingAppointmentIdChange}
                             onAddedAppointmentChange={this.onAddedAppointmentChange}/>
-                        <DayView/>
+                        <DayView
+                            startDayHour={6}
+                            endDayHour={23}/>
                         <MonthView/>
-                        <WeekView/>
+                        <WeekView
+                            startDayHour={6}
+                            endDayHour={23}/>
                         <Toolbar flexibleSpaceComponent={this.toolbar}/>
                         <DateNavigator/>
                         <ViewSwitcher/>
