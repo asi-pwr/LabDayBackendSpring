@@ -90,9 +90,6 @@ class AddSpeakerComponent extends React.Component {
 }
 
 
-AddSpeakerComponent.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 function mapStateToProps(state) {
     const { speakerReducer } = state;
     return { speakerReducer }

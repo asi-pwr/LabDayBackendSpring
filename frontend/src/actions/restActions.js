@@ -12,7 +12,7 @@ function restPost(item, endpoint, type) {
                 dispatch({
                     status: post.status,
                     type: type,
-                    newUser: post.data
+                    data: post.data
                 })
             })
     }

@@ -25,7 +25,7 @@ function register(username, password) {
             .then(response => {
                 dispatch({
                     type: restConstants.POST_USER_REQUEST,
-                    newUser: response.data.id,
+                    data: response.data.id,
                     status: response.status
                 })
             })

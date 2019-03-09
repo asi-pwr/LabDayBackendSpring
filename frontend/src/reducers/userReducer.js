@@ -16,7 +16,7 @@ export function userReducer(state = initialState, action) {
         case restConstants.POST_USER_REQUEST:
             return {
                 ...state,
-                newUser: action.newUser,
+                newUser: action.data,
                 status: action.status,
             }
         default:
