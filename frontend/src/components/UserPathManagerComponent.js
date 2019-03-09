@@ -45,12 +45,14 @@ class UserPathManagerComponent extends Component{
                     <Grid key={user.id} className={classes.grid}>
                         <Card className={classes.card}>
                             <CardContent>
-                                <Typography>
-                                    nazwa: {user.username}
+                                <Typography variant="h5" >
+                                    {user.username}
                                 </Typography>
+                                <br/>
+
 
                                     <PathSelectorComponent
-                                        path={user.path_id ? user.path_id :0}
+                                        path={user.path_id ? user.path_id : ''}
                                         paths={paths}
                                         pathChange={e=> {
                                             this.pathChange(e, user.id)
