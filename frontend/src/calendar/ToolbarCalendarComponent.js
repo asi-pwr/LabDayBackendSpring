@@ -60,7 +60,7 @@ class ToolbarCalendarComponent extends React.Component {
                     commitChanges={this.commitChanges}
                 open={open}/>
                 <PathSelectorComponent
-                    path={path}
+                    pathId={path}
                     pathChange={pathChange}
                     paths={paths}
                     allEvents={true}
