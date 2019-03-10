@@ -40,10 +40,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (alreadySetup)
-            return;
-
-        if(publicAccessActiveRepository.findById(0).isPresent())
+        if(alreadySetup)
+	  return;
+	
+	if(publicAccessActiveRepository.findById(0).isEmpty())
             publicAccessActiveRepository.save(new PublicAccessActive(0,false));
 
         Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
