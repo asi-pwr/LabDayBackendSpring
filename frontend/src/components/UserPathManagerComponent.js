@@ -64,7 +64,7 @@ class UserPathManagerComponent extends Component{
                             classes={classes}
                             user={user}
                             pathChange={this.pathChange}
-                            publicAccess={publicAccessActive.active}
+                            publicAccess={publicAccessActive}
                             dispatch={dispatch}
                             publicAccessChange={this.onPublicAccessChange}
                         />
