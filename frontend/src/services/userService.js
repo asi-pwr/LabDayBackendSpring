@@ -1,5 +1,6 @@
 import axios from "axios";
 import {restConstants} from "../constants/restConstants";
+import {backendURL} from "../App";
 
 export const userService = {
     login,
@@ -13,7 +14,7 @@ function login(username, password) {
     const configUrlEncoded = {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }
-    return axios.post(restConstants.apiBaseUrl + '/api/login', params, configUrlEncoded)
+    return axios.post(backendURL + '/api/login', params, configUrlEncoded)
         .then(response => { return response.data.token} )
         .then(token => {
             localStorage.setItem('token', token);

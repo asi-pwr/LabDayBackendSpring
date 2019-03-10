@@ -12,6 +12,7 @@ import {PathActions} from "../actions/PathActions";
 import {withStyles} from "@material-ui/core";
 import Checkbox from '@material-ui/core/Checkbox';
 import Switch from "@material-ui/core/es/Switch/Switch";
+import {backendURL} from "../App";
 
 class UserPathManagerComponent extends Component{
     constructor(props){
@@ -20,7 +21,7 @@ class UserPathManagerComponent extends Component{
         dispatch(PathActions.getPaths())
         dispatch(restActions.restGet('/users', restConstants.GET_USERS_REQUEST));
         dispatch(restActions.restGet(
-            restConstants.apiBaseUrl + '/api/public-access-active',
+            backendURL + '/api/public-access-active',
             restConstants.GET_PUBLIC_ACCESS_ACTIVE));
 
         this.pathChange = this.pathChange.bind(this);

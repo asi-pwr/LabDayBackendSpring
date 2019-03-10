@@ -1,8 +1,9 @@
 import axios from "axios";
 import {restConstants} from "../constants/restConstants";
+import {backendURL} from "../App";
 
 const axiosInstance = axios.create({
-    baseURL: restConstants.apiBaseUrl + '/admin/api',
+    baseURL: backendURL + '/admin/api',
     headers: axiosHeaders()
 });
 

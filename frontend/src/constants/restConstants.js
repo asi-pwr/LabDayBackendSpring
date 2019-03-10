@@ -27,6 +27,5 @@ export const restConstants = {
     GET_PUBLIC_ACCESS_ACTIVE: 'GET_PUBLIC_ACCESS_ACTIVE',
     POST_PUBLIC_ACCESS_ACTIVE: 'POST_PUBLIC_ACCESS_ACTIVE',
 
-    apiBaseUrl: backendURL,
 
 }
