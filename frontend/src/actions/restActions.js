@@ -21,7 +21,7 @@ function restPost(item, endpoint, type) {
 function restGet(endpoint, type) {
     return dispatch => {
         axiosInstance.get(endpoint)
-            .then(response =>{
+            .then(response => {
                 dispatch({
                     status: response.status,
                     type: type,

@@ -17,6 +17,11 @@ import AddSpeakerComponent from "./components/AddSpeakerComponent";
 import UserPathManagerComponent from "./components/UserPathManagerComponent";
 import RegisterComponent from "./components/RegisterComponent";
 
+
+export const backendURL = process.env.API_URL;
+
+
+
 class App extends Component {
   constructor(props){
     super(props);
