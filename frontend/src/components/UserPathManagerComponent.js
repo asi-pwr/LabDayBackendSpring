@@ -20,7 +20,7 @@ class UserPathManagerComponent extends Component{
         dispatch(PathActions.getPaths())
         dispatch(restActions.restGet('/users', restConstants.GET_USERS_REQUEST));
         dispatch(restActions.restGet(
-            'http://193.33.111.235:5436/api/public-access-active',
+            restConstants.apiBaseUrl + '/api/public-access-active',
             restConstants.GET_PUBLIC_ACCESS_ACTIVE));
 
         this.pathChange = this.pathChange.bind(this);

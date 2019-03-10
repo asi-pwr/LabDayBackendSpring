@@ -1,3 +1,5 @@
+import {backendURL} from "../App";
+
 export const restConstants = {
     POST_PLACE_REQUEST: 'POST_PLACE_REQUEST',
     GET_PLACE_REQUEST: 'GET_PLACE_REQUEST',
@@ -24,4 +26,7 @@ export const restConstants = {
 
     GET_PUBLIC_ACCESS_ACTIVE: 'GET_PUBLIC_ACCESS_ACTIVE',
     POST_PUBLIC_ACCESS_ACTIVE: 'POST_PUBLIC_ACCESS_ACTIVE',
+
+    apiBaseUrl: backendURL,
+
 }

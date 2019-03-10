@@ -14,14 +14,13 @@ export const userActions = {
 
 function register(username, password) {
     return dispatch => {
-        const apiBaseUrl = "http://193.33.111.235:5436/api";
         const params = new URLSearchParams();
         params.append('username', username);
         params.append('password', password);
         const configUrlEncoded = {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }
-        return axios.post(apiBaseUrl + '/register', params, configUrlEncoded)
+        return axios.post(restConstants.apiBaseUrl + '/api/register', params, configUrlEncoded)
             .then(response => {
                 dispatch({
                     type: restConstants.POST_USER_REQUEST,

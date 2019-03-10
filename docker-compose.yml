@@ -1,36 +1,19 @@
-version: "3.2"
+version: "3.7"
 services:
- labday-backend:
-  build:
-   context: .
-   dockerfile: backend.yml
-  environment:
-    - SPRING_DATASOURCE_URL=
-    - SPRING_DATASOURCE_USERNAME=
-    - SPRING_DATASOURCE_PASSWORD=
-    - jwt.secret=
-    - jwt.header=Authorization
-    - jwt.expirationTime=
-    - jwt.adminPassword=
-  ports:
-    - 5436:8080 
-  networks:
-    - labday-network
- labday-postgresql:
-    container_name: labday-postgresql
-    image: postgres
-    command: -p 5435
-    ports: 
-    - 5435:5435
-    environment:
-     POSTGRES_PASSWORD:
- labday-admin-panel:
-    container_name: labday-admin-panel
+  backend:
     build:
-     context: frontend/.
-     dockerfile: adminPanel.yml
-    ports: 
-    - 8080:3000
-networks:
- labday-network:
-  driver: bridge
+      context: .
+      dockerfile: Dockerfile.backend
+    env_file: .env
+    ports:
+      - "${BACKEND_PORT}:8080"
+  admin:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.admin
+    ports:
+      - "${FRONTEND_PORT}:3000"
+  db:
+    image: postgres:11-alpine
+    command: -c "track_commit_timestamp=on"
+    env_file: .env
