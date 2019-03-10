@@ -11,6 +11,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.admin
+    env_file: .env
     ports:
       - "${FRONTEND_PORT}:3000"
   db:
