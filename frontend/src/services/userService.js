@@ -1,6 +1,5 @@
 import axios from "axios";
-import {restConstants} from "../constants/restConstants";
-import {backendURL} from "../App";
+import {backendURL} from "../helpers/backendURL";
 
 export const userService = {
     login,

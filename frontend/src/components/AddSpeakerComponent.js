@@ -1,7 +1,6 @@
 import React from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from  'material-ui/TextField';
-import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from "react-redux";
 import {Redirect} from "react-router";

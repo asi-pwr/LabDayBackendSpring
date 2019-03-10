@@ -1,4 +1,3 @@
-import {backendURL} from "../App";
 
 export const restConstants = {
     POST_PLACE_REQUEST: 'POST_PLACE_REQUEST',

@@ -10,9 +10,8 @@ import Grid from "@material-ui/core/Grid/Grid";
 import PathSelectorComponent from "../calendar/PathSelectorComponent";
 import {PathActions} from "../actions/PathActions";
 import {withStyles} from "@material-ui/core";
-import Checkbox from '@material-ui/core/Checkbox';
 import Switch from "@material-ui/core/es/Switch/Switch";
-import {backendURL} from "../App";
+import {backendURL} from "../helpers/backendURL";
 
 class UserPathManagerComponent extends Component{
     constructor(props){
