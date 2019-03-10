@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Speaker;
 import pl.wroclaw.asi.labdaybackendspring.repositories.SpeakerRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,21 +25,20 @@ public class SpeakerServiceImpl implements SpeakerService {
 
     @Override
     public List<Speaker> findAllSpeakers() {
-        List<Speaker> speakerList = new ArrayList<>();
-        speakerRepository.findAll().iterator().forEachRemaining(speakerList::add);
-        return speakerList;
+        return (List<Speaker>) speakerRepository.findAll();
     }
 
     @Override
     public void deleteSpeaker(Integer id) {
         Optional<Speaker> speaker = speakerRepository.findById(id);
-        if(!speaker.isPresent())
+
+        speaker.ifPresentOrElse(speakerRepository::delete, () -> {
             throw new RuntimeException("Speaker with id:" + id + "does not exist");
-        speakerRepository.delete(speaker.get());
+        });
     }
 
     @Override
-    public List<Speaker> findActiveSpeakers() {
-        return speakerRepository.findAllActive();
+    public List<Speaker> findActiveSpeakers(Integer pathId) {
+        return speakerRepository.findAllActive(pathId);
     }
 }

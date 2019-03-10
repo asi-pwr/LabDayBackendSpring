@@ -60,13 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST,
-                        "/api/events",
-                        "/api/paths",
-                        "/api/map_others",
-                        "/api/speakers",
-                        "/api/timetables"
-                ).hasAuthority("WRITE_PRIVILEGE")
+                .antMatchers(HttpMethod.POST,"/admin/**/*").hasAuthority("WRITE_PRIVILEGE")
                 .antMatchers(
                         "/",
                         "/favicon.ico",
@@ -81,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/public-access-active",
                         "/api/public-access"
                 ).permitAll()
-                .antMatchers(HttpMethod.DELETE,"/api/**/*").hasAuthority("WRITE_PRIVILEGE")
+                .antMatchers(HttpMethod.DELETE,"/admin/**/*").hasAuthority("WRITE_PRIVILEGE")
                 .antMatchers(HttpMethod.GET,"/api/app-data").hasAuthority("READ_PRIVILEGE")
                 .antMatchers(HttpMethod.POST,"/api/login", "/api/register").permitAll()
                 .anyRequest().authenticated();

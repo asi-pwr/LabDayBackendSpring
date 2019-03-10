@@ -31,8 +31,11 @@ public class User implements UserDetails {
     @JsonProperty("username")
     private String username;
 
-    @JsonProperty("password")
+    @JsonIgnore
     private String password;
+
+    @JsonProperty("path_id")
+    private Integer pathId;
 
     @JsonIgnore
     @ManyToMany

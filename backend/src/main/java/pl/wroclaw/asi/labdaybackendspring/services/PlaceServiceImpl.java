@@ -24,16 +24,15 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<Place> findAllPlaces() {
-        List<Place> placesList = new ArrayList<>();
-        placeRepository.findAll().iterator().forEachRemaining(placesList::add);
-        return placesList;
+        return (List<Place>) placeRepository.findAll();
     }
 
     @Override
     public void deletePlace(Integer id) {
         Optional<Place> place = placeRepository.findById(id);
-        if (!place.isPresent())
+
+        place.ifPresentOrElse(placeRepository::delete, () -> {
             throw new RuntimeException("Place with id: " + id + "does not exist");
-        placeRepository.delete(place.get());
+        });
     }
 }

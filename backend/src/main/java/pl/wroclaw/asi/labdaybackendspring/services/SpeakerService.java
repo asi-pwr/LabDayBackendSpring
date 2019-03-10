@@ -8,6 +8,6 @@ public interface SpeakerService {
     Speaker saveOrUpdateSpeaker(Speaker speaker);
     List<Speaker> findAllSpeakers();
     void deleteSpeaker(Integer id);
-    List<Speaker> findActiveSpeakers();
+    List<Speaker> findActiveSpeakers(Integer pathId);
 
 }

@@ -17,7 +17,7 @@ import java.security.Principal;
 
 @Secured("ROLE_ADMIN")
 @Controller
-@RequestMapping("/api/paths")
+@RequestMapping("/admin/api/paths")
 public class PathController {
 
     private final PathService pathService;
@@ -36,15 +36,14 @@ public class PathController {
 
         if(errors != null)
             return errors;
-        pathService.saveOrUpdatePath(path);
-        return new ResponseEntity<>("Path successfully created", HttpStatus.CREATED);
+        return new ResponseEntity<>(pathService.saveOrUpdatePath(path), HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/{pathId}")
     public ResponseEntity<?> deletePathById(@PathVariable("pathId") Integer PathId){
         pathService.deletePath(PathId);
-        return new ResponseEntity<>("Path with id: " + PathId + "was successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping

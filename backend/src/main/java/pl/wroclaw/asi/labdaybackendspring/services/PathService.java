@@ -8,5 +8,5 @@ public interface PathService {
     Path saveOrUpdatePath(Path path);
     List<Path> findAllPaths();
     void deletePath(Integer id);
-    List<Path> findActivePaths();
+    List<Path> findActivePaths(Integer pathId);
 }

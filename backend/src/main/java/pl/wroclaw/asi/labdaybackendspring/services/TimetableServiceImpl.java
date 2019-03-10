@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Timetable;
 import pl.wroclaw.asi.labdaybackendspring.repositories.TimetableRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,22 +24,21 @@ public class TimetableServiceImpl implements TimetableService {
 
     @Override
     public List<Timetable> findAllTimetables() {
-        List<Timetable> timetableList = new ArrayList<>();
-        timetableRepository.findAll().iterator().forEachRemaining(timetableList::add);
-        return timetableList;
+        return (List<Timetable>) timetableRepository.findAll();
     }
 
     @Override
     public void deleteTimetable(Integer id) {
         Optional<Timetable> timetable = timetableRepository.findById(id);
-        if(!timetable.isPresent())
+
+        timetable.ifPresentOrElse(timetableRepository::delete, () -> {
             throw new RuntimeException("Timetable with id: " + id + "does not exists");
-        timetableRepository.delete(timetable.get());
+        });
     }
 
     @Override
-    public List<Timetable> findActiveTimetables() {
-        return timetableRepository.findAllActive();
+    public List<Timetable> findActiveTimetables(Integer pathId) {
+        return timetableRepository.findAllActive(pathId);
     }
 
 }
