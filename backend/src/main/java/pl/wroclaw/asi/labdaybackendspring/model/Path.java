@@ -20,6 +20,7 @@ public class Path {
     @JsonProperty("name")
     private String name;
 
+    @Lob
     @JsonProperty("info")
     private String info;
 
