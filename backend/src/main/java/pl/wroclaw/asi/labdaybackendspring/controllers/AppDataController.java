@@ -38,12 +38,14 @@ public class AppDataController {
             PlaceService placeService,
             PathService pathService,
             TimetableService timetableService,
-            SpeakerService speakerService, UserService userService) {
+            SpeakerService speakerService,
+            UserService userService) {
         this.eventService = eventService;
         this.placeService = placeService;
         this.pathService = pathService;
         this.timetableService = timetableService;
         this.speakerService = speakerService;
+
         this.userService = userService;
     }
 
