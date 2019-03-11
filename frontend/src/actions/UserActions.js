@@ -4,7 +4,7 @@ import {alertActions} from "./alertActions";
 import {userConstants} from "../constants/userConstants";
 import axios from "axios";
 import {restConstants} from "../constants/restConstants";
-import {backendURL} from "../App";
+import {backendURL} from "../helpers/backendURL";
 
 
 export const userActions = {
@@ -21,7 +21,7 @@ function register(username, password) {
         const configUrlEncoded = {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }
-        return axios.post(backendURL + '/api/register', params, configUrlEncoded)
+        return axios.post( backendURL + '/api/register', params, configUrlEncoded)
             .then(response => {
                 dispatch({
                     type: restConstants.POST_USER_REQUEST,

@@ -23,9 +23,7 @@ import java.util.Collections;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 public static final String TOKEN_PREFIX = "token ";
 
-
-    @Value("${jwt.header}")
-    private String HEADER_STRING;
+    private String HEADER_STRING = "Authorization";
 
     @Autowired
     private JwtTokenProvider tokenProvider;

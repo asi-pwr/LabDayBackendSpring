@@ -17,7 +17,8 @@ import AddSpeakerComponent from "./components/AddSpeakerComponent";
 import UserPathManagerComponent from "./components/UserPathManagerComponent";
 import RegisterComponent from "./components/RegisterComponent";
 
-export const backendURL = process.env.REACT_APP_API_URL;
+// export const backendURL = 'http://192.168.0.109:3001';
+    // process.env.REACT_APP_API_URL;
 
 class App extends Component {
   constructor(props){
