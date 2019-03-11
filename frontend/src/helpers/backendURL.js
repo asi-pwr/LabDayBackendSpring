@@ -1,1 +1,1 @@
-export const backendURL = 'http://192.168.0.109:3001';
+export const backendURL =  process.env.REACT_APP_API_URL;
