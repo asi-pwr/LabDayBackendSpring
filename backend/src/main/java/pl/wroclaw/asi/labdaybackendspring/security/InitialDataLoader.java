@@ -6,13 +6,11 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pl.wroclaw.asi.labdaybackendspring.model.Privilege;
-import pl.wroclaw.asi.labdaybackendspring.model.PublicAccessActive;
-import pl.wroclaw.asi.labdaybackendspring.model.Role;
-import pl.wroclaw.asi.labdaybackendspring.model.User;
+import pl.wroclaw.asi.labdaybackendspring.model.*;
 import pl.wroclaw.asi.labdaybackendspring.repositories.PrivilegeRepository;
 import pl.wroclaw.asi.labdaybackendspring.repositories.PublicAccessActiveRepository;
 import pl.wroclaw.asi.labdaybackendspring.repositories.RoleRepository;
+import pl.wroclaw.asi.labdaybackendspring.repositories.SpeakerRepository;
 import pl.wroclaw.asi.labdaybackendspring.services.UserService;
 
 import java.util.*;
@@ -24,6 +22,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SpeakerRepository speakerRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -41,10 +42,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if(alreadySetup)
-	  return;
+	        return;
 	
-	if(publicAccessActiveRepository.findById(0).isEmpty())
+	    if(publicAccessActiveRepository.findById(0).isEmpty())
             publicAccessActiveRepository.save(new PublicAccessActive(0,false));
+
+        if (speakerRepository.findByName("NaS").isEmpty()){
+            Speaker speaker = new Speaker("NaS", "Not a Speaker - for registry and opening", "");
+            speakerRepository.save(speaker);
+        }
 
         Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
         Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
