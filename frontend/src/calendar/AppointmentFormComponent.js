@@ -187,6 +187,7 @@ class AppointmentFormComponent extends React.Component {
                                 displayAppointmentData.startDate > displayAppointmentData.endDate
                                 || displayAppointmentData.path_id === -1
                                 || displayAppointmentData.path_id === ''
+                                || displayAppointmentData.speaker_id === undefined
                             }
                             className={classes.button}
                             onClick={() => {
