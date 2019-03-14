@@ -15,7 +15,7 @@ public class LabdaybackendspringApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LabdaybackendspringApplication.class, args);
-		lastUpdate = new LastUpdate(new Timestamp(new Date().getTime()));
+		lastUpdate = new LastUpdate(new Timestamp(new Date().getTime()).toString());
 
 	}
 }

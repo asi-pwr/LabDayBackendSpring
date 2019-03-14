@@ -40,7 +40,7 @@ public class EventController {
         if(errors != null)
             return errors;
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(eventService.saveOrUpdateEvent(event), HttpStatus.CREATED);
 
     }
@@ -48,7 +48,7 @@ public class EventController {
     @DeleteMapping("/{eventId}")
     public ResponseEntity<?> deleteEventById(@PathVariable Integer eventId){
         eventService.deleteEvent(eventId);
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 

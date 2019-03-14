@@ -10,9 +10,9 @@ import java.util.Objects;
 public class LastUpdate {
 
     @JsonProperty("updated_at")
-    private Timestamp updatedAt;
+    private String updatedAt;
 
-    public LastUpdate(Timestamp updatedAt) {
+    public LastUpdate(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -41,11 +41,12 @@ public class LastUpdate {
         return Objects.hash(updatedAt);
     }
 
-    public Timestamp getUpdatedAt() {
+
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

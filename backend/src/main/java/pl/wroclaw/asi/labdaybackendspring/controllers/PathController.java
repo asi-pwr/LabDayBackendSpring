@@ -41,7 +41,7 @@ public class PathController {
         if(errors != null)
             return errors;
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(pathService.saveOrUpdatePath(path), HttpStatus.CREATED);
 
     }
@@ -49,7 +49,7 @@ public class PathController {
     @DeleteMapping("/{pathId}")
     public ResponseEntity<?> deletePathById(@PathVariable("pathId") Integer PathId){
         pathService.deletePath(PathId);
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

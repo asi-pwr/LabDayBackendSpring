@@ -40,7 +40,7 @@ public class SpeakerController {
         if(errors != null)
             return errors;
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
 
         return new ResponseEntity<>(speakerService.saveOrUpdateSpeaker(speaker), HttpStatus.CREATED);
 
@@ -50,7 +50,7 @@ public class SpeakerController {
     public ResponseEntity<?> deleteSpeakerById(@PathVariable Integer speakerId){
         speakerService.deleteSpeaker(speakerId);
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>( HttpStatus.OK);
     }
 

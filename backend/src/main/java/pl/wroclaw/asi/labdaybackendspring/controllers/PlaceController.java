@@ -40,7 +40,7 @@ public class PlaceController {
         if(errors != null)
             return errors;
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(placeService.saveOrUpdatePlace(place), HttpStatus.CREATED);
 
     }
@@ -49,7 +49,7 @@ public class PlaceController {
     public ResponseEntity<?> deletePlaceById(@PathVariable("placeId") Integer placeId){
         placeService.deletePlace(placeId);
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

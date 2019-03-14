@@ -38,7 +38,7 @@ public class TimetableController {
         if(errors != null)
             return errors;
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
 
         return new ResponseEntity<>(timetableService.saveOrUpdateTimetable(timetable), HttpStatus.CREATED);
 
@@ -48,7 +48,7 @@ public class TimetableController {
     public ResponseEntity<?> deleteTimetableById(@PathVariable Integer timetableId){
         timetableService.deleteTimetable(timetableId);
 
-        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
