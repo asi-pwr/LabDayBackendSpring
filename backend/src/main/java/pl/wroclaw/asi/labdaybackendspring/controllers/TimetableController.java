@@ -12,6 +12,10 @@ import pl.wroclaw.asi.labdaybackendspring.services.TimetableService;
 import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import static pl.wroclaw.asi.labdaybackendspring.services.LastUpdateServiceImpl.lastUpdate;
 
 @Secured("ROLE_ADMIN")
 @Service
@@ -34,6 +38,8 @@ public class TimetableController {
         if(errors != null)
             return errors;
 
+        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+
         return new ResponseEntity<>(timetableService.saveOrUpdateTimetable(timetable), HttpStatus.CREATED);
 
     }
@@ -41,6 +47,9 @@ public class TimetableController {
     @DeleteMapping("/{timetableId}")
     public ResponseEntity<?> deleteTimetableById(@PathVariable Integer timetableId){
         timetableService.deleteTimetable(timetableId);
+
+        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

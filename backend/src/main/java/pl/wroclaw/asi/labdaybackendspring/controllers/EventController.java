@@ -13,6 +13,11 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import static pl.wroclaw.asi.labdaybackendspring.services.LastUpdateServiceImpl.lastUpdate;
+
 @Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/admin/api/events")
@@ -34,6 +39,8 @@ public class EventController {
 
         if(errors != null)
             return errors;
+
+        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
         return new ResponseEntity<>(eventService.saveOrUpdateEvent(event), HttpStatus.CREATED);
 
     }
@@ -41,6 +48,7 @@ public class EventController {
     @DeleteMapping("/{eventId}")
     public ResponseEntity<?> deleteEventById(@PathVariable Integer eventId){
         eventService.deleteEvent(eventId);
+        lastUpdate.setUpdatedAt(new Timestamp(new Date().getTime()));
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
