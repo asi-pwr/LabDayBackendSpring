@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Speaker;
 import pl.wroclaw.asi.labdaybackendspring.repositories.SpeakerRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +36,7 @@ public class SpeakerServiceImpl implements SpeakerService {
         return (List<Speaker>) speakerRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void deleteSpeaker(Integer id) {
         Optional<Speaker> speaker = speakerRepository.findById(id);

@@ -46,7 +46,7 @@ public class EventServiceImpl implements EventService {
     public void fillEventsWithSpeaker(Integer speakerId, Integer notASpeakerId) {
         List<Event> events = (List<Event>) eventRepository.findAll();
         events.forEach(event -> {
-                if (event.getSpeakerId().equals(speakerId)){
+                if (event.getSpeakerId() == null || event.getSpeakerId().equals(speakerId)){
                     event.setSpeakerId(notASpeakerId);
                     eventRepository.save(event);
                 }
