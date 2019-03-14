@@ -11,15 +11,21 @@ import java.util.Optional;
 @Service
 public class SpeakerServiceImpl implements SpeakerService {
 
+    private EventService eventService;
+
     private SpeakerRepository speakerRepository;
 
     @Autowired
-    public SpeakerServiceImpl(SpeakerRepository speakerRepository) {
+    public SpeakerServiceImpl(EventService eventService, SpeakerRepository speakerRepository) {
+        this.eventService = eventService;
         this.speakerRepository = speakerRepository;
     }
 
     @Override
     public Speaker saveOrUpdateSpeaker(Speaker speaker) {
+        if (speaker.getName().equals("NaS"))
+            return speakerRepository.findByName("NaS").get();
+
         return speakerRepository.save(speaker);
     }
 
@@ -32,7 +38,15 @@ public class SpeakerServiceImpl implements SpeakerService {
     public void deleteSpeaker(Integer id) {
         Optional<Speaker> speaker = speakerRepository.findById(id);
 
-        speaker.ifPresentOrElse(speakerRepository::delete, () -> {
+        Speaker nas = speakerRepository.findByName("NaS").get();
+        speaker.ifPresent(s ->{
+            eventService.fillEventsWithSpeaker(s.getId(), nas.getId());
+        });
+
+
+        speaker.ifPresentOrElse(s -> {
+            if (!s.getName().equals("NaS")) speakerRepository.delete(s);
+        }, () -> {
             throw new RuntimeException("Speaker with id:" + id + "does not exist");
         });
     }

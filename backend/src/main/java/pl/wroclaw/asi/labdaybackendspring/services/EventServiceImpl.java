@@ -3,6 +3,7 @@ package pl.wroclaw.asi.labdaybackendspring.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wroclaw.asi.labdaybackendspring.model.Event;
+import pl.wroclaw.asi.labdaybackendspring.model.Speaker;
 import pl.wroclaw.asi.labdaybackendspring.repositories.EventRepository;
 
 import java.util.List;
@@ -39,6 +40,17 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<Event> findActiveEvents(Integer pathId) {
         return eventRepository.findAllActive(pathId);
+    }
+
+    @Override
+    public void fillEventsWithSpeaker(Integer speakerId, Integer notASpeakerId) {
+        List<Event> events = (List<Event>) eventRepository.findAll();
+        events.forEach(event -> {
+                if (event.getSpeakerId().equals(speakerId)){
+                    event.setSpeakerId(notASpeakerId);
+                    eventRepository.save(event);
+                }
+        });
     }
 
 }
