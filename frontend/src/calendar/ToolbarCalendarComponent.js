@@ -100,7 +100,13 @@ class ToolbarCalendarComponent extends React.Component {
     commitChanges({ posted, deleted }){
         const { dispatch } = this.props
         if (posted){
-            dispatch(PathActions.postPath(posted))
+            const postPath = {
+                id: posted.id,
+                name: posted.name || '',
+                info: posted.info || '',
+                active: posted.active
+            }
+            dispatch(PathActions.postPath(postPath))
         }
         if (deleted){
             this.setState({ deletedPathId: deleted})
