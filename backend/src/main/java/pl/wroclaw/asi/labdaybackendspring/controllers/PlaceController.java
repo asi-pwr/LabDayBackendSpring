@@ -12,6 +12,10 @@ import pl.wroclaw.asi.labdaybackendspring.services.PlaceService;
 import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import static pl.wroclaw.asi.labdaybackendspring.services.LastUpdateServiceImpl.lastUpdate;
 
 @Secured("ROLE_ADMIN")
 @Controller
@@ -36,6 +40,7 @@ public class PlaceController {
         if(errors != null)
             return errors;
 
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(placeService.saveOrUpdatePlace(place), HttpStatus.CREATED);
 
     }
@@ -43,6 +48,8 @@ public class PlaceController {
     @DeleteMapping("/{placeId}")
     public ResponseEntity<?> deletePlaceById(@PathVariable("placeId") Integer placeId){
         placeService.deletePlace(placeId);
+
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

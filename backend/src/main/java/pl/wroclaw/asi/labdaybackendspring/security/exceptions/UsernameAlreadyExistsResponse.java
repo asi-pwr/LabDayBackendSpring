@@ -1,12 +1,20 @@
 package pl.wroclaw.asi.labdaybackendspring.security.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
+
+
 public class UsernameAlreadyExistsResponse {
     private String responseError;
+
+    public UsernameAlreadyExistsResponse(String responseError) {
+        this.responseError = responseError;
+    }
+
+    public String getResponseError() {
+        return responseError;
+    }
+
+    public void setResponseError(String responseError) {
+        this.responseError = responseError;
+    }
 }

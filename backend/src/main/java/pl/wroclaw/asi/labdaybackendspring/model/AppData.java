@@ -2,12 +2,11 @@ package pl.wroclaw.asi.labdaybackendspring.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
 
 import java.util.List;
+import java.util.Objects;
 
-@Data
 public class AppData {
 
     @JsonProperty("paths")
@@ -31,5 +30,77 @@ public class AppData {
         this.paths = paths;
         this.timetables = timetables;
         this.speakers = speakers;
+    }
+
+    public AppData() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AppData appData = (AppData) o;
+        return Objects.equals(paths, appData.paths) &&
+                Objects.equals(timetables, appData.timetables) &&
+                Objects.equals(events, appData.events) &&
+                Objects.equals(speakers, appData.speakers) &&
+                Objects.equals(mapOthers, appData.mapOthers);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(paths, timetables, events, speakers, mapOthers);
+    }
+
+    @Override
+    public String toString() {
+        return "AppData{" +
+                "paths=" + paths +
+                ", timetables=" + timetables +
+                ", events=" + events +
+                ", speakers=" + speakers +
+                ", mapOthers=" + mapOthers +
+                '}';
+    }
+
+    public List<Path> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
+    }
+
+    public List<Timetable> getTimetables() {
+        return timetables;
+    }
+
+    public void setTimetables(List<Timetable> timetables) {
+        this.timetables = timetables;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Speaker> getSpeakers() {
+        return speakers;
+    }
+
+    public void setSpeakers(List<Speaker> speakers) {
+        this.speakers = speakers;
+    }
+
+    public List<Place> getMapOthers() {
+        return mapOthers;
+    }
+
+    public void setMapOthers(List<Place> mapOthers) {
+        this.mapOthers = mapOthers;
     }
 }

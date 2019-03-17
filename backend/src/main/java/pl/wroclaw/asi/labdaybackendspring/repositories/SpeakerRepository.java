@@ -6,6 +6,7 @@ import pl.wroclaw.asi.labdaybackendspring.model.Event;
 import pl.wroclaw.asi.labdaybackendspring.model.Speaker;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SpeakerRepository extends CrudRepository<Speaker, Integer> {
 
@@ -18,4 +19,9 @@ public interface SpeakerRepository extends CrudRepository<Speaker, Integer> {
             "WHERE path.active = TRUE AND path.id = ?1",
             nativeQuery = true)
     List<Speaker> findAllActive(Integer pathId);
+
+    Optional<Speaker> findByName(String name);
+
+    void delete(Speaker entity);
+
 }

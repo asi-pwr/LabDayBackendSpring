@@ -7,17 +7,17 @@ export const AppointmentService ={
 
 function addAppointment(appointment){
         const event = {
-            name: appointment.title,
-            img: appointment.img,
-            address: appointment.address,
-            room: appointment.room,
-            info: appointment.info,
-            topic: appointment.topic,
-            speaker_id: appointment.speaker_id,
-            dor1_img: appointment.dor1_img,
-            dor2_img: appointment.dor2_img,
-            latitude: appointment.latitude,
-            longitude: appointment.longitude
+            name: appointment.title || '',
+            img: appointment.img || '',
+            address: appointment.address || '',
+            room: appointment.room || '',
+            info: appointment.info || '',
+            topic: appointment.topic || '',
+            speaker_id: appointment.speaker_id || '',
+            dor1_img: appointment.dor1_img || '',
+            dor2_img: appointment.dor2_img || '',
+            latitude: appointment.latitude || 0,
+            longitude: appointment.longitude || 0.
         }
         const timetable = {
             path_id: appointment.path_id,
@@ -31,17 +31,17 @@ function addAppointment(appointment){
 function changeAppointment(appointment) {
     const event = {
         id: appointment.event_id,
-        name: appointment.title,
-        img: appointment.img,
-        address: appointment.address,
-        room: appointment.room,
-        info: appointment.info,
-        topic: appointment.topic,
+        name: appointment.title || '' ,
+        img: appointment.img || '',
+        address: appointment.address || '',
+        room: appointment.room || '',
+        info: appointment.info || '',
+        topic: appointment.topic || '',
         speaker_id: appointment.speaker_id,
-        dor1_img: appointment.dor1_img,
-        dor2_img: appointment.dor2_img,
-        latitude: appointment.latitude,
-        longitude: appointment.longitude
+        dor1_img: appointment.dor1_img || '',
+        dor2_img: appointment.dor2_img || '',
+        latitude: appointment.latitude || 0,
+        longitude: appointment.longitude || 0,
     }
     const timetable = {
         id: appointment.id,

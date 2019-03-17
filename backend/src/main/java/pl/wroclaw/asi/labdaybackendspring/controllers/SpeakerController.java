@@ -12,6 +12,10 @@ import pl.wroclaw.asi.labdaybackendspring.services.SpeakerService;
 import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import static pl.wroclaw.asi.labdaybackendspring.services.LastUpdateServiceImpl.lastUpdate;
 
 
 @Secured("ROLE_ADMIN")
@@ -35,6 +39,9 @@ public class SpeakerController {
 
         if(errors != null)
             return errors;
+
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
+
         return new ResponseEntity<>(speakerService.saveOrUpdateSpeaker(speaker), HttpStatus.CREATED);
 
     }
@@ -42,6 +49,8 @@ public class SpeakerController {
     @DeleteMapping("/{speakerId}")
     public ResponseEntity<?> deleteSpeakerById(@PathVariable Integer speakerId){
         speakerService.deleteSpeaker(speakerId);
+
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>( HttpStatus.OK);
     }
 

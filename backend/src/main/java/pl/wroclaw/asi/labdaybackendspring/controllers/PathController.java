@@ -14,6 +14,10 @@ import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import static pl.wroclaw.asi.labdaybackendspring.services.LastUpdateServiceImpl.lastUpdate;
 
 @Secured("ROLE_ADMIN")
 @Controller
@@ -36,6 +40,8 @@ public class PathController {
 
         if(errors != null)
             return errors;
+
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(pathService.saveOrUpdatePath(path), HttpStatus.CREATED);
 
     }
@@ -43,6 +49,7 @@ public class PathController {
     @DeleteMapping("/{pathId}")
     public ResponseEntity<?> deletePathById(@PathVariable("pathId") Integer PathId){
         pathService.deletePath(PathId);
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

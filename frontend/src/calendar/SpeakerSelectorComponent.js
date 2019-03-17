@@ -9,8 +9,8 @@ import React from "react";
 
 class SpeakerSelectorComponent extends Component {
     render() {
-        const { speakerId, speakerChange, speakers, classes} = this.props
-        console.log(speakerId);
+        const { speakerId, speakerChange, speakers, classes} = this.props;
+        const notASpeaker = speakers.filter((speaker) => (speaker.name === "NaS"))[0];
         return(
             <FormControl
                 className={classes.speakerSelector}
@@ -22,10 +22,17 @@ class SpeakerSelectorComponent extends Component {
                     onChange={(e) => {speakerChange(e.target.value)}}
                     input={<Input name="Prelegenci" id="path-input"/>}
                 >
-                    <MenuItem value="">
-                        <em>None</em>
+
+                    <MenuItem
+                        value={notASpeaker.id}
+                        key={notASpeaker.id.toString()}
+                        className={classes.pathSelectorItem}
+                    >
+                        Brak
                     </MenuItem>
-                    {speakers.map((speaker) => (
+                    {speakers
+                        .filter((speaker) => (speaker.name !== "NaS"))
+                        .map((speaker) => (
                         <MenuItem
                             value={speaker.id}
                             key={speaker.id.toString()}

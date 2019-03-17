@@ -2,10 +2,7 @@ package pl.wroclaw.asi.labdaybackendspring.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +11,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Table(name="Users")
 public class User implements UserDetails {
 
@@ -45,6 +39,61 @@ public class User implements UserDetails {
     )
     private Collection<Role> roles;
 
+
+    public User() {
+    }
+
+    public User(String username, String password, Integer pathId, Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.pathId = pathId;
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", pathId=" + pathId +
+                ", roles=" + roles +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(pathId, user.pathId) &&
+                Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, username, password, pathId, roles);
+    }
+
+    public Integer getPathId() {
+        return pathId;
+    }
+
+    public void setPathId(Integer pathId) {
+        this.pathId = pathId;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
 
     public Integer getId() {
         return id;
