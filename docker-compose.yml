@@ -16,5 +16,4 @@ services:
       - "${FRONTEND_PORT}:3000"
   db:
     image: postgres:11-alpine
-    command: -c "track_commit_timestamp=on"
     env_file: .env
