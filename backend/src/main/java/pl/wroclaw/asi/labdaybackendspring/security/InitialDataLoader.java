@@ -63,22 +63,23 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         Optional<User> admin = userService.findUserByUsername("admin");
-        createAccountIfNotFound(admin.get(),"admin", adminPassword, Arrays.asList(adminRole));
+        createAccountIfNotFound(admin.orElse(null),"admin", adminPassword, Arrays.asList(adminRole));
 
         Role guestRole = roleRepository.findByName("ROLE_GUEST");
         Optional<User> guest = userService.findUserByUsername("guest");
-        createAccountIfNotFound(guest.get(),"guest","guest",Arrays.asList(guestRole));
+        createAccountIfNotFound(guest.orElse(null),"guest","guest",Arrays.asList(guestRole));
 
         alreadySetup = true;
     }
 
     @Transactional
     void createAccountIfNotFound(User user, String username, String password, Collection<Role> roles) {
-        if(user == null)
+        if(user == null){
             user = new User();
-        user.setUsername(username);
+            user.setUsername(username);
+	}
         user.setPassword(password);
-        if (user.getRoles().isEmpty())
+        if (user.getRoles() == null || user.getRoles().isEmpty())
             user.setRoles(roles);
         userService.saveUser(user);
     }
