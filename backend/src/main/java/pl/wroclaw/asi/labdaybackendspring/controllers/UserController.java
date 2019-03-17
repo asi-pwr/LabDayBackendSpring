@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.wroclaw.asi.labdaybackendspring.model.User;
 import pl.wroclaw.asi.labdaybackendspring.services.UserService;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import static pl.wroclaw.asi.labdaybackendspring.services.LastUpdateServiceImpl.lastUpdate;
+
 @Secured("ROLE_ADMIN")
 @Controller
 @RequestMapping("/admin/api/users")
@@ -33,6 +38,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity postUserWithPath( @RequestBody User user){
         User response = userService.saveUserWithPath(user);
+        lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         if (response != null)
             return new ResponseEntity<>(response,HttpStatus.OK);
         else
