@@ -25,7 +25,9 @@ class SpeakerSelectorComponent extends Component {
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    {speakers.map((speaker) => (
+                    {speakers
+                        .filter((speaker) => speaker.name !== "NaS")
+                        .map((speaker) => (
                         <MenuItem
                             value={speaker.id}
                             key={speaker.id.toString()}
