@@ -39,7 +39,9 @@ class ShowSpeakersComponent extends React.Component {
                 <Fab  aria-label="Add" className={classes.addButton} component={RouterLink} to={'/addSpeaker'}>
                     <AddIcon/>
                 </Fab>
-                { speakerReducer.speakers.map(speaker => (
+                { speakerReducer.speakers
+                    .filter((speaker) => (speaker.name !== "NaS"))
+                    .map(speaker => (
                     <Grid key={speaker.id}>
                         <ShowSpeaker speaker = {speaker} classes={classes} dispatch={dispatch} />
                     </Grid>
