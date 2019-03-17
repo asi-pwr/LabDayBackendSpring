@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wroclaw.asi.labdaybackendspring.model.*;
-import pl.wroclaw.asi.labdaybackendspring.repositories.PrivilegeRepository;
-import pl.wroclaw.asi.labdaybackendspring.repositories.PublicAccessActiveRepository;
-import pl.wroclaw.asi.labdaybackendspring.repositories.RoleRepository;
-import pl.wroclaw.asi.labdaybackendspring.repositories.SpeakerRepository;
+import pl.wroclaw.asi.labdaybackendspring.repositories.*;
 import pl.wroclaw.asi.labdaybackendspring.services.UserService;
 
 import java.util.*;
@@ -21,7 +19,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private boolean alreadySetup = false;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private SpeakerRepository speakerRepository;
@@ -37,6 +35,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     @Autowired
     private PublicAccessActiveRepository publicAccessActiveRepository;
+
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Override
     @Transactional
@@ -62,11 +65,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         createRoleIfNotFound("ROLE_GUEST", Arrays.asList(readPrivilege));
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
-        Optional<User> admin = userService.findUserByUsername("admin");
+        Optional<User> admin = userRepository.findByUsername("admin");
         createAccountIfNotFound(admin.orElse(null),"admin", adminPassword, Arrays.asList(adminRole));
 
         Role guestRole = roleRepository.findByName("ROLE_GUEST");
-        Optional<User> guest = userService.findUserByUsername("guest");
+        Optional<User> guest = userRepository.findByUsername("guest");
         createAccountIfNotFound(guest.orElse(null),"guest","guest",Arrays.asList(guestRole));
 
         alreadySetup = true;
@@ -78,10 +81,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             user = new User();
             user.setUsername(username);
 	}
-        user.setPassword(password);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
         if (user.getRoles() == null || user.getRoles().isEmpty())
             user.setRoles(roles);
-        userService.saveUser(user);
+        userRepository.save(user);
     }
 
     @Transactional
