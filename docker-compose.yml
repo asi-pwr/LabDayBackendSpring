@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile.admin
     env_file: .env
     ports:
-      - "${FRONTEND_PORT}:3000"
+      - "${FRONTEND_PORT}:5000"
   db:
     image: postgres:11-alpine
     env_file: .env
