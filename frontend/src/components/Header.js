@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -29,30 +29,32 @@ const styles = {
     marginLeft: 'auto'
   }
 };
+class Header extends Component {
+    render() {
 
-function Header(props) {
-  const { classes } = props;
-  const isLoggedIn = props.user ? Boolean(props.user.token) : false;
-  const buttons = isLoggedIn ? LoggedInButtons(props) : RegisterButton(props);
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuListComposition/>
-          </IconButton>
-          <Typography variant="h6" color="inherit">
-            <a href="/" className={classes.link}>
-              LabDay - Wydział Chemiczny
-            </a>
-          </Typography>
-          <div className={classes.toRight}>
-              {buttons}
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+        const {classes} = this.props;
+        const isLoggedIn = this.props.user ? Boolean(this.props.user.token) : false;
+        const buttons = isLoggedIn ? LoggedInButtons(this.props) : RegisterButton(this.props);
+        return (
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                            <MenuListComposition/>
+                        </IconButton>
+                        <Typography variant="h6" color="inherit">
+                            <a href="/" className={classes.link}>
+                                LabDay - Wydział Chemiczny
+                            </a>
+                        </Typography>
+                        <div className={classes.toRight}>
+                            {buttons}
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            </div>
+        );
+    }
 }
 
 function RegisterButton(props){
