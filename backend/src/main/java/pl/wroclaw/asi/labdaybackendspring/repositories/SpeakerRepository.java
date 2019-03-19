@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface SpeakerRepository extends CrudRepository<Speaker, Integer> {
 
     @Query(value =
-            "SELECT speaker.* " +
+            "SELECT DISTINCT speaker.* " +
             "FROM speaker " +
                     "INNER JOIN event ON event.speaker_id = speaker.id " +
                     "INNER JOIN timetable ON event.id = timetable.event_id " +

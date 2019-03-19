@@ -4,5 +4,11 @@ WORKDIR /adminPanel
 copy . ./
 RUN npm install --silent
 RUN npm install react-scripts@1.1.1 -g --silent
+RUN npm install -g serve
+RUN npm run build --production
 
-CMD ["npm", "start"]
+EXPOSE 5000
+
+CMD serve -s build
+
+
