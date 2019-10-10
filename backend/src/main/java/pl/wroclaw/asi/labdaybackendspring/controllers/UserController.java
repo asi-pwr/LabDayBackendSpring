@@ -31,16 +31,16 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity getUsers(){
+    public ResponseEntity getUsers() {
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity postUserWithPath( @RequestBody User user){
+    public ResponseEntity postUserWithPath(@RequestBody User user) {
         User response = userService.saveUserWithPath(user);
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         if (response != null)
-            return new ResponseEntity<>(response,HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

@@ -20,17 +20,17 @@ public class JwtTokenProvider {
     @Value("${jwt.expirationTime}")
     private Integer EXPIRATION_TIME;
 
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
-        Date expiryDate = new Date(now.getTime()+EXPIRATION_TIME);
+        Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
 
 
         String userId = user.getId().toString();
-        Map<String,Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
 
-        claims.put("id",userId);
-        claims.put("username",user.getUsername());
+        claims.put("id", userId);
+        claims.put("username", user.getUsername());
         JwtBuilder tokenBuilder = Jwts.builder()
                 .setSubject(userId)
                 .setClaims(claims)
@@ -48,28 +48,28 @@ public class JwtTokenProvider {
 
     }
 
-    public boolean validateToken(String token){
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
-        }catch (SignatureException ex){
+        } catch (SignatureException ex) {
             System.out.println("Invalid JWT Signature");
-        }catch (MalformedJwtException ex){
+        } catch (MalformedJwtException ex) {
             System.out.println("Invalid JWT UserTokenResponse");
-        }catch (ExpiredJwtException ex){
+        } catch (ExpiredJwtException ex) {
             System.out.println("Expired JWT token");
-        }catch (UnsupportedJwtException ex){
+        } catch (UnsupportedJwtException ex) {
             System.out.println("Unsupported JWT token");
-        }catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             System.out.println("JWT claims string is empty");
         }
         return false;
     }
 
 
-    public Integer getUserIdFromJWT(String token){
+    public Integer getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-        String id = (String)claims.get("id");
+        String id = (String) claims.get("id");
         return Integer.parseInt(id);
     }
 }

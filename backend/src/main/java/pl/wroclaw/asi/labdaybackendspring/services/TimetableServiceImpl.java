@@ -12,6 +12,7 @@ import java.util.Optional;
 public class TimetableServiceImpl implements TimetableService {
 
     private TimetableRepository timetableRepository;
+
     @Autowired
     public TimetableServiceImpl(TimetableRepository timetableRepository) {
         this.timetableRepository = timetableRepository;

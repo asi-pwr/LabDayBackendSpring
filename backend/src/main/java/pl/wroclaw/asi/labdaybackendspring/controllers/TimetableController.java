@@ -31,11 +31,11 @@ public class TimetableController {
     }
 
     @PostMapping
-    public ResponseEntity addTimetable(@Valid @RequestBody Timetable timetable, BindingResult result){
+    public ResponseEntity addTimetable(@Valid @RequestBody Timetable timetable, BindingResult result) {
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
 
-        if(errors != null)
+        if (errors != null)
             return errors;
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
@@ -45,7 +45,7 @@ public class TimetableController {
     }
 
     @DeleteMapping("/{timetableId}")
-    public ResponseEntity<?> deleteTimetableById(@PathVariable Integer timetableId){
+    public ResponseEntity<?> deleteTimetableById(@PathVariable Integer timetableId) {
         timetableService.deleteTimetable(timetableId);
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
@@ -54,7 +54,7 @@ public class TimetableController {
     }
 
     @GetMapping
-    public ResponseEntity getAllTimetables(){
-        return new ResponseEntity<>(timetableService.findAllTimetables(),HttpStatus.OK);
+    public ResponseEntity getAllTimetables() {
+        return new ResponseEntity<>(timetableService.findAllTimetables(), HttpStatus.OK);
     }
 }

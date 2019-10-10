@@ -13,7 +13,6 @@ import pl.wroclaw.asi.labdaybackendspring.services.PathService;
 import pl.wroclaw.asi.labdaybackendspring.services.ValidationErrorService;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -34,11 +33,11 @@ public class PathController {
     }
 
     @PostMapping
-    public ResponseEntity addPath(@Valid @RequestBody Path path , BindingResult result){
+    public ResponseEntity addPath(@Valid @RequestBody Path path, BindingResult result) {
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
 
-        if(errors != null)
+        if (errors != null)
             return errors;
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
@@ -47,15 +46,15 @@ public class PathController {
     }
 
     @DeleteMapping("/{pathId}")
-    public ResponseEntity<?> deletePathById(@PathVariable("pathId") Integer PathId){
+    public ResponseEntity<?> deletePathById(@PathVariable("pathId") Integer PathId) {
         pathService.deletePath(PathId);
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity getAllPaths(){
-        return new ResponseEntity<>(pathService.findAllPaths(),HttpStatus.OK);
+    public ResponseEntity getAllPaths() {
+        return new ResponseEntity<>(pathService.findAllPaths(), HttpStatus.OK);
     }
 
 }

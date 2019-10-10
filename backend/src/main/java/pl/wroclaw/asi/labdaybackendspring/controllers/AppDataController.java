@@ -51,7 +51,7 @@ public class AppDataController {
 
     @Transactional
     @GetMapping(value = "/app-data")
-    public ResponseEntity<?> getAppData(){
+    public ResponseEntity<?> getAppData() {
         AppData appData;
         Authentication auth = getContext().getAuthentication();
         Set<String> roles = auth
@@ -59,10 +59,10 @@ public class AppDataController {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
-        Object principal =  auth.getPrincipal();
-        if (roles.contains("ROLE_USER") && principal instanceof UserDetails){
-            Optional<User> user = userService.findUserByUsername(((UserDetails)principal).getUsername());
-            if (user.isPresent() && user.get().getPathId() != null){
+        Object principal = auth.getPrincipal();
+        if (roles.contains("ROLE_USER") && principal instanceof UserDetails) {
+            Optional<User> user = userService.findUserByUsername(((UserDetails) principal).getUsername());
+            if (user.isPresent() && user.get().getPathId() != null) {
                 Integer pathId = user.get().getPathId();
                 appData = new AppData(
                         eventService.findActiveEvents(pathId),
@@ -72,13 +72,12 @@ public class AppDataController {
                         speakerService.findActiveSpeakers(pathId)
                 );
                 return new ResponseEntity<>(appData, HttpStatus.OK);
-            }
-            else return new  ResponseEntity<>(new AppData(Collections.emptyList(),
+            } else return new ResponseEntity<>(new AppData(Collections.emptyList(),
                     Collections.emptyList(),
                     Collections.emptyList(),
                     Collections.emptyList(),
                     Collections.emptyList()), HttpStatus.OK);
-        } else if (roles.contains("ROLE_GUEST") || roles.contains("ROLE_ADMIN")){
+        } else if (roles.contains("ROLE_GUEST") || roles.contains("ROLE_ADMIN")) {
             appData = new AppData(
                     eventService.findAllEvents(),
                     placeService.findAllPlaces(),

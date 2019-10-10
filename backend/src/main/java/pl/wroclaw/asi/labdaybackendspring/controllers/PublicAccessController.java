@@ -25,21 +25,21 @@ public class PublicAccessController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping(value = "/admin/api/public-access")
-    public ResponseEntity setPublicAccess(@RequestBody PublicAccessActive publicAccess){
-       Optional<PublicAccessActive> publicAccessActiveFromDB =  publicAccessActiveRepository.findById(0);
+    public ResponseEntity setPublicAccess(@RequestBody PublicAccessActive publicAccess) {
+        Optional<PublicAccessActive> publicAccessActiveFromDB = publicAccessActiveRepository.findById(0);
 
-        if (publicAccessActiveFromDB.isEmpty()){
+        if (publicAccessActiveFromDB.isEmpty()) {
             publicAccess.setId(0);
             return new ResponseEntity<>(publicAccessActiveRepository.save(publicAccess), HttpStatus.OK);
         }
 
-       publicAccessActiveFromDB.ifPresent(
-               publicAccessActive -> publicAccessActive.setActive(publicAccess.isActive()));
+        publicAccessActiveFromDB.ifPresent(
+                publicAccessActive -> publicAccessActive.setActive(publicAccess.isActive()));
         return new ResponseEntity<>(publicAccessActiveRepository.save(publicAccessActiveFromDB.get()), HttpStatus.OK);
     }
 
     @GetMapping(path = "/api/public-access-active")
-    public ResponseEntity<?> isPublicAccessActive(){
+    public ResponseEntity<?> isPublicAccessActive() {
         return new ResponseEntity<>(publicAccessActiveRepository.findById(0), HttpStatus.OK);
     }
 

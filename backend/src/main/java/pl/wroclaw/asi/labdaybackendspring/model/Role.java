@@ -23,7 +23,7 @@ public class Role {
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
 
 
@@ -35,7 +35,6 @@ public class Role {
         this.users = users;
         this.privileges = privileges;
     }
-
 
 
     @Override

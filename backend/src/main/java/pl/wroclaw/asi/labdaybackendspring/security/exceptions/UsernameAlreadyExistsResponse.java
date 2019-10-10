@@ -1,8 +1,6 @@
 package pl.wroclaw.asi.labdaybackendspring.security.exceptions;
 
 
-
-
 public class UsernameAlreadyExistsResponse {
     private String responseError;
 

@@ -33,11 +33,11 @@ public class PlaceController {
     }
 
     @PostMapping
-    public ResponseEntity addPlace(@Valid @RequestBody Place place, BindingResult result){
+    public ResponseEntity addPlace(@Valid @RequestBody Place place, BindingResult result) {
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
 
-        if(errors != null)
+        if (errors != null)
             return errors;
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
@@ -46,7 +46,7 @@ public class PlaceController {
     }
 
     @DeleteMapping("/{placeId}")
-    public ResponseEntity<?> deletePlaceById(@PathVariable("placeId") Integer placeId){
+    public ResponseEntity<?> deletePlaceById(@PathVariable("placeId") Integer placeId) {
         placeService.deletePlace(placeId);
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
@@ -54,7 +54,7 @@ public class PlaceController {
     }
 
     @GetMapping
-    public ResponseEntity getAllPlaces(){
-        return new ResponseEntity<>(placeService.findAllPlaces(),HttpStatus.OK);
+    public ResponseEntity getAllPlaces() {
+        return new ResponseEntity<>(placeService.findAllPlaces(), HttpStatus.OK);
     }
 }

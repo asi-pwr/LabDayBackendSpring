@@ -12,14 +12,15 @@ import java.util.Optional;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Integer> {
     void delete(Event entity);
+
     Iterable<Event> findAll();
 
     @Query(value =
             "SELECT event.* " +
-            "FROM event " +
-                "INNER JOIN timetable ON event.id = timetable.event_id " +
-                "INNER JOIN path ON path.id = timetable.path_id " +
-            "WHERE path.active = TRUE AND path.id = ?1",
+                    "FROM event " +
+                    "INNER JOIN timetable ON event.id = timetable.event_id " +
+                    "INNER JOIN path ON path.id = timetable.path_id " +
+                    "WHERE path.active = TRUE AND path.id = ?1",
             nativeQuery = true)
     List<Event> findAllActive(Integer pathId);
 }

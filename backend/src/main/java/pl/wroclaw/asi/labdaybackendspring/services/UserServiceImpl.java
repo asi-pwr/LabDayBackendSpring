@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(newUser);
     }
 
-    public Optional<User> findUserByUsername(String username){
+    public Optional<User> findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -40,9 +40,9 @@ public class UserServiceImpl implements UserService {
         return (List<User>) userRepository.findAllByOrderById();
     }
 
-    public User saveUserWithPath(User user){
+    public User saveUserWithPath(User user) {
         Optional<User> updatedUser = Optional.ofNullable(userRepository.getById(user.getId()));
-        if (updatedUser.isPresent()){
+        if (updatedUser.isPresent()) {
             updatedUser.get().setPathId(user.getPathId());
             return userRepository.save(updatedUser.get());
         }

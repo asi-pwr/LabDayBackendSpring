@@ -33,11 +33,11 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity addEvent(@Valid @RequestBody Event event, BindingResult result){
+    public ResponseEntity addEvent(@Valid @RequestBody Event event, BindingResult result) {
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
 
-        if(errors != null)
+        if (errors != null)
             return errors;
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
@@ -46,15 +46,15 @@ public class EventController {
     }
 
     @DeleteMapping("/{eventId}")
-    public ResponseEntity<?> deleteEventById(@PathVariable Integer eventId){
+    public ResponseEntity<?> deleteEventById(@PathVariable Integer eventId) {
         eventService.deleteEvent(eventId);
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity getAllEvents(){
-        return new ResponseEntity<>(eventService.findAllEvents(),HttpStatus.OK);
+    public ResponseEntity getAllEvents() {
+        return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK);
     }
 
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface PlaceService {
     Place saveOrUpdatePlace(Place place);
+
     List<Place> findAllPlaces();
+
     void deletePlace(Integer id);
 }

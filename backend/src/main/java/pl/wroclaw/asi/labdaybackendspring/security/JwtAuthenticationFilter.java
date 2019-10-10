@@ -21,7 +21,7 @@ import java.util.Collections;
 
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-public static final String TOKEN_PREFIX = "token ";
+    public static final String TOKEN_PREFIX = "token ";
 
     private String HEADER_STRING = "Authorization";
 
@@ -37,7 +37,7 @@ public static final String TOKEN_PREFIX = "token ";
 
         try {
             String jwt = getJWTFromRequest(httpServletRequest);
-            if(StringUtils.hasText(jwt)&& tokenProvider.validateToken(jwt)){
+            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 Integer userId = tokenProvider.getUserIdFromJWT(jwt);
                 UserDetails userDetails = customUserDetailsService.loadUserById(userId);
 
@@ -48,7 +48,7 @@ public static final String TOKEN_PREFIX = "token ";
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Could not set user authentication in security context", ex);
         }
 
@@ -57,10 +57,10 @@ public static final String TOKEN_PREFIX = "token ";
 
     }
 
-    private String getJWTFromRequest(HttpServletRequest request){
+    private String getJWTFromRequest(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
-        if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)){
-            return token.substring(6,token.length());
+        if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
+            return token.substring(6, token.length());
         }
         return null;
     }
