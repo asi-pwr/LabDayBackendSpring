@@ -1,21 +1,20 @@
-import React, { Component } from "react";
-import {connect} from "react-redux";
-import CalendarComponent from "../calendar/CalendarComponent";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import CalendarComponent from '../calendar/CalendarComponent';
 
 class Dashboard extends Component {
-
   render() {
     return (
       <div>
-          <CalendarComponent/>
+        <CalendarComponent />
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-    const { user } = state.authentication;
-    return {  user };
+  const { user } = state.authentication;
+  return { user };
 }
 
 const DashboardPage = connect(mapStateToProps)(Dashboard);
