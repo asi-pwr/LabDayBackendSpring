@@ -1,28 +1,31 @@
-import axios from "axios";
-import {backendURL} from "../helpers/backendURL";
+import axios from 'axios';
+import { backendURL } from '../helpers/backendURL';
 
 export const userService = {
-    login,
-    logout
+  login,
+  logout
 };
 
 function login(username, password) {
-    const params = new URLSearchParams();
-    params.append('username', username);
-    params.append('password', password);
-    const configUrlEncoded = {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }
-    return axios.post(backendURL + '/api/login', params, configUrlEncoded)
-        .then(response => { return response.data.token} )
-        .then(token => {
-            localStorage.setItem('token', token);
-            localStorage.setItem('username', username)
-            return token;
-        });
+  const params = new URLSearchParams();
+  params.append('username', username);
+  params.append('password', password);
+  const configUrlEncoded = {
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  };
+  return axios
+    .post(backendURL + '/api/login', params, configUrlEncoded)
+    .then(response => {
+      return response.data.token;
+    })
+    .then(token => {
+      localStorage.setItem('token', token);
+      localStorage.setItem('username', username);
+      return token;
+    });
 }
 
 function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+  localStorage.removeItem('token');
+  localStorage.removeItem('username');
 }
