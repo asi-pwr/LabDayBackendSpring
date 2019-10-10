@@ -7,7 +7,10 @@ import java.util.Optional;
 
 public interface UserService {
     public User saveUser(User newUser);
+
     public Optional<User> findUserByUsername(String username);
+
     public List<User> findAllUsers();
+
     public User saveUserWithPath(User user);
 }

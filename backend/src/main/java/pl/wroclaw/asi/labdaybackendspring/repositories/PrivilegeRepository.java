@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.wroclaw.asi.labdaybackendspring.model.Privilege;
 
 @Repository
-public interface PrivilegeRepository extends CrudRepository<Privilege,Integer> {
+public interface PrivilegeRepository extends CrudRepository<Privilege, Integer> {
     Privilege findByName(String name);
 }

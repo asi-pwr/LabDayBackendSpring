@@ -42,7 +42,7 @@ public class SpeakerServiceImpl implements SpeakerService {
         Optional<Speaker> speaker = speakerRepository.findById(id);
 
         Speaker nas = speakerRepository.findByName("NaS").get();
-        speaker.ifPresent(s ->{
+        speaker.ifPresent(s -> {
             eventService.fillEventsWithSpeaker(s.getId(), nas.getId());
         });
 

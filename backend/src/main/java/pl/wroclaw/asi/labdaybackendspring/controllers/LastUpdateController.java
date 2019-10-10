@@ -18,7 +18,7 @@ public class LastUpdateController {
     }
 
     @GetMapping(value = "/last-update")
-    public ResponseEntity<?> getLastUpdate(){
+    public ResponseEntity<?> getLastUpdate() {
         return new ResponseEntity<>(lastUpdate, HttpStatus.OK);
     }
 }

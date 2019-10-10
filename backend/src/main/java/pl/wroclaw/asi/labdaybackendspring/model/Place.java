@@ -15,12 +15,13 @@ public class Place {
         REST(3);
 
         private final int type;
-        private Type(final int type){
+
+        private Type(final int type) {
             this.type = type;
         }
 
         @JsonValue
-        public int toInt(){
+        public int toInt() {
             return this.type;
         }
     }

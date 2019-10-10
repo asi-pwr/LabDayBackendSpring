@@ -49,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
-    public UserDetails loadUserById(Integer id) throws UsernameNotFoundException{
+    public UserDetails loadUserById(Integer id) throws UsernameNotFoundException {
         return Optional.ofNullable(userRepository.getById(id))
                 .map(this::createNewUserdetailsUser)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

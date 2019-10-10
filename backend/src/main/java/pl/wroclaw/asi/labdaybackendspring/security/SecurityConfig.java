@@ -32,10 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailsService customUserDetailsService;
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {return  new JwtAuthenticationFilter();}
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
 
     @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder(){
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -59,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/admin/**/*").hasAuthority("WRITE_PRIVILEGE")
+                .antMatchers(HttpMethod.POST, "/admin/**/*").hasAuthority("WRITE_PRIVILEGE")
                 .antMatchers(
                         "/",
                         "/favicon.ico",
@@ -74,9 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/public-access-active",
                         "/api/public-access"
                 ).permitAll()
-                .antMatchers(HttpMethod.DELETE,"/admin/**/*").hasAuthority("WRITE_PRIVILEGE")
-                .antMatchers(HttpMethod.GET,"/api/app-data").hasAuthority("READ_PRIVILEGE")
-                .antMatchers(HttpMethod.POST,"/api/login", "/api/register").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/admin/**/*").hasAuthority("WRITE_PRIVILEGE")
+                .antMatchers(HttpMethod.GET, "/api/app-data").hasAuthority("READ_PRIVILEGE")
+                .antMatchers(HttpMethod.POST, "/api/login", "/api/register").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

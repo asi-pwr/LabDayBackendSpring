@@ -33,7 +33,6 @@ public class Speaker {
     }
 
 
-
     @Override
     public String toString() {
         return "Speaker{" +

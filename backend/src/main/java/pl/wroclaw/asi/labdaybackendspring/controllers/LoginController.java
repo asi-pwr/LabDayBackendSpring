@@ -44,8 +44,8 @@ public class LoginController {
     }
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity loginUser(@RequestParam Map<String, String> body){
-        if (body.containsKey("username") && body.containsKey("password")){
+    public ResponseEntity loginUser(@RequestParam Map<String, String> body) {
+        if (body.containsKey("username") && body.containsKey("password")) {
             User user = new User();
             user.setUsername(body.get("username"));
             user.setPassword(body.get("password"));
@@ -60,30 +60,30 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = tokenProvider.generateToken(authentication);
             if (!user.getUsername().equals("guest"))
-                return new ResponseEntity(new UserTokenResponse(jwt),HttpStatus.OK);
+                return new ResponseEntity(new UserTokenResponse(jwt), HttpStatus.OK);
         }
 
-        return new ResponseEntity("",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(path = "/register")
-    public ResponseEntity<?> registerUser(@RequestParam Map<String, String> body){
+    public ResponseEntity<?> registerUser(@RequestParam Map<String, String> body) {
         User user = new User();
         if (body.containsKey("username") && body.containsKey("password")) {
             user.setUsername(body.get("username"));
             user.setPassword(body.get("password"));
             Role role = roleRepository.findByName("ROLE_USER");
             user.setRoles(Arrays.asList(role));
-            return new ResponseEntity(userService.saveUser(user),HttpStatus.CREATED);
+            return new ResponseEntity(userService.saveUser(user), HttpStatus.CREATED);
         }
 
-        return  new ResponseEntity("", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(path = "/public-access")
-    public ResponseEntity<?> getPublicAccess(){
+    public ResponseEntity<?> getPublicAccess() {
         Optional<User> guest = userService.findUserByUsername("guest");
-        if (guest.isPresent() && publicAccessActiveRepository.findById(0).get().isActive()){
+        if (guest.isPresent() && publicAccessActiveRepository.findById(0).get().isActive()) {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             guest.get().getUsername(),
@@ -92,11 +92,10 @@ public class LoginController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = tokenProvider.generateToken(authentication);
-            return new ResponseEntity(new UserTokenResponse(jwt),HttpStatus.OK);
+            return new ResponseEntity(new UserTokenResponse(jwt), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
-
 
 
 }

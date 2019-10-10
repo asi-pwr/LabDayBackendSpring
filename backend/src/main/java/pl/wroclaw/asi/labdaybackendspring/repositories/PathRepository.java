@@ -9,5 +9,6 @@ public interface PathRepository extends CrudRepository<Path, Integer> {
     List<Path> findAllByActiveTrueAndId(Integer pathId);
 
     List<Path> getByActiveTrue();
+
     Integer countDistinctByActiveTrue();
 }

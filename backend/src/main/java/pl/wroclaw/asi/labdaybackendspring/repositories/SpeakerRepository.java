@@ -12,11 +12,11 @@ public interface SpeakerRepository extends CrudRepository<Speaker, Integer> {
 
     @Query(value =
             "SELECT DISTINCT speaker.* " +
-            "FROM speaker " +
+                    "FROM speaker " +
                     "INNER JOIN event ON event.speaker_id = speaker.id " +
                     "INNER JOIN timetable ON event.id = timetable.event_id " +
                     "INNER JOIN path ON path.id = timetable.path_id " +
-            "WHERE path.active = TRUE AND path.id = ?1",
+                    "WHERE path.active = TRUE AND path.id = ?1",
             nativeQuery = true)
     List<Speaker> findAllActive(Integer pathId);
 

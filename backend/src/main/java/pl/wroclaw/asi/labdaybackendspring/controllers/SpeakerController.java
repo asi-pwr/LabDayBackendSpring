@@ -33,11 +33,11 @@ public class SpeakerController {
     }
 
     @PostMapping
-    public ResponseEntity addSpeaker(@Valid @RequestBody Speaker speaker, BindingResult result){
+    public ResponseEntity addSpeaker(@Valid @RequestBody Speaker speaker, BindingResult result) {
 
         ResponseEntity<?> errors = validationErrorService.mapValidationService(result);
 
-        if(errors != null)
+        if (errors != null)
             return errors;
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
@@ -47,15 +47,15 @@ public class SpeakerController {
     }
 
     @DeleteMapping("/{speakerId}")
-    public ResponseEntity<?> deleteSpeakerById(@PathVariable Integer speakerId){
+    public ResponseEntity<?> deleteSpeakerById(@PathVariable Integer speakerId) {
         speakerService.deleteSpeaker(speakerId);
 
         lastUpdate.setUpdatedAt(String.valueOf(new Timestamp(new Date().getTime())));
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity getAllSpeakers(){
-        return new ResponseEntity<>(speakerService.findAllSpeakers(),HttpStatus.OK);
+    public ResponseEntity getAllSpeakers() {
+        return new ResponseEntity<>(speakerService.findAllSpeakers(), HttpStatus.OK);
     }
 }

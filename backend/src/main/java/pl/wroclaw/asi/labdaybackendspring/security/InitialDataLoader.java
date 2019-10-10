@@ -44,13 +44,13 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if(alreadySetup)
-	        return;
-	
-	    if(publicAccessActiveRepository.findById(0).isEmpty())
-            publicAccessActiveRepository.save(new PublicAccessActive(0,false));
+        if (alreadySetup)
+            return;
 
-        if (speakerRepository.findByName("NaS").isEmpty()){
+        if (publicAccessActiveRepository.findById(0).isEmpty())
+            publicAccessActiveRepository.save(new PublicAccessActive(0, false));
+
+        if (speakerRepository.findByName("NaS").isEmpty()) {
             Speaker speaker = new Speaker("NaS", "Not a Speaker - for registry and opening", "");
             speakerRepository.save(speaker);
         }
@@ -58,7 +58,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
         Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
 
-        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege,writePrivilege);
+        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
 
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
@@ -66,21 +66,21 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         Optional<User> admin = userRepository.findByUsername("admin");
-        createAccountIfNotFound(admin.orElse(null),"admin", adminPassword, Arrays.asList(adminRole));
+        createAccountIfNotFound(admin.orElse(null), "admin", adminPassword, Arrays.asList(adminRole));
 
         Role guestRole = roleRepository.findByName("ROLE_GUEST");
         Optional<User> guest = userRepository.findByUsername("guest");
-        createAccountIfNotFound(guest.orElse(null),"guest","guest",Arrays.asList(guestRole));
+        createAccountIfNotFound(guest.orElse(null), "guest", "guest", Arrays.asList(guestRole));
 
         alreadySetup = true;
     }
 
     @Transactional
     void createAccountIfNotFound(User user, String username, String password, Collection<Role> roles) {
-        if(user == null){
+        if (user == null) {
             user = new User();
             user.setUsername(username);
-	}
+        }
         user.setPassword(bCryptPasswordEncoder.encode(password));
         if (user.getRoles() == null || user.getRoles().isEmpty())
             user.setRoles(roles);
@@ -90,7 +90,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Transactional
     Role createRoleIfNotFound(String name, Collection<Privilege> privileges) {
         Role role = roleRepository.findByName(name);
-        if (role == null){
+        if (role == null) {
             role = new Role();
             role.setName(name);
             role.setPrivileges(privileges);
