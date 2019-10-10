@@ -44,6 +44,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-vazco": "^5.0.0",
+    "eslint-plugin-react": "^7.16.0",
     "material-ui-popup-state": "^1.2.0"
   }
 }
